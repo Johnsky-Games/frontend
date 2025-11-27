@@ -1,0 +1,168 @@
+.rating-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.rating-list-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    gap: 1rem;
+}
+
+.rating-list-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #8b5cf6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rating-list-loading p {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.rating-list-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: #f9fafb;
+    border-radius: 12px;
+    border: 2px dashed #d1d5db;
+}
+
+.rating-list-empty p {
+    color: #6b7280;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.rating-item {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.2s;
+}
+
+.rating-item:hover {
+    border-color: #d1d5db;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.rating-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+.rating-item-user {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.rating-item-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.rating-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.rating-item-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.rating-item-date {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.rating-item-review {
+    margin: 0.75rem 0;
+    padding-left: 3.25rem;
+}
+
+.rating-item-review p {
+    color: #374151;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.rating-item-actions {
+    display: flex;
+    gap: 1rem;
+    padding-left: 3.25rem;
+    margin-top: 0.75rem;
+}
+
+.rating-item-action {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.625rem;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #6b7280;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.rating-item-action:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.rating-item-action svg {
+    flex-shrink: 0;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+    .rating-item {
+        padding: 1rem;
+    }
+
+    .rating-item-review {
+        padding-left: 0;
+    }
+
+    .rating-item-actions {
+        padding-left: 0;
+    }
+
+    .rating-item-header {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+}

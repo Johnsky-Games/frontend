@@ -1,0 +1,87 @@
+.favorite-btn {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.favorite-btn:hover:not(:disabled) {
+    border-color: #d1d5db;
+    background: #f9fafb;
+    transform: scale(1.05);
+}
+
+.favorite-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.favorite-btn--active {
+    color: #ef4444;
+    border-color: #fecaca;
+    background: #fef2f2;
+}
+
+.favorite-btn--active:hover:not(:disabled) {
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+.favorite-btn__icon {
+    transition: all 0.2s ease;
+}
+
+.favorite-btn:active:not(:disabled) .favorite-btn__icon {
+    transform: scale(0.9);
+}
+
+/* Size variants */
+.favorite-btn--sm {
+    padding: 0.375rem;
+}
+
+.favorite-btn--sm .favorite-btn__icon {
+    width: 16px;
+    height: 16px;
+}
+
+.favorite-btn--sm .favorite-btn__label {
+    font-size: 0.75rem;
+}
+
+.favorite-btn--md {
+    padding: 0.5rem;
+}
+
+.favorite-btn--md .favorite-btn__icon {
+    width: 20px;
+    height: 20px;
+}
+
+.favorite-btn--md .favorite-btn__label {
+    font-size: 0.875rem;
+}
+
+.favorite-btn--lg {
+    padding: 0.75rem 1rem;
+}
+
+.favorite-btn--lg .favorite-btn__icon {
+    width: 24px;
+    height: 24px;
+}
+
+.favorite-btn--lg .favorite-btn__label {
+    font-size: 1rem;
+}
+
+.favorite-btn__label {
+    white-space: nowrap;
+}

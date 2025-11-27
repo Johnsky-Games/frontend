@@ -1,0 +1,433 @@
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import api from '../services/ApiService';
+import { ArrowLeft, Clock, DollarSign, User } from 'lucide-react';
+
+interface Business {
+    id: number;
+    name: string;
+    address: string;
+    phone: string;
+    description: string;
+    business_hours: any;
+}
+
+interface Service {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    duration: number;
+}
+
+interface Staff {
+    id: number;
+    user_name: string;
+    job_title: string;
+    user_avatar: string | null;
+}
+
+interface TimeSlot {
+    time: string;
+    available: boolean;
+}
+
+const BusinessBookingPage: React.FC = () => {
+    const { user } = useAuth();
+    const navigate = useNavigate();
+    const { businessId } = useParams<{ businessId: string }>();
+
+    const [business, setBusiness] = useState<Business | null>(null);
+    const [services, setServices] = useState<Service[]>([]);
+    const [staff, setStaff] = useState<Staff[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
+
+    // Booking form state
+    const [selectedService, setSelectedService] = useState<string>('');
+    const [selectedStaff, setSelectedStaff] = useState<string>('');
+    const [date, setDate] = useState('');
+    const [selectedTime, setSelectedTime] = useState('');
+    const [notes, setNotes] = useState('');
+    const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([]);
+    const [loadingSlots, setLoadingSlots] = useState(false);
+
+    useEffect(() => {
+        if (!businessId) {
+            toast.error('Invalid business');
+            navigate('/client/businesses');
+            return;
+        }
+        fetchBusinessDetails();
+    }, [businessId]);
+
+    useEffect(() => {
+        if (selectedService) {
+            fetchStaff();
+        } else {
+            setStaff([]);
+            setSelectedStaff('');
+        }
+    }, [selectedService]);
+
+    useEffect(() => {
+        if (date && selectedService && selectedStaff) {
+            fetchAvailability();
+        } else {
+            setAvailableSlots([]);
+            setSelectedTime('');
+        }
+    }, [date, selectedService, selectedStaff]);
+
+    const fetchBusinessDetails = async () => {
+        try {
+            setLoading(true);
+
+            // Fetch business
+            const businessRes = await api.get(`/businesses/${businessId}`);
+            if (businessRes.data.code === 'SUCCESS') {
+                setBusiness(businessRes.data.data || businessRes.data.business);
+            }
+
+            // Fetch services
+            const servicesRes = await api.get(`/businesses/${businessId}/services`);
+            if (servicesRes.data.code === 'SUCCESS') {
+                setServices(servicesRes.data.services);
+            }
+
+        } catch (error) {
+            console.error('Error fetching business details:', error);
+            toast.error('Failed to load business details');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchStaff = async () => {
+        try {
+            console.log('🔍 Fetching staff for service:', selectedService);
+            const response = await api.get(`/businesses/${businessId}/staff`, {
+                params: { service_id: selectedService }
+            });
+            console.log('📦 Staff response:', response.data);
+            if (response.data.code === 'SUCCESS') {
+                console.log('✅ Setting staff:', response.data.staff);
+                setStaff(response.data.staff);
+            }
+        } catch (error) {
+            console.error('❌ Error fetching staff:', error);
+        }
+    };
+
+    const fetchAvailability = async () => {
+        try {
+            setLoadingSlots(true);
+            setSelectedTime('');
+            const params: any = {
+                date,
+                service_id: selectedService,
+                staff_id: selectedStaff
+            };
+
+            const response = await api.get(`/businesses/${businessId}/availability`, {
+                params
+            });
+
+            if (response.data.code === 'SUCCESS') {
+                setAvailableSlots(response.data.slots);
+            }
+        } catch (error) {
+            console.error('Error fetching availability:', error);
+            toast.error('Failed to load available times');
+        } finally {
+            setLoadingSlots(false);
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!selectedService) {
+            toast.error('Please select a service');
+            return;
+        }
+
+        if (!selectedStaff) {
+            toast.error('Please select a staff member');
+            return;
+        }
+
+        if (!date || !selectedTime) {
+            toast.error('Please select date and time');
+            return;
+        }
+
+        try {
+            setSubmitting(true);
+
+            const service = services.find(s => s.id === parseInt(selectedService));
+            if (!service) return;
+
+            // Calculate end time
+            const startDate = new Date(`2000-01-01T${selectedTime}:00`);
+            const endDate = new Date(startDate.getTime() + (service.duration * 60000));
+            const endTime = endDate.toTimeString().slice(0, 5);
+
+            const payload: any = {
+                business_id: parseInt(businessId!),
+                service_id: parseInt(selectedService),
+                date,
+                start_time: selectedTime,
+                end_time: endTime,
+                notes,
+                staff_id: parseInt(selectedStaff)
+            };
+
+            const response = await api.post('/appointments', payload);
+
+            if (response.data.code === 'APPOINTMENT_CREATED') {
+                toast.success('Appointment booked successfully!');
+                navigate('/client/appointments');
+            }
+        } catch (error: any) {
+            console.error('Booking error:', error);
+            if (error.response?.data?.code === 'APPOINTMENT_OVERLAP') {
+                toast.error('This time slot is no longer available. Please choose another.');
+                fetchAvailability();
+            } else {
+                toast.error(error.response?.data?.message || 'Failed to book appointment');
+            }
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const selectedServiceObj = services.find(s => s.id === parseInt(selectedService));
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        );
+    }
+
+    if (!business) {
+        return (
+            <div className="max-w-7xl mx-auto px-4 py-8">
+                <div className="text-center">
+                    <h2 className="text-xl font-bold text-gray-900">Business not found</h2>
+                    <button onClick={() => navigate('/client/businesses')} className="mt-4 text-indigo-600 hover:text-indigo-500">
+                        Back to Businesses
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-8">
+            {/* Back Button */}
+            <button
+                onClick={() => navigate('/client/businesses')}
+                className="mb-6 inline-flex items-center text-sm text-gray-600 hover:text-gray-900"
+            >
+                <ArrowLeft className="h-4 w-4 mr-1" />
+                Back to Businesses
+            </button>
+
+            {/* Business Header */}
+            <div className="bg-white shadow rounded-lg p-6 mb-6">
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">{business.name}</h1>
+                <p className="text-gray-600 mb-4">{business.description}</p>
+                <div className="flex flex-wrap gap-4 text-sm text-gray-500">
+                    <span>📍 {business.address}</span>
+                    <span>📞 {business.phone}</span>
+                </div>
+            </div>
+
+            {/* Booking Form */}
+            <div className="bg-white shadow rounded-lg overflow-hidden">
+                <div className="px-6 py-5 border-b border-gray-200">
+                    <h2 className="text-xl font-semibold text-gray-900">Book an Appointment</h2>
+                </div>
+
+                <form onSubmit={handleSubmit} className="p-6 space-y-6">
+                    {/* Service Selection */}
+                    <div>
+                        <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
+                            Select Service *
+                        </label>
+                        <select
+                            id="service"
+                            value={selectedService}
+                            onChange={(e) => setSelectedService(e.target.value)}
+                            className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            required
+                        >
+                            <option value="">Choose a service...</option>
+                            {services.map((service) => (
+                                <option key={service.id} value={service.id}>
+                                    {service.name} - ${Number(service.price).toFixed(2)} ({service.duration} min)
+                                </option>
+                            ))}
+                        </select>
+                        {selectedServiceObj && (
+                            <p className="mt-2 text-sm text-gray-600">{selectedServiceObj.description}</p>
+                        )}
+                    </div>
+
+                    {/* Staff Selection - Required */}
+                    {staff.length > 0 && (
+                        <div>
+                            <label htmlFor="staff" className="block text-sm font-medium text-gray-700 mb-2">
+                                Select Staff Member *
+                            </label>
+                            <select
+                                id="staff"
+                                value={selectedStaff}
+                                onChange={(e) => setSelectedStaff(e.target.value)}
+                                className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                required
+                            >
+                                <option value="">Choose a staff member...</option>
+                                {staff.map((member) => (
+                                    <option key={member.id} value={member.id}>
+                                        {member.user_name} - {member.job_title}
+                                    </option>
+                                ))}
+                            </select>
+                            <p className="mt-1 text-xs text-gray-500">
+                                Select the staff member you'd like to book with
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Date Selection */}
+                    <div>
+                        <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">
+                            Select Date *
+                        </label>
+                        <input
+                            type="date"
+                            id="date"
+                            required
+                            min={new Date().toISOString().split('T')[0]}
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                            disabled={!selectedStaff}
+                            className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        />
+                        {!selectedStaff && (
+                            <p className="mt-1 text-xs text-gray-500">
+                                Please select a staff member first
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Time Slots */}
+                    {date && selectedService && selectedStaff && (
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Available Times *
+                            </label>
+                            {loadingSlots ? (
+                                <div className="text-sm text-gray-500">Loading available times...</div>
+                            ) : availableSlots.length > 0 ? (
+                                <div className="grid grid-cols-4 gap-2 sm:grid-cols-6">
+                                    {availableSlots.map((slot) => (
+                                        <button
+                                            key={slot.time}
+                                            type="button"
+                                            disabled={!slot.available}
+                                            onClick={() => setSelectedTime(slot.time)}
+                                            className={`
+                                                px-3 py-2 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                                                ${!slot.available
+                                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                                    : selectedTime === slot.time
+                                                        ? 'bg-indigo-600 text-white shadow-sm'
+                                                        : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                                                }
+                                            `}
+                                        >
+                                            {slot.time}
+                                        </button>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-sm text-gray-500 italic">
+                                    No available times for this date.
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Notes */}
+                    <div>
+                        <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-2">
+                            Notes (Optional)
+                        </label>
+                        <textarea
+                            id="notes"
+                            rows={3}
+                            value={notes}
+                            onChange={(e) => setNotes(e.target.value)}
+                            className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="Any special requests or notes..."
+                        />
+                    </div>
+
+                    {/* Summary */}
+                    {selectedServiceObj && (
+                        <div className="bg-gray-50 rounded-lg p-4">
+                            <h3 className="text-sm font-medium text-gray-900 mb-2">Booking Summary</h3>
+                            <div className="space-y-1 text-sm text-gray-600">
+                                <div className="flex items-center">
+                                    <User className="h-4 w-4 mr-2" />
+                                    <span>{selectedServiceObj.name}</span>
+                                </div>
+                                <div className="flex items-center">
+                                    <Clock className="h-4 w-4 mr-2" />
+                                    <span>{selectedServiceObj.duration} minutes</span>
+                                </div>
+                                <div className="flex items-center">
+                                    <DollarSign className="h-4 w-4 mr-2" />
+                                    <span>${Number(selectedServiceObj.price).toFixed(2)}</span>
+                                </div>
+                                {date && selectedTime && (
+                                    <div className="mt-2 pt-2 border-t border-gray-200">
+                                        <strong>Date & Time:</strong> {date} at {selectedTime}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Actions */}
+                    <div className="flex justify-end space-x-3 pt-4">
+                        <button
+                            type="button"
+                            onClick={() => navigate('/client/businesses')}
+                            className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={submitting || !selectedTime}
+                            className={`px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${(submitting || !selectedTime) ? 'opacity-75 cursor-not-allowed' : ''
+                                }`}
+                        >
+                            {submitting ? 'Booking...' : 'Confirm Booking'}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default BusinessBookingPage;
