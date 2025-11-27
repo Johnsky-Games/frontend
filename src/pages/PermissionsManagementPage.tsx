@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ApiService from '../services/ApiService';
 import { ArrowLeft, Save, Shield, Check } from 'lucide-react';
+import { toast, ToastContainer } from 'react-toastify';
+import { usePermissions } from '../hooks/usePermissions';
+import AccessDenied from '../components/AccessDenied';
 
 interface Permission {
     id: number;
@@ -31,8 +34,14 @@ const PermissionsManagementPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
 
+    const { hasPermission, isMainAdmin } = usePermissions();
+
     useEffect(() => {
-        fetchData();
+        if (isMainAdmin() || hasPermission('manage_permissions')) {
+            fetchData();
+        } else {
+            setLoading(false);
+        }
     }, [id]);
 
     const fetchData = async () => {
@@ -44,15 +53,17 @@ const PermissionsManagementPage: React.FC = () => {
                 ApiService.get(`/admin/collaborators/${id}/permissions`)
             ]);
 
-            setAllPermissions(permissionsRes.data);
-            setCollaborator(collabRes.data);
+            setAllPermissions(permissionsRes.data.data);
+            setCollaborator(collabRes.data.data);
 
             // Extract permission keys from current permissions
-            const currentKeys = currentPermsRes.data.map((p: Permission) => p.permission_key);
+            const currentKeys = currentPermsRes.data.data.map((p: Permission) => p.permission_key);
             setSelectedPermissions(currentKeys);
         } catch (error) {
             console.error('Error fetching data:', error);
-            alert('Failed to load permissions');
+            toast.error('❌ Failed to load permissions', {
+                autoClose: 4000
+            });
         } finally {
             setLoading(false);
         }
@@ -100,11 +111,15 @@ const PermissionsManagementPage: React.FC = () => {
             await ApiService.post(`/admin/collaborators/${id}/permissions`, {
                 permissions: selectedPermissions
             });
-            alert('Permissions updated successfully');
+            toast.success('✅ Permissions updated successfully', {
+                autoClose: 3000
+            });
             navigate('/admin/collaborators');
         } catch (error) {
             console.error('Error saving permissions:', error);
-            alert('Failed to save permissions');
+            toast.error('❌ Failed to save permissions', {
+                autoClose: 4000
+            });
         } finally {
             setSaving(false);
         }
@@ -142,6 +157,10 @@ const PermissionsManagementPage: React.FC = () => {
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
             </div>
         );
+    }
+
+    if (!isMainAdmin() && !hasPermission('manage_permissions')) {
+        return <AccessDenied requiredPermission="manage_permissions" />;
     }
 
     return (
@@ -273,6 +292,9 @@ const PermissionsManagementPage: React.FC = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Toast Notifications */}
+            <ToastContainer />
         </div>
     );
 };

@@ -5,6 +5,8 @@ import {
   PieChart, Pie, Cell, BarChart, Bar, LineChart, Line,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
+import { usePermissions } from '../hooks/usePermissions';
+import AccessDenied from '../components/AccessDenied';
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
 
@@ -43,8 +45,10 @@ const AdminDashboardPage: React.FC = () => {
   const [insights, setInsights] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const { hasPermission, isMainAdmin } = usePermissions();
+
   useEffect(() => {
-    if (user?.role === 'admin') {
+    if (user?.role === 'admin' && (isMainAdmin() || hasPermission('view_dashboard'))) {
       fetchDashboardData();
     } else {
       setLoading(false);
@@ -86,6 +90,10 @@ const AdminDashboardPage: React.FC = () => {
     );
   }
 
+  if (!isMainAdmin() && !hasPermission('view_dashboard')) {
+    return <AccessDenied requiredPermission="view_dashboard" />;
+  }
+
   if (!user || user.role !== 'admin') {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
@@ -115,8 +123,8 @@ const AdminDashboardPage: React.FC = () => {
             <div
               key={idx}
               className={`p-4 rounded-lg border ${insight.type === 'warning'
-                  ? 'bg-yellow-50 border-yellow-200 text-yellow-800'
-                  : 'bg-green-50 border-green-200 text-green-800'
+                ? 'bg-yellow-50 border-yellow-200 text-yellow-800'
+                : 'bg-green-50 border-green-200 text-green-800'
                 }`}
             >
               <span className="text-sm font-medium">{insight.message}</span>

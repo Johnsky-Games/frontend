@@ -1,5 +1,6 @@
 import React from 'react';
-import { usePermission } from '../hooks/usePermission';
+import { usePermissions } from '../hooks/usePermissions';
+import AccessDenied from './AccessDenied';
 
 interface PermissionGateProps {
     permission?: string;
@@ -9,34 +10,11 @@ interface PermissionGateProps {
     requireAnyAdmin?: boolean;
     fallback?: React.ReactNode;
     children: React.ReactNode;
+    showAccessDenied?: boolean; // New prop to explicitly show AccessDenied component
 }
 
 /**
  * Component to conditionally render children based on user permissions
- * 
- * @example
- * // Single permission
- * <PermissionGate permission={PERMISSIONS.USERS_EDIT}>
- *   <button>Edit User</button>
- * </PermissionGate>
- * 
- * @example
- * // Multiple permissions (any)
- * <PermissionGate permissions={[PERMISSIONS.USERS_VIEW, PERMISSIONS.BUSINESSES_VIEW]}>
- *   <Dashboard />
- * </PermissionGate>
- * 
- * @example
- * // Multiple permissions (all required)
- * <PermissionGate permissions={[...]} requireAll>
- *   <AdminPanel />
- * </PermissionGate>
- * 
- * @example
- * // Super admin only
- * <PermissionGate requireSuperAdmin>
- *   <SystemSettings />
- * </PermissionGate>
  */
 const PermissionGate: React.FC<PermissionGateProps> = ({
     permission,
@@ -44,30 +22,37 @@ const PermissionGate: React.FC<PermissionGateProps> = ({
     requireAll = false,
     requireSuperAdmin = false,
     requireAnyAdmin = false,
-    fallback = null,
-    children
+    fallback,
+    children,
+    showAccessDenied = false
 }) => {
     const {
         hasPermission,
         hasAnyPermission,
         hasAllPermissions,
-        isSuperAdmin,
-        hasAdminRole
-    } = usePermission();
+        isMainAdmin
+    } = usePermissions();
 
-    // Check super admin requirement
-    if (requireSuperAdmin && !isSuperAdmin) {
-        return <>{fallback}</>;
+    // Determine the default fallback
+    const defaultFallback = showAccessDenied ? (
+        <AccessDenied
+            requiredPermission={permission || (permissions ? permissions.join(', ') : undefined)}
+        />
+    ) : fallback || null;
+
+    // Check super admin requirement (main admin = not collaborator)
+    if (requireSuperAdmin && !isMainAdmin()) {
+        return <>{defaultFallback}</>;
     }
 
     // Check any admin role requirement
-    if (requireAnyAdmin && !hasAdminRole) {
-        return <>{fallback}</>;
+    if (requireAnyAdmin && !isMainAdmin()) {
+        return <>{defaultFallback}</>;
     }
 
     // Check single permission
     if (permission && !hasPermission(permission)) {
-        return <>{fallback}</>;
+        return <>{defaultFallback}</>;
     }
 
     // Check multiple permissions
@@ -77,7 +62,7 @@ const PermissionGate: React.FC<PermissionGateProps> = ({
             : hasAnyPermission(permissions);
 
         if (!hasAccess) {
-            return <>{fallback}</>;
+            return <>{defaultFallback}</>;
         }
     }
 

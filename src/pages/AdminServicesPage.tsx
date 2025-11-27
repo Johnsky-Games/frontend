@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import { usePermissions } from '../hooks/usePermissions';
+import AccessDenied from '../components/AccessDenied';
 import api from '../services/ApiService';
 import {
   MagnifyingGlassIcon,
@@ -48,19 +51,20 @@ const AdminServicesPage: React.FC = () => {
 
   // Modal state for viewing service details
   const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const { hasPermission, isMainAdmin } = usePermissions();
 
   useEffect(() => {
-    if (user?.role === 'admin') {
-      fetchServices(true);
+    if (isMainAdmin() || hasPermission('view_services')) {
+      fetchServices();
     } else {
       setLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, []);
 
   useEffect(() => {
-    if (user?.role === 'admin' && !loading) {
+    if ((isMainAdmin() || hasPermission('view_services')) && !loading) {
       const timer = setTimeout(() => {
         fetchServices(false);
       }, 500); // Debounce search
@@ -112,11 +116,11 @@ const AdminServicesPage: React.FC = () => {
 
   const openServiceModal = (service: Service) => {
     setSelectedService(service);
-    setIsModalOpen(true);
+    setShowDeleteModal(true);
   };
 
   const closeServiceModal = () => {
-    setIsModalOpen(false);
+    setShowDeleteModal(false);
     setSelectedService(null);
   };
 
@@ -130,10 +134,14 @@ const AdminServicesPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex justify-center items-center h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
+  }
+
+  if (!isMainAdmin() && !hasPermission('view_services')) {
+    return <AccessDenied requiredPermission="view_services" />;
   }
 
   if (!user || user.role !== 'admin') {
@@ -289,10 +297,10 @@ const AdminServicesPage: React.FC = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${service.is_active
+                      <span className={`px - 2 inline - flex text - xs leading - 5 font - semibold rounded - full ${service.is_active
                         ? 'bg-green-100 text-green-800'
                         : 'bg-red-100 text-red-800'
-                        }`}>
+                        } `}>
                         {service.is_active ? 'Active' : 'Inactive'}
                       </span>
                     </td>
@@ -340,16 +348,16 @@ const AdminServicesPage: React.FC = () => {
                   <button
                     onClick={() => setPagination(prev => ({ ...prev, offset: Math.max(0, prev.offset - prev.limit) }))}
                     disabled={pagination.currentPage <= 1}
-                    className={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium ${pagination.currentPage <= 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-50'
-                      }`}
+                    className={`relative inline - flex items - center px - 2 py - 2 rounded - l - md border border - gray - 300 bg - white text - sm font - medium ${pagination.currentPage <= 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-50'
+                      } `}
                   >
                     Previous
                   </button>
                   <button
                     onClick={() => setPagination(prev => ({ ...prev, offset: Math.min(prev.total - prev.limit, prev.offset + prev.limit) }))}
                     disabled={pagination.currentPage >= pagination.totalPages}
-                    className={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium ${pagination.currentPage >= pagination.totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-50'
-                      }`}
+                    className={`relative inline - flex items - center px - 2 py - 2 rounded - r - md border border - gray - 300 bg - white text - sm font - medium ${pagination.currentPage >= pagination.totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-50'
+                      } `}
                   >
                     Next
                   </button>
@@ -361,7 +369,7 @@ const AdminServicesPage: React.FC = () => {
       </div>
 
       {/* Service Details Modal */}
-      {isModalOpen && selectedService && (
+      {showDeleteModal && selectedService && (
         <div className="fixed inset-0 z-10 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onClick={closeServiceModal}></div>
@@ -404,8 +412,8 @@ const AdminServicesPage: React.FC = () => {
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-500">Status</label>
-                          <span className={`mt-1 inline-flex text-xs leading-5 font-semibold rounded-full ${selectedService.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                            }`}>
+                          <span className={`mt - 1 inline - flex text - xs leading - 5 font - semibold rounded - full ${selectedService.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                            } `}>
                             {selectedService.is_active ? 'Active' : 'Inactive'}
                           </span>
                         </div>

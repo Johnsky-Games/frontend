@@ -13,6 +13,7 @@ interface User {
   created_at: string;
   admin_role?: 'super_admin' | 'admin' | 'moderator' | 'support' | null;
   permissions?: string[] | null;
+  is_admin_collaborator?: boolean;
 }
 
 interface Business {

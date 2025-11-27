@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import { usePermissions } from '../hooks/usePermissions';
+import AccessDenied from '../components/AccessDenied';
 import api from '../services/ApiService';
 
 interface Appointment {
@@ -34,18 +37,22 @@ const AdminAppointmentsPage: React.FC = () => {
     dateFrom: '',
     dateTo: ''
   });
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+  const [showStatusModal, setShowStatusModal] = useState(false);
+
+  const { hasPermission, isMainAdmin } = usePermissions();
 
   useEffect(() => {
-    if (user?.role === 'admin') {
+    if (isMainAdmin() || hasPermission('view_appointments')) {
       fetchAppointments(true);
     } else {
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, []); // Only run once on mount
 
   useEffect(() => {
-    if (user?.role === 'admin' && !loading) {
+    if ((isMainAdmin() || hasPermission('view_appointments')) && !loading) {
       fetchAppointments(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -118,8 +125,8 @@ const AdminAppointmentsPage: React.FC = () => {
     );
   }
 
-  if (!user || user.role !== 'admin') {
-    return <Navigate to="/login" replace />;
+  if (!isMainAdmin() && !hasPermission('view_appointments')) {
+    return <AccessDenied requiredPermission="view_appointments" />;
   }
 
   return (

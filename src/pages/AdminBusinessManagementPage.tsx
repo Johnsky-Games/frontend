@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { useAuth } from '../context/AuthContext';
 import { Navigate as NavigateComponent, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import { usePermissions } from '../hooks/usePermissions';
+import AccessDenied from '../components/AccessDenied';
 import api from '../services/ApiService';
 
 interface Business {
@@ -48,6 +50,10 @@ const AdminBusinessManagementPage: React.FC = () => {
     search: ''
   });
   const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null);
+  const [showStatusModal, setShowStatusModal] = useState(false);
+
+  const { hasPermission, isMainAdmin } = usePermissions();
 
   // Handle search debounce
   useEffect(() => {
@@ -60,7 +66,7 @@ const AdminBusinessManagementPage: React.FC = () => {
 
   // Initial load
   useEffect(() => {
-    if (user?.role === 'admin') {
+    if (isMainAdmin() || hasPermission('view_businesses')) {
       fetchBusinesses(true);
     } else {
       setLoading(false);
@@ -70,7 +76,7 @@ const AdminBusinessManagementPage: React.FC = () => {
 
   // Fetch on filter/pagination change
   useEffect(() => {
-    if (user?.role === 'admin' && !loading) {
+    if ((isMainAdmin() || hasPermission('view_businesses')) && !loading) {
       fetchBusinesses(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -186,10 +192,14 @@ const AdminBusinessManagementPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex justify-center items-center h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
+  }
+
+  if (!isMainAdmin() && !hasPermission('view_businesses')) {
+    return <AccessDenied requiredPermission="view_businesses" />;
   }
 
   if (!user || user.role !== 'admin') {
@@ -321,7 +331,7 @@ const AdminBusinessManagementPage: React.FC = () => {
                   >
                     View Details
                   </button>
-                  {business.verification_status === 'pending' && (
+                  {(isMainAdmin() || hasPermission('manage_businesses')) && business.verification_status === 'pending' && (
                     <>
                       <button
                         onClick={() => handleChangeStatus(business.id, 'approved')}
@@ -340,15 +350,17 @@ const AdminBusinessManagementPage: React.FC = () => {
                     </>
                   )}
                 </div>
-                <button
-                  onClick={() => handleChangeActiveStatus(business.id, !business.is_active)}
-                  className={`w-full px-3 py-2 rounded-md text-sm font-medium transition-colors ${business.is_active
+                {(isMainAdmin() || hasPermission('manage_businesses')) && (
+                  <button
+                    onClick={() => handleChangeActiveStatus(business.id, !business.is_active)}
+                    className={`w-full px-3 py-2 rounded-md text-sm font-medium transition-colors ${business.is_active
                       ? 'bg-red-100 text-red-700 hover:bg-red-200'
                       : 'bg-green-100 text-green-700 hover:bg-green-200'
-                    }`}
-                >
-                  {business.is_active ? '🚫 Suspend' : '✓ Activate'}
-                </button>
+                      }`}
+                  >
+                    {business.is_active ? '🚫 Suspend' : '✓ Activate'}
+                  </button>
+                )}
               </div>
             </div>
           ))

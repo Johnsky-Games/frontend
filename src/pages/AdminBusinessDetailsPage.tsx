@@ -4,6 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/ApiService';
 import { toast } from 'react-toastify';
+import { usePermissions } from '../hooks/usePermissions';
+import AccessDenied from '../components/AccessDenied';
 
 interface Business {
     id: number;
@@ -44,6 +46,8 @@ const AdminBusinessDetailsPage: React.FC = () => {
     const [business, setBusiness] = useState<Business | null>(null);
     const [loading, setLoading] = useState(true);
 
+    const { hasPermission, isMainAdmin } = usePermissions();
+
     useEffect(() => {
         const fetchBusiness = async () => {
             try {
@@ -57,12 +61,13 @@ const AdminBusinessDetailsPage: React.FC = () => {
                 setLoading(false);
             }
         };
-        if (user?.role === 'admin') {
+        if (isMainAdmin() || hasPermission('view_businesses')) {
             fetchBusiness();
         } else {
-            navigate('/login');
+            setLoading(false);
         }
-    }, [id, user, navigate]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]); // Only re-fetch when the business ID changes
 
     const formatDate = (dateString: string) => {
         if (!dateString) return 'N/A';
@@ -134,6 +139,10 @@ const AdminBusinessDetailsPage: React.FC = () => {
         );
     }
 
+    if (!isMainAdmin() && !hasPermission('view_businesses')) {
+        return <AccessDenied requiredPermission="view_businesses" />;
+    }
+
     if (!business) {
         return <div>Business not found</div>;
     }
@@ -184,32 +193,34 @@ const AdminBusinessDetailsPage: React.FC = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="bg-white shadow sm:rounded-lg mb-6 p-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Actions</h3>
-                <div className="flex flex-wrap gap-3">
-                    {business.verification_status === 'pending' && (
-                        <>
-                            <button onClick={handleApprove} className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
-                                ✓ Approve Verification
+            {(isMainAdmin() || hasPermission('manage_businesses')) && (
+                <div className="bg-white shadow sm:rounded-lg mb-6 p-6">
+                    <h3 className="text-lg font-medium text-gray-900 mb-4">Actions</h3>
+                    <div className="flex flex-wrap gap-3">
+                        {business.verification_status === 'pending' && (
+                            <>
+                                <button onClick={handleApprove} className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+                                    ✓ Approve Verification
+                                </button>
+                                <button onClick={handleReject} className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">
+                                    ✗ Reject Verification
+                                </button>
+                            </>
+                        )}
+                        {(business.verification_status === 'approved' || business.verification_status === 'rejected') && (
+                            <button onClick={handleSetPending} className="bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700">
+                                Set to Pending
                             </button>
-                            <button onClick={handleReject} className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">
-                                ✗ Reject Verification
-                            </button>
-                        </>
-                    )}
-                    {(business.verification_status === 'approved' || business.verification_status === 'rejected') && (
-                        <button onClick={handleSetPending} className="bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700">
-                            Set to Pending
+                        )}
+                        <button
+                            onClick={handleToggleActive}
+                            className={`${business.is_active ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'} text-white px-4 py-2 rounded-md`}
+                        >
+                            {business.is_active ? 'Suspend Business' : 'Activate Business'}
                         </button>
-                    )}
-                    <button
-                        onClick={handleToggleActive}
-                        className={`${business.is_active ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'} text-white px-4 py-2 rounded-md`}
-                    >
-                        {business.is_active ? 'Suspend Business' : 'Activate Business'}
-                    </button>
+                    </div>
                 </div>
-            </div>
+            )}
 
             {/* Business Information */}
             <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-6">

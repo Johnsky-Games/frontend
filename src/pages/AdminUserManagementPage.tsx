@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/ApiService';
 import Swal from 'sweetalert2';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import { usePermissions } from '../hooks/usePermissions';
+import AccessDenied from '../components/AccessDenied';
 
 interface User {
   id: number;
@@ -23,6 +25,11 @@ const AdminUserManagementPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<number | null>(null);
+
+  const { hasPermission, isMainAdmin } = usePermissions();
+
   const [pagination, setPagination] = useState({
     total: 0,
     limit: 10,
@@ -48,17 +55,16 @@ const AdminUserManagementPage: React.FC = () => {
 
   // Initial load
   useEffect(() => {
-    if (user?.role === 'admin') {
+    if (isMainAdmin() || hasPermission('view_users')) {
       fetchUsers(true);
     } else {
       setLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, []);
 
   // Fetch on filter/pagination change
   useEffect(() => {
-    if (user?.role === 'admin' && !loading) {
+    if ((isMainAdmin() || hasPermission('view_users')) && !loading) {
       fetchUsers(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -199,15 +205,24 @@ const AdminUserManagementPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex justify-center items-center h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
-  if (!user || user.role !== 'admin') {
-    return <Navigate to="/login" replace />;
+  if (!isMainAdmin() && !hasPermission('view_users')) {
+    return <AccessDenied requiredPermission="view_users" />;
   }
+
+  // The original check for user.role !== 'admin' is now covered by the usePermissions hook.
+  // If a non-admin user somehow reaches here without 'view_users' permission, AccessDenied will handle it.
+  // If they have 'view_users' but are not an admin, they are allowed to view.
+  // If the user object itself is null (not logged in), useAuth should redirect or prevent access earlier.
+  // However, if we want to explicitly redirect to login for *any* non-admin, non-permissioned user,
+  // we can keep a modified version of the original check.
+  // For now, based on the instruction, the AccessDenied component is the primary gate.
+  // The instruction removed the original `if (!user || user.role !== 'admin')` block, so I will remove it.
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">

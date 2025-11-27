@@ -5,6 +5,8 @@ import {
     BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area
 } from 'recharts';
 import { Download, Users, Building, CreditCard, TrendingUp, Calendar, CheckCircle, AlertCircle, Activity } from 'lucide-react';
+import { usePermissions } from '../hooks/usePermissions';
+import AccessDenied from '../components/AccessDenied';
 
 interface SystemOverview {
     total_users: number;
@@ -62,8 +64,14 @@ const AdminReportsPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [period, setPeriod] = useState('30_days');
 
+    const { hasPermission, isMainAdmin } = usePermissions();
+
     useEffect(() => {
-        fetchAllData();
+        if (isMainAdmin() || hasPermission('view_reports')) {
+            fetchAllData();
+        } else {
+            setLoading(false);
+        }
     }, [period]);
 
     const fetchAllData = async () => {
@@ -189,12 +197,16 @@ const AdminReportsPage: React.FC = () => {
 
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
-    if (loading && !overview) {
+    if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
             </div>
         );
+    }
+
+    if (!isMainAdmin() && !hasPermission('view_reports')) {
+        return <AccessDenied requiredPermission="view_reports" />;
     }
 
     return (
@@ -398,31 +410,37 @@ const AdminReportsPage: React.FC = () => {
                                     cx="50%"
                                     cy="50%"
                                     outerRadius={80}
+                                    fill="#8884d8"
                                     dataKey="count"
                                     nameKey="plan_type"
-                                    label={({ name, percent }) => `${name} ${percent ? (percent * 100).toFixed(0) : 0}%`}
+                                    label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
                                 >
                                     {subscriptionStats?.plan_distribution.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                 </Pie>
                                 <Tooltip />
+                                <Legend />
                             </PieChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
 
-                {/* Top Service Categories */}
+                {/* Service Categories */}
                 <div className="bg-white shadow rounded-lg p-6">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Top Categories</h3>
+                    <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Top Service Categories</h3>
                     <div className="h-64">
                         <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={serviceStats?.categories} layout="vertical">
+                            <BarChart
+                                layout="vertical"
+                                data={serviceStats?.categories.slice(0, 5)}
+                                margin={{ top: 5, right: 30, left: 40, bottom: 5 }}
+                            >
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis type="number" />
-                                <YAxis dataKey="category" type="category" width={100} />
+                                <YAxis type="category" dataKey="category" width={100} />
                                 <Tooltip />
-                                <Bar dataKey="count" fill="#8884d8" radius={[0, 4, 4, 0]} />
+                                <Bar dataKey="count" fill="#8884d8" name="Services" />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
@@ -431,54 +449,63 @@ const AdminReportsPage: React.FC = () => {
 
             {/* Top Businesses Tables */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Top by Revenue */}
+                {/* By Revenue */}
                 <div className="bg-white shadow rounded-lg overflow-hidden">
-                    <div className="px-4 py-5 sm:px-6 border-b border-gray-200 flex justify-between items-center">
+                    <div className="px-6 py-4 border-b border-gray-200">
                         <h3 className="text-lg leading-6 font-medium text-gray-900">Top Businesses by Revenue</h3>
-                        <CreditCard className="h-5 w-5 text-gray-400" />
                     </div>
-                    <ul className="divide-y divide-gray-200 max-h-96 overflow-y-auto">
-                        {topBusinesses.by_revenue.map((business, index) => (
-                            <li key={business.id} className="px-4 py-4 sm:px-6 flex items-center justify-between hover:bg-gray-50">
-                                <div className="flex items-center">
-                                    <span className={`flex-shrink-0 h-6 w-6 flex items-center justify-center rounded-full text-xs font-medium mr-3 ${index < 3 ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-500'
-                                        }`}>
-                                        {index + 1}
-                                    </span>
-                                    <span className="text-sm font-medium text-gray-900">{business.name}</span>
-                                </div>
-                                <span className="text-sm font-semibold text-gray-900">${business.total_paid?.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
-                            </li>
-                        ))}
-                    </ul>
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Business</th>
+                                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {topBusinesses.by_revenue.map((business, index) => (
+                                    <tr key={business.id}>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">#{index + 1}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{business.name}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-500">${business.total_paid?.toFixed(2)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
-                {/* Top by Rating */}
+                {/* By Rating */}
                 <div className="bg-white shadow rounded-lg overflow-hidden">
-                    <div className="px-4 py-5 sm:px-6 border-b border-gray-200 flex justify-between items-center">
+                    <div className="px-6 py-4 border-b border-gray-200">
                         <h3 className="text-lg leading-6 font-medium text-gray-900">Top Rated Businesses</h3>
-                        <CheckCircle className="h-5 w-5 text-gray-400" />
                     </div>
-                    <ul className="divide-y divide-gray-200 max-h-96 overflow-y-auto">
-                        {topBusinesses.by_rating.map((business, index) => (
-                            <li key={business.id} className="px-4 py-4 sm:px-6 flex items-center justify-between hover:bg-gray-50">
-                                <div className="flex items-center">
-                                    <span className={`flex-shrink-0 h-6 w-6 flex items-center justify-center rounded-full text-xs font-medium mr-3 ${index < 3 ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-500'
-                                        }`}>
-                                        {index + 1}
-                                    </span>
-                                    <span className="text-sm font-medium text-gray-900">{business.name}</span>
-                                </div>
-                                <div className="flex items-center">
-                                    <div className="flex items-center bg-green-100 px-2 py-0.5 rounded-full">
-                                        <span className="text-sm font-bold text-green-800 mr-1">{Number(business.average_rating).toFixed(1)}</span>
-                                        <span className="text-xs text-green-600">★</span>
-                                    </div>
-                                    <span className="text-xs text-gray-500 ml-2">({business.review_count} reviews)</span>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Business</th>
+                                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {topBusinesses.by_rating.map((business, index) => (
+                                    <tr key={business.id}>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">#{index + 1}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{business.name}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-500">
+                                            <div className="flex items-center justify-end">
+                                                <span className="mr-1">{business.average_rating?.toFixed(1)}</span>
+                                                <span className="text-xs text-gray-400">({business.review_count})</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

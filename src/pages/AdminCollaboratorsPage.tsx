@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ApiService from '../services/ApiService';
 import { UserPlus, Shield, Edit, Trash2, Key, X, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import { usePermissions } from '../hooks/usePermissions';
+import AccessDenied from '../components/AccessDenied';
 
 interface Collaborator {
     id: number;
@@ -29,6 +31,7 @@ const AdminCollaboratorsPage: React.FC = () => {
     const [showPermissionsModal, setShowPermissionsModal] = useState(false);
     const [selectedCollaborator, setSelectedCollaborator] = useState<number | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [collaboratorToDelete, setCollaboratorToDelete] = useState<number | null>(null);
 
     // Create form state
     const [formData, setFormData] = useState({
@@ -37,8 +40,14 @@ const AdminCollaboratorsPage: React.FC = () => {
         permissions: [] as string[]
     });
 
+    const { hasPermission, isMainAdmin } = usePermissions();
+
     useEffect(() => {
-        fetchCollaborators();
+        if (isMainAdmin() || hasPermission('manage_collaborators')) {
+            fetchCollaborators();
+        } else {
+            setLoading(false);
+        }
     }, []);
 
     const fetchCollaborators = async () => {
@@ -87,12 +96,14 @@ const AdminCollaboratorsPage: React.FC = () => {
     };
 
     const handleDeleteCollaborator = async (id: number) => {
-        if (!window.confirm('Are you sure you want to delete this collaborator?')) {
-            return;
-        }
+        setCollaboratorToDelete(id);
+    };
+
+    const confirmDelete = async () => {
+        if (!collaboratorToDelete) return;
 
         try {
-            await ApiService.delete(`/admin/collaborators/${id}`);
+            await ApiService.delete(`/admin/collaborators/${collaboratorToDelete}`);
             fetchCollaborators();
             toast.success('🗑️ Collaborator deleted successfully', {
                 autoClose: 3000
@@ -102,10 +113,15 @@ const AdminCollaboratorsPage: React.FC = () => {
             toast.error('❌ Failed to delete collaborator', {
                 autoClose: 4000
             });
+        } finally {
+            setCollaboratorToDelete(null);
         }
     };
 
     const handleManagePermissions = (collabId: number) => {
+        toast.info('🔑 Redirecting to permissions management...', {
+            autoClose: 2000
+        });
         navigate(`/admin/collaborators/${collabId}/permissions`);
     };
 
@@ -128,6 +144,10 @@ const AdminCollaboratorsPage: React.FC = () => {
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
             </div>
         );
+    }
+
+    if (!isMainAdmin() && !hasPermission('manage_collaborators')) {
+        return <AccessDenied requiredPermission="manage_collaborators" />;
     }
 
     return (
@@ -335,6 +355,42 @@ const AdminCollaboratorsPage: React.FC = () => {
                     </div>
                 </div>
             )}
+
+            {/* Delete Confirmation Modal */}
+            {collaboratorToDelete && (
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+                    <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+                        <div className="flex items-center mb-4">
+                            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-3">
+                                <Trash2 className="h-6 w-6 text-red-600" />
+                            </div>
+                            <h3 className="text-lg font-semibold text-gray-900">Delete Collaborator</h3>
+                        </div>
+
+                        <p className="text-sm text-gray-600 mb-6">
+                            Are you sure you want to delete this collaborator? This action cannot be undone.
+                        </p>
+
+                        <div className="flex justify-end space-x-3">
+                            <button
+                                onClick={() => setCollaboratorToDelete(null)}
+                                className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={confirmDelete}
+                                className="px-4 py-2 bg-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Toast Notifications */}
+            <ToastContainer />
         </div>
     );
 };
