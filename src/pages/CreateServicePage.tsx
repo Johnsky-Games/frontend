@@ -130,7 +130,7 @@ const CreateServicePage: React.FC = () => {
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
-                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                                 placeholder="e.g., Haircut, Manicure, Massage"
                             />
                         </div>
@@ -146,7 +146,7 @@ const CreateServicePage: React.FC = () => {
                                 value={formData.description}
                                 onChange={handleChange}
                                 rows={4}
-                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                                 placeholder="Describe your service..."
                             />
                         </div>
@@ -165,7 +165,7 @@ const CreateServicePage: React.FC = () => {
                                     onChange={handleChange}
                                     required
                                     min="1"
-                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                                     placeholder="30"
                                 />
                             </div>
@@ -183,7 +183,7 @@ const CreateServicePage: React.FC = () => {
                                     required
                                     min="0"
                                     step="0.01"
-                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                                     placeholder="25.00"
                                 />
                             </div>
@@ -199,7 +199,7 @@ const CreateServicePage: React.FC = () => {
                                 name="category"
                                 value={formData.category}
                                 onChange={handleChange}
-                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                             >
                                 <option value="">Select a category</option>
                                 <option value="hair">Hair Services</option>
@@ -226,7 +226,7 @@ const CreateServicePage: React.FC = () => {
                                         name="service_image"
                                         accept="image/*"
                                         onChange={handleImageChange}
-                                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
                                     />
                                     <p className="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                                 </div>
@@ -250,7 +250,7 @@ const CreateServicePage: React.FC = () => {
                                 name="is_active"
                                 checked={formData.is_active}
                                 onChange={handleChange}
-                                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                             />
                             <label htmlFor="is_active" className="ml-2 block text-sm text-gray-900">
                                 Service is active and available for booking
@@ -263,14 +263,14 @@ const CreateServicePage: React.FC = () => {
                         <button
                             type="button"
                             onClick={() => navigate('/business-owner/services')}
-                            className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
                             disabled={loading}
-                            className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loading ? 'Creating...' : 'Create Service'}
                         </button>

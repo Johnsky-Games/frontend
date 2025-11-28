@@ -151,7 +151,7 @@ const ClientAppointmentsPage: React.FC = () => {
             <div className="mt-4">
               <button
                 onClick={fetchAppointments}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 Retry
               </button>
@@ -181,7 +181,7 @@ const ClientAppointmentsPage: React.FC = () => {
               name="status"
               value={filters.status}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             >
               <option value="">All Statuses</option>
               <option value="scheduled">Scheduled</option>
@@ -201,7 +201,7 @@ const ClientAppointmentsPage: React.FC = () => {
               name="date_from"
               value={filters.date_from}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             />
           </div>
           <div>
@@ -214,7 +214,7 @@ const ClientAppointmentsPage: React.FC = () => {
               name="date_to"
               value={filters.date_to}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             />
           </div>
           <div>
@@ -226,7 +226,7 @@ const ClientAppointmentsPage: React.FC = () => {
               name="business_id"
               value={filters.business_id}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             >
               <option value="">All Businesses</option>
               {/* Would be populated with user's businesses */}
@@ -236,7 +236,7 @@ const ClientAppointmentsPage: React.FC = () => {
         <div className="mt-4 flex justify-end">
           <button
             type="submit"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
           >
             Apply Filters
           </button>
@@ -251,12 +251,12 @@ const ClientAppointmentsPage: React.FC = () => {
               <li key={appointment.id}>
                 <div className="px-4 py-4 sm:px-6">
                   <div className="flex items-center justify-between">
-                    <div className="text-sm font-medium text-indigo-600 truncate">
+                    <div className="text-sm font-medium text-primary-600 truncate">
                       {appointment.service_name}
                     </div>
                     <div className={`ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${appointment.status === 'scheduled' ? 'bg-blue-100 text-blue-800' :
                       appointment.status === 'confirmed' ? 'bg-green-100 text-green-800' :
-                        appointment.status === 'completed' ? 'bg-indigo-100 text-indigo-800' :
+                        appointment.status === 'completed' ? 'bg-primary-100 text-primary-800' :
                           appointment.status === 'cancelled' ? 'bg-red-100 text-red-800' :
                             'bg-yellow-100 text-yellow-800'
                       }`}>
@@ -302,7 +302,7 @@ const ClientAppointmentsPage: React.FC = () => {
                       )}
                       <button
                         onClick={() => navigate(`/client/appointments/${appointment.id}`)}
-                        className="text-indigo-600 hover:text-indigo-900"
+                        className="text-primary-600 hover:text-primary-900"
                       >
                         View Details
                       </button>
@@ -322,7 +322,7 @@ const ClientAppointmentsPage: React.FC = () => {
             <div className="mt-6">
               <button
                 onClick={() => navigate('/businesses')}
-                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 Book an Appointment
               </button>

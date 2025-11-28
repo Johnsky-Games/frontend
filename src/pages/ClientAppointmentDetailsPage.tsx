@@ -109,7 +109,7 @@ const ClientAppointmentDetailsPage: React.FC = () => {
                         <div className="mt-4">
                             <button
                                 onClick={() => navigate('/client/appointments')}
-                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700"
                             >
                                 Back to Appointments
                             </button>
@@ -127,7 +127,7 @@ const ClientAppointmentDetailsPage: React.FC = () => {
                     <h2 className="text-xl font-medium text-gray-900">Appointment not found</h2>
                     <button
                         onClick={() => navigate('/client/appointments')}
-                        className="mt-4 text-indigo-600 hover:text-indigo-500"
+                        className="mt-4 text-primary-600 hover:text-primary-500"
                     >
                         Back to Appointments
                     </button>
@@ -140,7 +140,7 @@ const ClientAppointmentDetailsPage: React.FC = () => {
         switch (status) {
             case 'scheduled': return 'bg-blue-100 text-blue-800';
             case 'confirmed': return 'bg-green-100 text-green-800';
-            case 'completed': return 'bg-indigo-100 text-indigo-800';
+            case 'completed': return 'bg-primary-100 text-primary-800';
             case 'cancelled': return 'bg-red-100 text-red-800';
             case 'no_show': return 'bg-yellow-100 text-yellow-800';
             default: return 'bg-gray-100 text-gray-800';
@@ -204,13 +204,13 @@ const ClientAppointmentDetailsPage: React.FC = () => {
                                 )}
                                 <div className="mt-1 flex gap-4">
                                     {appointment.business_phone && (
-                                        <a href={`tel:${appointment.business_phone}`} className="text-indigo-600 hover:text-indigo-500 flex items-center text-xs">
+                                        <a href={`tel:${appointment.business_phone}`} className="text-primary-600 hover:text-primary-500 flex items-center text-xs">
                                             <Phone size={14} className="mr-1" /> Call
                                         </a>
                                     )}
                                     <button
                                         onClick={() => navigate(`/businesses/${appointment.business_id}`)}
-                                        className="text-indigo-600 hover:text-indigo-500 flex items-center text-xs"
+                                        className="text-primary-600 hover:text-primary-500 flex items-center text-xs"
                                     >
                                         View Profile
                                     </button>
@@ -226,7 +226,7 @@ const ClientAppointmentDetailsPage: React.FC = () => {
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                     <div className="flex items-center">
-                                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-semibold">
+                                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-primary-500 flex items-center justify-center text-white font-semibold">
                                             {appointment.staff_member_name.charAt(0).toUpperCase()}
                                         </div>
                                         <div className="ml-3">

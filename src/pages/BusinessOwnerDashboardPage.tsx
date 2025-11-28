@@ -65,7 +65,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
             <div className="mt-4">
               <button
                 onClick={fetchDashboardData}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 Retry
               </button>
@@ -108,7 +108,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
         <div className="bg-white overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+              <div className="flex-shrink-0 bg-primary-500 rounded-md p-3">
                 <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
@@ -190,7 +190,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
               <div className={`flex-shrink-0 rounded-md p-3 ${dashboardData?.stats?.subscription?.status === 'active' ? 'bg-purple-500' :
-                dashboardData?.stats?.subscription?.status === 'trial' ? 'bg-indigo-400' : 'bg-red-500'
+                dashboardData?.stats?.subscription?.status === 'trial' ? 'bg-primary-400' : 'bg-red-500'
                 }`}>
                 <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
@@ -414,10 +414,10 @@ const BusinessOwnerDashboardPage: React.FC = () => {
                 <li key={appointment.id}>
                   <div className="px-4 py-4 sm:px-6">
                     <div className="flex items-center justify-between">
-                      <div className="text-sm font-medium text-indigo-600 truncate">
+                      <div className="text-sm font-medium text-primary-600 truncate">
                         {appointment.client_name}
                       </div>
-                      <div className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                      <div className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
                         {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
                       </div>
                     </div>
@@ -460,8 +460,8 @@ const BusinessOwnerDashboardPage: React.FC = () => {
                   <div className="px-4 py-4 sm:px-6">
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
-                        <div className="bg-indigo-100 rounded-full p-2">
-                          <span className="text-indigo-800 font-medium">
+                        <div className="bg-primary-100 rounded-full p-2">
+                          <span className="text-primary-800 font-medium">
                             {client.name.charAt(0)}
                           </span>
                         </div>

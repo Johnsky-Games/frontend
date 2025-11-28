@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import ThemeToggle from './ThemeToggle';
+import UserAvatar from './UserAvatar';
+import { Menu, X, ChevronDown } from 'lucide-react';
 
 interface HeaderProps {
   title?: string;
@@ -13,15 +15,20 @@ const Header: React.FC<HeaderProps> = ({ title, showNav = true }) => {
   const { user, business, logout } = useAuth();
   const { theme, businessTheme } = useTheme();
   const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
+  const moreMenuRef = useRef<HTMLDivElement>(null);
 
-  // Apply business theme colors if available
-  React.useEffect(() => {
-    if (businessTheme) {
-      document.documentElement.style.setProperty('--color-primary-500', businessTheme.primary_color);
-      document.documentElement.style.setProperty('--color-secondary-500', businessTheme.secondary_color);
-      document.documentElement.style.setProperty('--color-accent-500', businessTheme.accent_color);
-    }
-  }, [businessTheme]);
+  // Close More menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (moreMenuRef.current && !moreMenuRef.current.contains(event.target as Node)) {
+        setIsMoreMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Determine active nav item based on current location
   const isActive = (path: string) => location.pathname === path;
@@ -63,8 +70,13 @@ const Header: React.FC<HeaderProps> = ({ title, showNav = true }) => {
 
   const navigationItems = getNavigationItems();
 
+  // Split items for desktop view (show 5, hide rest)
+  const VISIBLE_ITEMS_COUNT = 5;
+  const visibleNavItems = navigationItems.slice(0, VISIBLE_ITEMS_COUNT);
+  const overflowNavItems = navigationItems.slice(VISIBLE_ITEMS_COUNT);
+
   return (
-    <header className="bg-white dark:bg-gray-800 shadow">
+    <header className="bg-white dark:bg-gray-800 shadow sticky top-0 z-50 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top bar with logo and theme toggle */}
         <div className="flex justify-between h-16">
@@ -84,56 +96,101 @@ const Header: React.FC<HeaderProps> = ({ title, showNav = true }) => {
                       user.role === 'client' ? '/client/dashboard' :
                         '/dashboard'
                 ) : "/"}
-                className="text-xl font-bold text-primary-600 dark:text-primary-400"
+                className="text-xl font-bold text-primary-600 dark:text-primary-400 whitespace-nowrap"
               >
                 {business?.name && user?.role === 'business_owner' ? business.name : 'BeautySalon'}
               </Link>
             </div>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - Standard + More Dropdown */}
             {showNav && user && (
-              <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                {navigationItems.map((item) => (
+              <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
+                {visibleNavItems.map((item) => (
                   <Link
                     key={item.href}
                     to={item.href}
                     className={`${isActive(item.href)
                       ? 'border-primary-500 text-gray-900 dark:text-gray-100'
                       : 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300'
-                      } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                      } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200`}
                   >
                     {item.name}
                   </Link>
                 ))}
+
+                {/* "More" Dropdown for overflow items */}
+                {overflowNavItems.length > 0 && (
+                  <div className="relative flex items-center" ref={moreMenuRef}>
+                    <button
+                      onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
+                      className={`border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 focus:outline-none ${isMoreMenuOpen ? 'text-gray-900 dark:text-gray-100' : ''}`}
+                    >
+                      More <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isMoreMenuOpen ? 'transform rotate-180' : ''}`} />
+                    </button>
+
+                    {isMoreMenuOpen && (
+                      <div className="absolute top-full right-0 left-0 mt-1 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none z-50 animate-in fade-in zoom-in-95 duration-100">
+                        {overflowNavItems.map((item) => (
+                          <Link
+                            key={item.href}
+                            to={item.href}
+                            onClick={() => setIsMoreMenuOpen(false)}
+                            className={`${isActive(item.href)
+                              ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
+                              : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'
+                              } block px-4 py-2 text-sm transition-colors duration-150`}
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             )}
           </div>
 
           {/* Right side - profile and logout */}
-          <div className="flex items-center">
+          <div className="flex items-center flex-shrink-0 ml-4">
             {user && (
               <>
                 <ThemeToggle />
-                <div className="ml-3 relative">
+                <div className="ml-3 relative hidden sm:block">
                   <div>
                     <button
-                      className="max-w-xs flex items-center text-sm rounded-full focus:outline-none"
+                      className="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                     >
                       <span className="sr-only">Open user menu</span>
-                      <div className="h-8 w-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-                        <span className="text-primary-800 dark:text-primary-200 font-medium">
-                          {user.name?.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
+                      <UserAvatar
+                        name={user.name}
+                        avatar={user.avatar}
+                        size="sm"
+                      />
                     </button>
                   </div>
                 </div>
                 <button
                   onClick={logout}
-                  className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+                  className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 hidden sm:block transition-colors duration-200"
                 >
                   Logout
                 </button>
+
+                {/* Mobile menu button (Visible up to LG) */}
+                <div className="flex items-center lg:hidden ml-4">
+                  <button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 transition-colors duration-200"
+                  >
+                    <span className="sr-only">Open main menu</span>
+                    {isMobileMenuOpen ? (
+                      <X className="block h-6 w-6" aria-hidden="true" />
+                    ) : (
+                      <Menu className="block h-6 w-6" aria-hidden="true" />
+                    )}
+                  </button>
+                </div>
               </>
             )}
 
@@ -142,13 +199,13 @@ const Header: React.FC<HeaderProps> = ({ title, showNav = true }) => {
               <div className="flex items-center">
                 <Link
                   to="/login"
-                  className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
+                  className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 transition-colors duration-200"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                  className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200"
                 >
                   Sign Up
                 </Link>
@@ -157,22 +214,48 @@ const Header: React.FC<HeaderProps> = ({ title, showNav = true }) => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {showNav && user && (
-          <div className="sm:hidden">
-            <div className="pt-2 pb-3 space-y-1">
+        {/* Mobile Navigation Menu */}
+        {showNav && user && isMobileMenuOpen && (
+          <div className="lg:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 absolute w-full shadow-lg z-50 left-0 right-0">
+            <div className="pt-2 pb-3 space-y-1 px-2">
               {navigationItems.map((item) => (
                 <Link
                   key={item.href}
                   to={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className={`${isActive(item.href)
-                    ? 'bg-indigo-50 border-indigo-500 text-indigo-700'
-                    : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'
-                    } block pl-3 pr-4 py-2 border-l-4 text-base font-medium`}
+                    ? 'bg-primary-50 border-primary-500 text-primary-700 dark:bg-primary-900/20 dark:text-primary-300'
+                    : 'border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-800 dark:hover:text-gray-100'
+                    } block pl-3 pr-4 py-3 border-l-4 text-base font-medium transition-colors duration-200 rounded-r-md`}
                 >
                   {item.name}
                 </Link>
               ))}
+
+              {/* Mobile Profile Section */}
+              <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700 mt-4">
+                <div className="flex items-center px-4">
+                  <div className="flex-shrink-0">
+                    <UserAvatar
+                      name={user.name}
+                      avatar={user.avatar}
+                      size="md"
+                    />
+                  </div>
+                  <div className="ml-3">
+                    <div className="text-base font-medium text-gray-800 dark:text-gray-200">{user.name}</div>
+                    <div className="text-sm font-medium text-gray-500 dark:text-gray-400">{user.email}</div>
+                  </div>
+                </div>
+                <div className="mt-3 space-y-1">
+                  <button
+                    onClick={logout}
+                    className="block w-full text-left px-4 py-2 text-base font-medium text-red-600 hover:text-red-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}

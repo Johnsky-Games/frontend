@@ -147,7 +147,7 @@ const BusinessOwnerAppointmentsPage: React.FC = () => {
             <div className="mt-4">
               <button
                 onClick={fetchAppointments}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 Retry
               </button>
@@ -177,7 +177,7 @@ const BusinessOwnerAppointmentsPage: React.FC = () => {
               name="status"
               value={filters.status}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             >
               <option value="">All Statuses</option>
               <option value="scheduled">Scheduled</option>
@@ -197,7 +197,7 @@ const BusinessOwnerAppointmentsPage: React.FC = () => {
               name="date_from"
               value={filters.date_from}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             />
           </div>
           <div>
@@ -210,7 +210,7 @@ const BusinessOwnerAppointmentsPage: React.FC = () => {
               name="date_to"
               value={filters.date_to}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             />
           </div>
           <div>
@@ -224,14 +224,14 @@ const BusinessOwnerAppointmentsPage: React.FC = () => {
               value={filters.search}
               onChange={handleFilterChange}
               placeholder="Search by client name"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             />
           </div>
         </form>
         <div className="mt-4 flex justify-end">
           <button
             type="submit"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
           >
             Apply Filters
           </button>
@@ -287,7 +287,7 @@ const BusinessOwnerAppointmentsPage: React.FC = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${appointment.status === 'scheduled' ? 'bg-blue-100 text-blue-800' :
                       appointment.status === 'confirmed' ? 'bg-green-100 text-green-800' :
-                        appointment.status === 'completed' ? 'bg-indigo-100 text-indigo-800' :
+                        appointment.status === 'completed' ? 'bg-primary-100 text-primary-800' :
                           appointment.status === 'cancelled' ? 'bg-red-100 text-red-800' :
                             'bg-yellow-100 text-yellow-800'
                       }`}>
@@ -303,7 +303,7 @@ const BusinessOwnerAppointmentsPage: React.FC = () => {
                       onChange={(e) => handleStatusChange(appointment.id, e.target.value)}
                       className={`rounded border px-2 py-1 text-sm ${appointment.status === 'scheduled' ? 'bg-blue-100 border-blue-300' :
                         appointment.status === 'confirmed' ? 'bg-green-100 border-green-300' :
-                          appointment.status === 'completed' ? 'bg-indigo-100 border-indigo-300' :
+                          appointment.status === 'completed' ? 'bg-primary-100 border-primary-300' :
                             appointment.status === 'cancelled' ? 'bg-red-100 border-red-300' :
                               'bg-yellow-100 border-yellow-300'
                         }`}

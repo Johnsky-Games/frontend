@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import api from '../services/ApiService';
 import BusinessHoursEditor from '../components/BusinessHoursEditor';
 import SpecialHoursEditor from '../components/SpecialHoursEditor';
 
 const BusinessProfilePage: React.FC = () => {
   const { business, user, refreshBusiness } = useAuth();
+  const { setBusinessTheme } = useTheme();
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -304,6 +306,36 @@ const BusinessProfilePage: React.FC = () => {
     }
   };
 
+  const handleThemeUpdate = async () => {
+    if (!business) return;
+
+    try {
+      const response = await api.patch(`/businesses/${business.id}/theme`, {
+        primary_color: formData.primary_color,
+        secondary_color: formData.secondary_color,
+        accent_color: formData.accent_color
+      });
+
+      if (response.data.code === 'SUCCESS') {
+        toast.success('Theme updated successfully!');
+
+        // Apply theme immediately
+        setBusinessTheme({
+          primary_color: formData.primary_color,
+          secondary_color: formData.secondary_color,
+          accent_color: formData.accent_color,
+          theme_mode: formData.theme_mode
+        });
+
+        // Refresh business data
+        await refreshBusiness();
+      }
+    } catch (error: any) {
+      console.error('Update theme error:', error);
+      toast.error(error.response?.data?.message || 'Failed to update theme');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -462,7 +494,7 @@ const BusinessProfilePage: React.FC = () => {
                         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                       <div className="flex text-sm text-gray-600">
-                        <label htmlFor="logo-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                        <label htmlFor="logo-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500">
                           <span>Upload a file</span>
                           <input
                             id="logo-upload"
@@ -485,7 +517,7 @@ const BusinessProfilePage: React.FC = () => {
                       type="button"
                       onClick={handleLogoUpload}
                       disabled={uploadingLogo}
-                      className="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                      className="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
                     >
                       {uploadingLogo ? 'Uploading...' : 'Upload Logo'}
                     </button>
@@ -529,7 +561,7 @@ const BusinessProfilePage: React.FC = () => {
                         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                       <div className="flex text-sm text-gray-600">
-                        <label htmlFor="cover-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                        <label htmlFor="cover-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500">
                           <span>Upload a file</span>
                           <input
                             id="cover-upload"
@@ -552,7 +584,7 @@ const BusinessProfilePage: React.FC = () => {
                       type="button"
                       onClick={handleCoverImageUpload}
                       disabled={uploadingCoverImage}
-                      className="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                      className="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
                     >
                       {uploadingCoverImage ? 'Uploading...' : 'Upload Cover Image'}
                     </button>
@@ -585,7 +617,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -601,7 +633,7 @@ const BusinessProfilePage: React.FC = () => {
                             rows={3}
                             value={formData.description}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -627,7 +659,7 @@ const BusinessProfilePage: React.FC = () => {
                             type="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -643,7 +675,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="phone"
                             value={formData.phone}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -660,7 +692,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.whatsapp_number}
                             onChange={handleChange}
                             placeholder="+1234567890"
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -677,7 +709,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.website_url}
                             onChange={handleChange}
                             placeholder="https://example.com"
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -704,7 +736,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.facebook_url}
                             onChange={handleChange}
                             placeholder="https://facebook.com/..."
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -721,7 +753,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.instagram_url}
                             onChange={handleChange}
                             placeholder="https://instagram.com/..."
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -738,7 +770,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.twitter_url}
                             onChange={handleChange}
                             placeholder="https://x.com/..."
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -755,7 +787,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.linkedin_url}
                             onChange={handleChange}
                             placeholder="https://linkedin.com/..."
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -772,7 +804,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.tiktok_url}
                             onChange={handleChange}
                             placeholder="https://tiktok.com/@..."
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -789,9 +821,98 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.youtube_url}
                             onChange={handleChange}
                             placeholder="https://youtube.com/@..."
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-8">
+                    <div>
+                      <h3 className="text-lg leading-6 font-medium text-gray-900">Theme Customization</h3>
+                      <p className="mt-1 text-sm text-gray-500">
+                        Configure your business brand colors. These colors will be applied throughout your business profile.
+                      </p>
+                    </div>
+                    <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                      <div className="sm:col-span-2">
+                        <label htmlFor="primary_color" className="block text-sm font-medium text-gray-700">
+                          Primary Color
+                        </label>
+                        <div className="mt-1 flex items-center space-x-3">
+                          <input
+                            type="color"
+                            name="primary_color"
+                            id="primary_color"
+                            value={formData.primary_color}
+                            onChange={handleChange}
+                            className="h-10 w-20 rounded border border-gray-300 cursor-pointer"
+                          />
+                          <input
+                            type="text"
+                            value={formData.primary_color}
+                            onChange={(e) => setFormData(prev => ({ ...prev, primary_color: e.target.value }))}
+                            className="flex-1 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+                        <p className="mt-1 text-xs text-gray-500">Main brand color</p>
+                      </div>
+
+                      <div className="sm:col-span-2">
+                        <label htmlFor="secondary_color" className="block text-sm font-medium text-gray-700">
+                          Secondary Color
+                        </label>
+                        <div className="mt-1 flex items-center space-x-3">
+                          <input
+                            type="color"
+                            name="secondary_color"
+                            id="secondary_color"
+                            value={formData.secondary_color}
+                            onChange={handleChange}
+                            className="h-10 w-20 rounded border border-gray-300 cursor-pointer"
+                          />
+                          <input
+                            type="text"
+                            value={formData.secondary_color}
+                            onChange={(e) => setFormData(prev => ({ ...prev, secondary_color: e.target.value }))}
+                            className="flex-1 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+                        <p className="mt-1 text-xs text-gray-500">Complementary color</p>
+                      </div>
+
+                      <div className="sm:col-span-2">
+                        <label htmlFor="accent_color" className="block text-sm font-medium text-gray-700">
+                          Accent Color
+                        </label>
+                        <div className="mt-1 flex items-center space-x-3">
+                          <input
+                            type="color"
+                            name="accent_color"
+                            id="accent_color"
+                            value={formData.accent_color}
+                            onChange={handleChange}
+                            className="h-10 w-20 rounded border border-gray-300 cursor-pointer"
+                          />
+                          <input
+                            type="text"
+                            value={formData.accent_color}
+                            onChange={(e) => setFormData(prev => ({ ...prev, accent_color: e.target.value }))}
+                            className="flex-1 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+                        <p className="mt-1 text-xs text-gray-500">Highlight color</p>
+                      </div>
+
+                      <div className="sm:col-span-6">
+                        <button
+                          type="button"
+                          onClick={handleThemeUpdate}
+                          className="inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                        >
+                          Apply Theme Colors
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -815,7 +936,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="address"
                             value={formData.address}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -831,7 +952,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="city"
                             value={formData.city}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -847,7 +968,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="state"
                             value={formData.state}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -863,7 +984,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="zip_code"
                             value={formData.zip_code}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -880,7 +1001,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="latitude"
                             value={formData.latitude}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -897,7 +1018,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="longitude"
                             value={formData.longitude}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
                       </div>
@@ -914,7 +1035,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.map_url}
                             onChange={handleChange}
                             placeholder="https://goo.gl/maps/..."
-                            className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-l-md sm:text-sm border-gray-300"
+                            className="flex-1 focus:ring-primary-500 focus:border-primary-500 block w-full min-w-0 rounded-none rounded-l-md sm:text-sm border-gray-300"
                           />
                           <a
                             href={formData.map_url || '#'}
@@ -938,7 +1059,7 @@ const BusinessProfilePage: React.FC = () => {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                     >
                       {loading ? 'Saving...' : 'Save Changes'}
                     </button>

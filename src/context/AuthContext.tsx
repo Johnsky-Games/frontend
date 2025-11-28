@@ -2,6 +2,21 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { useNavigate } from 'react-router-dom';
 import api from '../services/ApiService';
 
+// Helper function to save business theme
+const saveBusinessTheme = (business: any) => {
+  if (business && business.primary_color) {
+    const themeData = {
+      primary_color: business.primary_color,
+      secondary_color: business.secondary_color,
+      accent_color: business.accent_color,
+      theme_mode: business.theme_mode
+    };
+    localStorage.setItem('businessTheme', JSON.stringify(themeData));
+    // Trigger a storage event to notify ThemeContext
+    window.dispatchEvent(new Event('business-theme-updated'));
+  }
+};
+
 interface User {
   id: number;
   name: string;
@@ -107,6 +122,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(user);
         if (business) {
           setBusiness(business);
+          saveBusinessTheme(business);
         }
       }
     } catch (error) {
@@ -141,8 +157,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(user);
         setBusiness(business || null);
 
-        setUser(user);
-        setBusiness(business || null);
+        // Apply business theme if available
+        if (business) {
+          saveBusinessTheme(business);
+        }
 
         // navigate('/dashboard'); // Removed to let caller handle navigation
 

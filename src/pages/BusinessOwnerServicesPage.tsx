@@ -163,7 +163,7 @@ const BusinessOwnerServicesPage: React.FC = () => {
             <div className="mt-4">
               <button
                 onClick={fetchServices}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700"
               >
                 Retry
               </button>
@@ -184,7 +184,7 @@ const BusinessOwnerServicesPage: React.FC = () => {
         </div>
         <button
           onClick={() => navigate('/business-owner/services/create')}
-          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
         >
           + Create New Service
         </button>
@@ -197,7 +197,7 @@ const BusinessOwnerServicesPage: React.FC = () => {
             name="category"
             value={filters.category}
             onChange={handleFilterChange}
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
           >
             <option value="">All Categories</option>
             <option value="hair">Hair Services</option>
@@ -213,7 +213,7 @@ const BusinessOwnerServicesPage: React.FC = () => {
             name="is_active"
             value={filters.is_active}
             onChange={handleFilterChange}
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
           >
             <option value="">All Statuses</option>
             <option value="true">Active</option>
@@ -225,7 +225,7 @@ const BusinessOwnerServicesPage: React.FC = () => {
             value={filters.search}
             onChange={handleFilterChange}
             placeholder="Search services..."
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
           />
         </div>
       </div>
@@ -271,7 +271,7 @@ const BusinessOwnerServicesPage: React.FC = () => {
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleEditService(service.id)}
-                    className="flex-1 bg-indigo-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors"
+                    className="flex-1 bg-primary-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-primary-700 transition-colors"
                   >
                     Edit
                   </button>
@@ -300,7 +300,7 @@ const BusinessOwnerServicesPage: React.FC = () => {
             <p className="text-gray-500">No services found</p>
             <button
               onClick={() => navigate('/business-owner/services/create')}
-              className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
+              className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200"
             >
               + Create your first service
             </button>

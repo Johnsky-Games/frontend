@@ -107,7 +107,7 @@ const BusinessOwnerClientProfilePage: React.FC = () => {
           <p className="text-gray-500">Client not found</p>
           <button
             onClick={() => navigate('/business-owner/clients')}
-            className="mt-4 text-indigo-600 hover:text-indigo-500"
+            className="mt-4 text-primary-600 hover:text-primary-500"
           >
             ← Back to Clients
           </button>
@@ -138,8 +138,8 @@ const BusinessOwnerClientProfilePage: React.FC = () => {
               {client.avatar ? (
                 <img className="h-20 w-20 rounded-full" src={client.avatar} alt={client.name} />
               ) : (
-                <div className="bg-indigo-100 rounded-full h-20 w-20 flex items-center justify-center">
-                  <span className="text-indigo-800 font-medium text-2xl">
+                <div className="bg-primary-100 rounded-full h-20 w-20 flex items-center justify-center">
+                  <span className="text-primary-800 font-medium text-2xl">
                     {client.name ? client.name.charAt(0).toUpperCase() : '?'}
                   </span>
                 </div>
@@ -165,7 +165,7 @@ const BusinessOwnerClientProfilePage: React.FC = () => {
             <div className="flex space-x-3">
               <button
                 onClick={handleSendMessage}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 Send Message
               </button>

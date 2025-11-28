@@ -132,7 +132,7 @@ const StaffDashboardPage: React.FC = () => {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
             </div>
         );
     }
@@ -155,14 +155,14 @@ const StaffDashboardPage: React.FC = () => {
                                     className="h-16 w-16 rounded-lg object-cover shadow-md border border-gray-100"
                                 />
                             ) : (
-                                <div className="h-16 w-16 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-2xl shadow-md">
+                                <div className="h-16 w-16 rounded-lg bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white font-bold text-2xl shadow-md">
                                     {business?.name.charAt(0)}
                                 </div>
                             )}
                             <div className="ml-4">
                                 <h1 className="text-2xl font-bold text-gray-900">{business?.name}</h1>
                                 <div className="flex items-center text-sm text-gray-500 mt-1">
-                                    <span className="font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full mr-2">
+                                    <span className="font-medium text-primary-600 bg-primary-50 px-2 py-0.5 rounded-full mr-2">
                                         {staff.job_title}
                                     </span>
                                     <span>Welcome back, {user?.name}</span>
@@ -179,7 +179,7 @@ const StaffDashboardPage: React.FC = () => {
                             </div>
                             <Link
                                 to="/staff/appointments"
-                                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
                             >
                                 <Calendar className="mr-2 h-4 w-4" />
                                 My Schedule
@@ -195,7 +195,7 @@ const StaffDashboardPage: React.FC = () => {
                     {/* Today's Performance */}
                     <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-4 opacity-10">
-                            <Activity className="h-24 w-24 text-indigo-600" />
+                            <Activity className="h-24 w-24 text-primary-600" />
                         </div>
                         <div className="relative z-10">
                             <p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Today's Focus</p>
@@ -209,7 +209,7 @@ const StaffDashboardPage: React.FC = () => {
                                     {today.completed} Done
                                 </span>
                                 <span className="mx-2 text-gray-300">|</span>
-                                <span className="text-indigo-600 font-medium">
+                                <span className="text-primary-600 font-medium">
                                     ${Number(today.revenue).toFixed(0)} Earned
                                 </span>
                             </div>
@@ -255,7 +255,7 @@ const StaffDashboardPage: React.FC = () => {
                     </div>
 
                     {/* Total Clients/Impact */}
-                    <div className="bg-gradient-to-br from-purple-600 to-indigo-700 rounded-xl shadow-sm p-6 text-white relative overflow-hidden">
+                    <div className="bg-gradient-to-br from-purple-600 to-primary-700 rounded-xl shadow-sm p-6 text-white relative overflow-hidden">
                         <div className="relative z-10">
                             <p className="text-sm font-medium text-purple-100 uppercase tracking-wider">Monthly Impact</p>
                             <p className="mt-2 text-3xl font-bold">{month.total}</p>
@@ -274,11 +274,11 @@ const StaffDashboardPage: React.FC = () => {
                 {/* Legacy Stats Grid (Restored by Request) */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     {/* Today's Stats */}
-                    <div className="bg-white overflow-hidden shadow-sm rounded-lg border-l-4 border-indigo-500">
+                    <div className="bg-white overflow-hidden shadow-sm rounded-lg border-l-4 border-primary-500">
                         <div className="px-4 py-5">
                             <div className="flex items-center">
                                 <div className="flex-shrink-0">
-                                    <Clock className="h-8 w-8 text-indigo-500" />
+                                    <Clock className="h-8 w-8 text-primary-500" />
                                 </div>
                                 <div className="ml-4">
                                     <div className="text-sm font-medium text-gray-500">Hoy</div>
@@ -351,7 +351,7 @@ const StaffDashboardPage: React.FC = () => {
                     <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="text-lg font-bold text-gray-900 flex items-center">
-                                <TrendingUp className="h-5 w-5 text-indigo-600 mr-2" />
+                                <TrendingUp className="h-5 w-5 text-primary-600 mr-2" />
                                 Activity & Revenue Trend
                             </h2>
                             <div className="text-sm text-gray-500">Last 7 Days</div>
@@ -417,7 +417,7 @@ const StaffDashboardPage: React.FC = () => {
                                     </div>
                                     <div className="w-full bg-gray-100 rounded-full h-2">
                                         <div
-                                            className="bg-indigo-500 h-2 rounded-full"
+                                            className="bg-primary-500 h-2 rounded-full"
                                             style={{ width: `${(service.count / top_services[0].count) * 100}%` }}
                                         ></div>
                                     </div>
@@ -440,7 +440,7 @@ const StaffDashboardPage: React.FC = () => {
                     <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                         <div className="px-6 py-5 border-b border-gray-100 flex justify-between items-center">
                             <h2 className="text-lg font-bold text-gray-900">Upcoming Appointments</h2>
-                            <Link to="/staff/appointments" className="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center">
+                            <Link to="/staff/appointments" className="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center">
                                 View All <ArrowRight className="h-4 w-4 ml-1" />
                             </Link>
                         </div>
@@ -450,7 +450,7 @@ const StaffDashboardPage: React.FC = () => {
                                     <div key={apt.id} className="p-6 hover:bg-gray-50 transition-colors">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center">
-                                                <div className="flex-shrink-0 h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-lg">
+                                                <div className="flex-shrink-0 h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-lg">
                                                     {apt.client_name.charAt(0)}
                                                 </div>
                                                 <div className="ml-4">
@@ -481,12 +481,12 @@ const StaffDashboardPage: React.FC = () => {
                         <h2 className="text-lg font-bold text-gray-900 mb-4">My Services</h2>
                         <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
                             {services.map((service) => (
-                                <div key={service.id} className="flex items-center p-3 rounded-lg border border-gray-100 hover:border-indigo-100 hover:bg-indigo-50 transition-all">
+                                <div key={service.id} className="flex items-center p-3 rounded-lg border border-gray-100 hover:border-primary-100 hover:bg-primary-50 transition-all">
                                     <div className="h-10 w-10 rounded-lg bg-gray-200 flex-shrink-0 overflow-hidden">
                                         {service.image ? (
                                             <img src={service.image} alt={service.name} className="h-full w-full object-cover" />
                                         ) : (
-                                            <div className="h-full w-full flex items-center justify-center bg-indigo-100 text-indigo-500">
+                                            <div className="h-full w-full flex items-center justify-center bg-primary-100 text-primary-500">
                                                 <Star className="h-5 w-5" />
                                             </div>
                                         )}

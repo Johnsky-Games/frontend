@@ -105,7 +105,7 @@ const SubscriptionPage: React.FC = () => {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
             </div>
         );
     }
@@ -180,7 +180,7 @@ const SubscriptionPage: React.FC = () => {
             {/* Plans Grid */}
             <div className="mt-12 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-3">
                 {plans.map((plan) => (
-                    <div key={plan.id} className={`border rounded-lg shadow-sm divide-y divide-gray-200 bg-white flex flex-col ${currentSubscription?.plan_id === plan.id ? 'ring-2 ring-indigo-500' : ''
+                    <div key={plan.id} className={`border rounded-lg shadow-sm divide-y divide-gray-200 bg-white flex flex-col ${currentSubscription?.plan_id === plan.id ? 'ring-2 ring-primary-500' : ''
                         }`}>
                         <div className="p-6">
                             <h2 className="text-lg leading-6 font-medium text-gray-900">{plan.name}</h2>
@@ -189,7 +189,7 @@ const SubscriptionPage: React.FC = () => {
                                 <span className="text-base font-medium text-gray-500">/{plan.duration_months === 1 ? 'mo' : 'yr'}</span>
                             </p>
                             {plan.trial_days > 0 && (
-                                <p className="mt-1 text-sm text-indigo-600 font-semibold">
+                                <p className="mt-1 text-sm text-primary-600 font-semibold">
                                     {plan.trial_days}-day free trial
                                 </p>
                             )}
@@ -197,8 +197,8 @@ const SubscriptionPage: React.FC = () => {
                                 onClick={() => handleSubscribe(plan.id)}
                                 disabled={processing || currentSubscription?.plan_id === plan.id}
                                 className={`mt-8 block w-full py-3 px-6 border border-transparent rounded-md text-center font-medium ${currentSubscription?.plan_id === plan.id
-                                    ? 'bg-indigo-50 text-indigo-700 cursor-default'
-                                    : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                                    ? 'bg-primary-50 text-primary-700 cursor-default'
+                                    : 'bg-primary-600 text-white hover:bg-primary-700'
                                     }`}
                             >
                                 {currentSubscription?.plan_id === plan.id ? 'Current Plan' : 'Select Plan'}

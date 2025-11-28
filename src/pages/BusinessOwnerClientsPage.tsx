@@ -132,7 +132,7 @@ const BusinessOwnerClientsPage: React.FC = () => {
             <div className="mt-4">
               <button
                 onClick={fetchClients}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 Retry
               </button>
@@ -162,7 +162,7 @@ const BusinessOwnerClientsPage: React.FC = () => {
               name="status"
               value={filters.status}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             >
               <option value="">All Statuses</option>
               <option value="active">Active</option>
@@ -180,7 +180,7 @@ const BusinessOwnerClientsPage: React.FC = () => {
               value={filters.search}
               onChange={handleFilterChange}
               placeholder="Search by name or email"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             />
           </div>
           <div>
@@ -192,7 +192,7 @@ const BusinessOwnerClientsPage: React.FC = () => {
               name="sort"
               value={filters.sort}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             >
               <option value="created_at_desc">Newest First</option>
               <option value="created_at_asc">Oldest First</option>
@@ -217,8 +217,8 @@ const BusinessOwnerClientsPage: React.FC = () => {
                         {client.avatar ? (
                           <img className="h-12 w-12 rounded-full" src={client.avatar} alt={client.name || 'Client'} />
                         ) : (
-                          <div className="bg-indigo-100 rounded-full h-12 w-12 flex items-center justify-center">
-                            <span className="text-indigo-800 font-medium">
+                          <div className="bg-primary-100 rounded-full h-12 w-12 flex items-center justify-center">
+                            <span className="text-primary-800 font-medium">
                               {client.name ? client.name.charAt(0).toUpperCase() : '?'}
                             </span>
                           </div>
@@ -252,13 +252,13 @@ const BusinessOwnerClientsPage: React.FC = () => {
                   <div className="mt-4 flex justify-end space-x-3">
                     <button
                       onClick={() => handleViewClientDetails(client.id)}
-                      className="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                     >
                       View Profile
                     </button>
                     <button
                       onClick={() => handleSendMessage(client.id)}
-                      className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                     >
                       Send Message
                     </button>

@@ -211,7 +211,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
             </div>
         );
     }
@@ -226,7 +226,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                 </div>
                 <button
                     onClick={() => handleOpenModal()}
-                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                 >
                     <Plus className="mr-2 h-5 w-5" />
                     Add Staff Member
@@ -242,7 +242,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                     <div className="mt-6">
                         <button
                             onClick={() => handleOpenModal()}
-                            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700"
                         >
                             <Plus className="mr-2 h-5 w-5" />
                             Add Staff Member
@@ -263,8 +263,8 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                                 alt={member.user_name}
                                             />
                                         ) : (
-                                            <div className="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center">
-                                                <User className="h-6 w-6 text-indigo-600" />
+                                            <div className="h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center">
+                                                <User className="h-6 w-6 text-primary-600" />
                                             </div>
                                         )}
                                     </div>
@@ -292,7 +292,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                             member.services.map(serviceId => {
                                                 const service = services.find(s => s.id === serviceId);
                                                 return service ? (
-                                                    <span key={serviceId} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-indigo-100 text-indigo-700">
+                                                    <span key={serviceId} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-primary-100 text-primary-700">
                                                         {service.name}
                                                     </span>
                                                 ) : null;
@@ -363,7 +363,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                                 type="email"
                                                 value={formData.email}
                                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                                                 required
                                                 disabled={!!editingStaff}
                                             />
@@ -385,7 +385,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                                     value={formData.name}
                                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                                     placeholder="e.g., John Doe"
-                                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                                                     required
                                                 />
                                                 <p className="mt-1 text-xs text-gray-500">
@@ -405,7 +405,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                                     value={formData.phone}
                                                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                                     placeholder="+1234567890"
-                                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                                                 />
                                             </div>
                                         )}
@@ -418,7 +418,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                                 value={formData.job_title}
                                                 onChange={(e) => setFormData({ ...formData, job_title: e.target.value })}
                                                 placeholder="e.g., Senior Stylist, Barber"
-                                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                                                 required
                                             />
                                         </div>
@@ -431,7 +431,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                                 onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                                                 rows={3}
                                                 placeholder="Brief description about this staff member..."
-                                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                                             />
                                         </div>
 
@@ -449,7 +449,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                                                     type="checkbox"
                                                                     checked={formData.services.includes(service.id)}
                                                                     onChange={() => handleServiceToggle(service.id)}
-                                                                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                                                    className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                                                                 />
                                                                 <span className="ml-2 text-sm text-gray-700">{service.name}</span>
                                                             </label>
@@ -464,14 +464,14 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                     <button
                                         type="submit"
-                                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary-600 text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:ml-3 sm:w-auto sm:text-sm"
                                     >
                                         {editingStaff ? 'Update' : 'Create'}
                                     </button>
                                     <button
                                         type="button"
                                         onClick={handleCloseModal}
-                                        className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                        className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                                     >
                                         Cancel
                                     </button>

@@ -2,22 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { useAuth } from '../context/AuthContext';
+import ApiService from '../services/ApiService';
 
 const UserProfilePage: React.FC = () => {
-  const { user, business } = useAuth();
+  const { user, business, updateUser } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     avatar: null as string | null
   });
-  
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
     newPassword: '',
     confirmNewPassword: ''
   });
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -103,14 +107,73 @@ const UserProfilePage: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // In a real app, you would save this to your backend
-    console.log('Saving user profile:', formData);
-    toast.success('Profile updated successfully!');
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please select an image file');
+        return;
+      }
+
+      // Validate file size (10MB max)
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error('Image size must be less than 10MB');
+        return;
+      }
+
+      setSelectedFile(file);
+
+      // Generate preview URL
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const handlePasswordSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      // First upload avatar if a file was selected
+      let avatarUrl = formData.avatar;
+      if (selectedFile) {
+        const formDataUpload = new FormData();
+        formDataUpload.append('avatar', selectedFile);
+
+        const uploadResponse = await ApiService.post('/auth/profile/avatar', formDataUpload, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+
+        if (uploadResponse.data.code === 'SUCCESS') {
+          avatarUrl = uploadResponse.data.data.avatar;
+          toast.success('Avatar uploaded successfully!');
+        }
+      }
+
+      // Then update other profile fields
+      await updateUser({
+        name: formData.name,
+        phone: formData.phone,
+        avatar: avatarUrl
+      });
+
+      // Clear selected file and preview after successful upload
+      setSelectedFile(null);
+      setPreviewUrl(null);
+
+      toast.success('Profile updated successfully!');
+    } catch (error: any) {
+      console.error('Error updating profile:', error);
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to update profile';
+      toast.error(errorMessage);
+    }
+  };
+
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (passwordData.newPassword !== passwordData.confirmNewPassword) {
@@ -123,16 +186,31 @@ const UserProfilePage: React.FC = () => {
       return;
     }
 
-    // In a real app, you would send this to your backend
-    console.log('Changing password:', passwordData);
-    toast.success('Password changed successfully!');
+    // Send to backend
+    try {
+      await ApiService.post('/auth/change-password', {
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword
+      });
 
-    // Reset form
-    setPasswordData({
-      currentPassword: '',
-      newPassword: '',
-      confirmNewPassword: ''
-    });
+      toast.success('Password changed successfully!');
+
+      // Reset form
+      setPasswordData({
+        currentPassword: '',
+        newPassword: '',
+        confirmNewPassword: ''
+      });
+    } catch (error: any) {
+      console.error('Error changing password:', error);
+      const errorMessage = error.response?.data?.error || 'Failed to change password';
+
+      if (errorMessage === 'Current password is incorrect') {
+        setError('Current password is incorrect');
+      } else {
+        setError(errorMessage);
+      }
+    }
   };
 
   if (loading) {
@@ -161,7 +239,7 @@ const UserProfilePage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-8">
       <h1 className="text-2xl font-semibold text-gray-900 mb-6">User Profile</h1>
-      
+
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
         {/* Profile Picture Section */}
         <div className="lg:col-span-1">
@@ -172,10 +250,16 @@ const UserProfilePage: React.FC = () => {
             </div>
             <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
               <div className="flex items-center justify-center w-32 h-32 rounded-full bg-gray-200 overflow-hidden">
-                {formData.avatar ? (
-                  <img 
-                    src={formData.avatar} 
-                    alt="Profile" 
+                {previewUrl ? (
+                  <img
+                    src={previewUrl}
+                    alt="Profile Preview"
+                    className="w-full h-full object-cover"
+                  />
+                ) : formData.avatar ? (
+                  <img
+                    src={formData.avatar}
+                    alt="Profile"
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -197,7 +281,14 @@ const UserProfilePage: React.FC = () => {
                       <div className="flex text-sm text-gray-600">
                         <label htmlFor="avatar-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                           <span>Upload a file</span>
-                          <input id="avatar-upload" name="avatar-upload" type="file" className="sr-only" />
+                          <input
+                            id="avatar-upload"
+                            name="avatar-upload"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            className="sr-only"
+                          />
                         </label>
                         <p className="pl-1">or drag and drop</p>
                       </div>
@@ -209,7 +300,7 @@ const UserProfilePage: React.FC = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Profile Information Form */}
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-white shadow sm:rounded-lg">
@@ -276,7 +367,7 @@ const UserProfilePage: React.FC = () => {
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-gray-100"
                     />
                   </div>
-                  
+
                   {user.role === 'business_owner' && business && (
                     <div className="col-span-6">
                       <label htmlFor="business" className="block text-sm font-medium text-gray-700">

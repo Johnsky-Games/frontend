@@ -34,6 +34,7 @@ interface Business {
     latitude?: number;
     longitude?: number;
     average_rating?: number;
+    business_hours?: any;
     total_ratings?: number;
 }
 
@@ -66,15 +67,27 @@ const BusinessDetailsPage: React.FC = () => {
     const [showRatingForm, setShowRatingForm] = useState(false);
     const [userRating, setUserRating] = useState<any>(null);
 
+    const [services, setServices] = useState([]);
+
     useEffect(() => {
         if (businessId) {
             fetchBusinessDetails();
             fetchRatings();
+            fetchServices();
             if (user) {
                 fetchUserRating();
             }
         }
     }, [businessId, user]);
+
+    async function fetchServices() {
+        try {
+            const response = await ApiService.get(`/businesses/${businessId}/services`);
+            setServices(response.data.services);
+        } catch (error) {
+            console.error('Error fetching services:', error);
+        }
+    }
 
     async function fetchBusinessDetails() {
         try {
@@ -201,7 +214,45 @@ const BusinessDetailsPage: React.FC = () => {
                             </p>
                         </div>
 
-                        {/* Services would go here */}
+                        {/* Services */}
+                        <div className="bg-white rounded-xl shadow-sm p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">Services</h2>
+                            {loading ? (
+                                <div className="animate-pulse space-y-4">
+                                    {[1, 2, 3].map(i => (
+                                        <div key={i} className="h-20 bg-gray-100 rounded-lg"></div>
+                                    ))}
+                                </div>
+                            ) : services.length > 0 ? (
+                                <div className="space-y-4">
+                                    {services.map((service: any) => (
+                                        <div key={service.id} className="flex justify-between items-center p-4 border border-gray-100 rounded-lg hover:border-purple-100 transition-colors">
+                                            <div>
+                                                <h3 className="font-semibold text-gray-900">{service.name}</h3>
+                                                <p className="text-sm text-gray-500 mt-1">{service.description}</p>
+                                                <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+                                                    <span className="flex items-center gap-1">
+                                                        <Clock size={14} />
+                                                        {service.duration} min
+                                                    </span>
+                                                    <span className="font-semibold text-purple-600">
+                                                        ${Number(service.price).toFixed(2)}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <button
+                                                onClick={() => navigate(`/client/services?business_id=${businessId}&service_id=${service.id}`)}
+                                                className="px-4 py-2 bg-purple-50 text-purple-600 rounded-lg text-sm font-medium hover:bg-purple-100 transition-colors"
+                                            >
+                                                Book
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className="text-gray-500 text-center py-4">No services available yet.</p>
+                            )}
+                        </div>
 
                         {/* Reviews */}
                         <div className="bg-white rounded-xl shadow-sm p-6">
@@ -322,22 +373,45 @@ const BusinessDetailsPage: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* Opening Hours (Placeholder) */}
+                        {/* Opening Hours */}
                         <div className="bg-white rounded-xl shadow-sm p-6">
                             <h3 className="text-lg font-bold text-gray-900 mb-4">Opening Hours</h3>
                             <div className="space-y-2 text-sm text-gray-600">
-                                <div className="flex justify-between">
-                                    <span>Monday - Friday</span>
-                                    <span>9:00 AM - 6:00 PM</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>Saturday</span>
-                                    <span>10:00 AM - 4:00 PM</span>
-                                </div>
-                                <div className="flex justify-between text-red-500">
-                                    <span>Sunday</span>
-                                    <span>Closed</span>
-                                </div>
+                                {(() => {
+                                    if (!business.business_hours) {
+                                        return <p className="text-gray-500 italic">Hours not available</p>;
+                                    }
+
+                                    let hours = business.business_hours;
+                                    // Handle if it's a JSON string
+                                    if (typeof hours === 'string') {
+                                        try {
+                                            hours = JSON.parse(hours);
+                                        } catch (e) {
+                                            return <p className="text-red-400">Error loading hours</p>;
+                                        }
+                                    }
+
+                                    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+                                    return days.map(day => {
+                                        const schedule = (hours as any)[day];
+                                        if (!schedule) return null;
+
+                                        const isClosed = schedule.closed || (!schedule.open && !schedule.close);
+
+                                        return (
+                                            <div key={day} className="flex justify-between capitalize">
+                                                <span className="font-medium">{day}</span>
+                                                {isClosed ? (
+                                                    <span className="text-red-500">Closed</span>
+                                                ) : (
+                                                    <span>{schedule.open} - {schedule.close}</span>
+                                                )}
+                                            </div>
+                                        );
+                                    });
+                                })()}
                             </div>
                         </div>
                     </div>
