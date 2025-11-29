@@ -59,10 +59,10 @@ const ClientDashboardPage: React.FC = () => {
   if (error) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-        <div className="bg-white shadow sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Error Loading Dashboard</h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Error Loading Dashboard</h3>
+            <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
               <p>{error}</p>
             </div>
             <div className="mt-4">
@@ -82,10 +82,10 @@ const ClientDashboardPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900">
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
           Welcome, {user.name || user.email}!
         </h1>
-        <p className="mt-1 text-sm text-gray-500">Here's what's happening with your appointments</p>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Here's what's happening with your appointments</p>
       </div>
 
       {/* Stats Overview */}
@@ -102,7 +102,7 @@ const ClientDashboardPage: React.FC = () => {
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">Upcoming Appointments</dt>
                   <dd className="flex items-baseline">
-                    <div className="text-2xl font-semibold text-gray-900">
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">
                       {dashboardData?.stats?.upcoming_appointments || 0}
                     </div>
                   </dd>
@@ -124,7 +124,7 @@ const ClientDashboardPage: React.FC = () => {
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">Completed Appointments</dt>
                   <dd className="flex items-baseline">
-                    <div className="text-2xl font-semibold text-gray-900">
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">
                       {dashboardData?.stats?.completed_appointments || 0}
                     </div>
                   </dd>
@@ -146,7 +146,7 @@ const ClientDashboardPage: React.FC = () => {
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">Total Appointments</dt>
                   <dd className="flex items-baseline">
-                    <div className="text-2xl font-semibold text-gray-900">
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">
                       {dashboardData?.stats?.total_appointments || 0}
                     </div>
                   </dd>
@@ -168,7 +168,7 @@ const ClientDashboardPage: React.FC = () => {
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">Favorite Businesses</dt>
                   <dd className="flex items-baseline">
-                    <div className="text-2xl font-semibold text-gray-900">
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">
                       {dashboardData?.stats?.favorite_businesses || 0}
                     </div>
                   </dd>
@@ -190,7 +190,7 @@ const ClientDashboardPage: React.FC = () => {
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">Total Spent</dt>
                   <dd className="flex items-baseline">
-                    <div className="text-2xl font-semibold text-gray-900">
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">
                       ${dashboardData?.stats?.totalSpent?.toFixed(2) || '0.00'}
                     </div>
                   </dd>
@@ -205,7 +205,7 @@ const ClientDashboardPage: React.FC = () => {
         {/* Recent Appointments */}
         <div className="bg-white shadow overflow-hidden sm:rounded-md">
           <div className="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Recent Appointments</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Recent Appointments</h3>
           </div>
           <ul className="divide-y divide-gray-200">
             {dashboardData?.recent_appointments && dashboardData.recent_appointments.length > 0 ? (
@@ -228,7 +228,7 @@ const ClientDashboardPage: React.FC = () => {
                     <div className="mt-2 sm:flex sm:justify-between">
                       <div className="sm:flex">
                         <div className="mr-6">
-                          <p className="text-sm text-gray-500">{appointment.business_name}</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">{appointment.business_name}</p>
                           <p className="text-sm text-gray-900">
                             {new Date(appointment.date).toLocaleDateString('en-US', {
                               weekday: 'short',
@@ -258,7 +258,7 @@ const ClientDashboardPage: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                   <h3 className="mt-2 text-sm font-medium text-gray-900">No appointments yet</h3>
-                  <p className="mt-1 text-sm text-gray-500">Get started by booking your first appointment.</p>
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Get started by booking your first appointment.</p>
                   <div className="mt-6">
                     <button
                       onClick={() => navigate('/businesses')}
@@ -284,7 +284,7 @@ const ClientDashboardPage: React.FC = () => {
         {/* Favorite Businesses */}
         <div className="bg-white shadow overflow-hidden sm:rounded-md">
           <div className="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Favorite Businesses</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Favorite Businesses</h3>
           </div>
           <ul className="divide-y divide-gray-200">
             {dashboardData?.favorite_businesses && dashboardData.favorite_businesses.length > 0 ? (
@@ -301,7 +301,7 @@ const ClientDashboardPage: React.FC = () => {
                       </div>
                       <div className="ml-4">
                         <div className="text-sm font-medium text-gray-900">{business.name}</div>
-                        <div className="flex items-center text-sm text-gray-500">
+                        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                           <svg className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
                           </svg>
@@ -333,7 +333,7 @@ const ClientDashboardPage: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                   <h3 className="mt-2 text-sm font-medium text-gray-900">No favorite businesses</h3>
-                  <p className="mt-1 text-sm text-gray-500">Start by exploring businesses in your area.</p>
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Start by exploring businesses in your area.</p>
                   <div className="mt-6">
                     <button
                       onClick={() => navigate('/businesses')}

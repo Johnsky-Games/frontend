@@ -1,82 +1,68 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
+import api from '../services/ApiService';
+import { Star, Calendar, Search, TrendingUp, Shield, Clock, MapPin } from 'lucide-react';
+
+interface TopBusiness {
+  id: number;
+  name: string;
+  appointments: number;
+  revenue: number;
+  // Add other fields if available from getTopPerformers or join
+  logo?: string;
+  city?: string;
+  average_rating?: number;
+}
 
 const HomePage: React.FC = () => {
   const { user } = useAuth();
+  const [topBusinesses, setTopBusinesses] = useState<TopBusiness[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTopBusinesses = async () => {
+      try {
+        const response = await api.get('/businesses/top-performers?limit=3');
+        if (response.data.code === 'SUCCESS') {
+          setTopBusinesses(response.data.businesses);
+        }
+      } catch (error) {
+        console.error('Failed to fetch top businesses:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTopBusinesses();
+  }, []);
 
   return (
-    <div className="min-h-screen">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <div className="flex-shrink-0 flex items-center">
-                <span className="text-xl font-bold text-indigo-600">BeautySalon</span>
-              </div>
-            </div>
-            <div className="flex items-center">
-              {user ? (
-                <Link
-                  to="/dashboard"
-                  className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 btn-animated"
-                >
-                  Dashboard
-                </Link>
-              ) : (
-                <>
-                  <Link
-                    to="/login"
-                    className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 btn-animated"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 btn-animated"
-                  >
-                    Sign Up
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <div className="relative bg-white overflow-hidden">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
+      {/* Hero Section - Dual Focus */}
+      <div className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+          <div className="relative z-10 pb-8 bg-white dark:bg-gray-900 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
             <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28 fade-in">
               <div className="sm:text-center lg:text-left">
-                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                  <span className="block xl:inline">Manage Your</span>{' '}
-                  <span className="block text-indigo-600 xl:inline">Beauty Salon</span>
+                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
+                  <span className="block">Discover & Book</span>
+                  <span className="block text-indigo-600 dark:text-indigo-400">The Best Beauty Services</span>
                 </h1>
-                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  Book appointments, manage your services, and grow your beauty business with our all-in-one reservation system.
-                  Perfect for salons, barbershops, and nail studios.
+                <p className="mt-3 text-base text-gray-500 dark:text-gray-400 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                  Whether you're looking for a fresh cut or managing a bustling salon, BeautySalon is your go-to platform. Connect, book, and grow.
                 </p>
                 <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start space-x-4">
-                  <Link to={user ? "/dashboard" : "/register"} className="no-underline">
-                    <Button
-                      variant="primary"
-                      size="lg"
-                      className="w-full md:w-auto"
-                    >
-                      {user ? "Go to Dashboard" : "Get Started"}
+                  <Link to="/businesses" className="no-underline">
+                    <Button variant="primary" size="lg" className="w-full md:w-auto flex items-center justify-center gap-2">
+                      <Search className="w-5 h-5" />
+                      Find a Salon
                     </Button>
                   </Link>
-                  <Link to="/#features" className="no-underline">
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="w-full md:w-auto"
-                    >
-                      Learn More
+                  <Link to="/register?role=business_owner" className="no-underline">
+                    <Button variant="outline" size="lg" className="w-full md:w-auto">
+                      List Your Business
                     </Button>
                   </Link>
                 </div>
@@ -86,86 +72,214 @@ const HomePage: React.FC = () => {
         </div>
         <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
           <img
-            className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full img-animated"
-            src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-            alt="Beauty salon"
+            className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
+            src="https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            alt="Modern beauty salon interior"
           />
+          <div className="absolute inset-0 bg-indigo-900/10 mix-blend-multiply lg:hidden"></div>
         </div>
       </div>
 
-      {/* Features Section */}
-      <div id="features" className="py-12 bg-gray-50">
+      {/* Dynamic Top Performers Section */}
+      <div className="py-12 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:text-center fade-in">
-            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">Features</h2>
-            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-              Everything you need to manage your salon
-            </p>
-            <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-              Our platform helps you streamline operations and provide better service to your clients.
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+              Popular Salons Near You
+            </h2>
+            <p className="mt-4 text-xl text-gray-500 dark:text-gray-400">
+              Discover the top-rated beauty destinations loved by our community.
             </p>
           </div>
 
-          <div className="mt-10">
-            <div className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
-              <div className="relative slide-in" style={{ animationDelay: '0.1s' }}>
-                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
+          {loading ? (
+            <div className="flex justify-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+            </div>
+          ) : topBusinesses.length > 0 ? (
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {topBusinesses.map((business) => (
+                <Link key={business.id} to={`/businesses/${business.id}`} className="group block">
+                  <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 h-full flex flex-col">
+                    <div className="h-48 bg-gray-200 dark:bg-gray-700 relative">
+                      {/* Placeholder for business image if not available in top performers response */}
+                      <img
+                        src={`https://source.unsplash.com/random/800x600/?salon,beauty,${business.id}`}
+                        alt={business.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80';
+                        }}
+                      />
+                      <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                        <span className="text-sm font-bold text-gray-900 dark:text-white">4.9</span>
+                      </div>
+                    </div>
+                    <div className="p-6 flex-1 flex flex-col">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                        {business.name}
+                      </h3>
+                      <div className="flex items-center text-gray-500 dark:text-gray-400 mb-4 text-sm">
+                        <MapPin className="w-4 h-4 mr-1" />
+                        <span>{business.city || 'City Center'}</span>
+                      </div>
+                      <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                          {business.appointments} bookings this month
+                        </span>
+                        <span className="text-indigo-600 dark:text-indigo-400 font-medium text-sm flex items-center">
+                          Book Now <TrendingUp className="w-4 h-4 ml-1" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-xl border border-dashed border-gray-300 dark:border-gray-700">
+              <p className="text-gray-500 dark:text-gray-400">No top businesses found yet. Be the first to join!</p>
+              <Link to="/register?role=business_owner" className="mt-4 inline-block text-indigo-600 hover:text-indigo-500 font-medium">
+                Register your business &rarr;
+              </Link>
+            </div>
+          )}
+
+          <div className="mt-12 text-center">
+            <Link to="/businesses">
+              <Button variant="outline" size="lg">View All Salons</Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Value Proposition - For Clients */}
+      <div className="py-16 bg-white dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div>
+              <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl mb-6">
+                For Clients: <br />
+                <span className="text-indigo-600 dark:text-indigo-400">Beauty at your fingertips</span>
+              </h2>
+              <p className="text-lg text-gray-500 dark:text-gray-400 mb-8">
+                Say goodbye to phone calls and waiting on hold. Find the perfect stylist, barber, or esthetician and book instantly, 24/7.
+              </p>
+
+              <div className="space-y-6">
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400">
+                      <Search className="h-6 w-6" />
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Discover Local Gems</h3>
+                    <p className="mt-2 text-base text-gray-500 dark:text-gray-400">
+                      Browse photos, read verified reviews, and find the best professionals in your area.
+                    </p>
+                  </div>
                 </div>
-                <div className="ml-16">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">Easy Scheduling</h3>
-                  <p className="mt-2 text-base text-gray-500">
-                    Allow your clients to book appointments online at their convenience.
-                    Real-time availability ensures no double bookings.
+
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400">
+                      <Calendar className="h-6 w-6" />
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Book Anytime</h3>
+                    <p className="mt-2 text-base text-gray-500 dark:text-gray-400">
+                      View real-time availability and book your appointment in seconds, even after hours.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400">
+                      <Star className="h-6 w-6" />
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Manage Favorites</h3>
+                    <p className="mt-2 text-base text-gray-500 dark:text-gray-400">
+                      Save your favorite salons and rebook with a single click.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-10 lg:mt-0 relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 transform skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl opacity-20"></div>
+              <img
+                src="https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Client booking on phone"
+                className="relative rounded-3xl shadow-2xl ring-1 ring-gray-900/10"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Value Proposition - For Business Owners */}
+      <div className="py-16 bg-gray-50 dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div className="order-2 lg:order-1 relative">
+              <div className="absolute inset-0 bg-gradient-to-l from-indigo-500 to-pink-600 transform -skew-y-6 sm:skew-y-0 sm:rotate-6 sm:rounded-3xl opacity-20"></div>
+              <img
+                src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Business dashboard"
+                className="relative rounded-3xl shadow-2xl ring-1 ring-gray-900/10"
+              />
+            </div>
+            <div className="order-1 lg:order-2 mt-10 lg:mt-0">
+              <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl mb-6">
+                For Owners: <br />
+                <span className="text-indigo-600 dark:text-indigo-400">Streamline your business</span>
+              </h2>
+              <p className="text-lg text-gray-500 dark:text-gray-400 mb-8">
+                Take control of your schedule, clients, and revenue with our powerful all-in-one management platform.
+              </p>
+
+              <div className="grid grid-cols-1 gap-6">
+                <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center mb-4">
+                    <Shield className="h-6 w-6 text-indigo-600 dark:text-indigo-400 mr-3" />
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">Reduce No-Shows</h3>
+                  </div>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Automated reminders and confirmation emails keep your schedule full and efficient.
+                  </p>
+                </div>
+
+                <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center mb-4">
+                    <TrendingUp className="h-6 w-6 text-indigo-600 dark:text-indigo-400 mr-3" />
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">Business Insights</h3>
+                  </div>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Track revenue, popular services, and staff performance with detailed analytics.
+                  </p>
+                </div>
+
+                <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center mb-4">
+                    <Clock className="h-6 w-6 text-indigo-600 dark:text-indigo-400 mr-3" />
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">24/7 Booking</h3>
+                  </div>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Let clients book while you sleep. Your calendar fills up automatically.
                   </p>
                 </div>
               </div>
 
-              <div className="relative slide-in" style={{ animationDelay: '0.2s' }}>
-                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                </div>
-                <div className="ml-16">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">Custom Branding</h3>
-                  <p className="mt-2 text-base text-gray-500">
-                    Customize your booking page with your salon's logo, colors, and brand identity
-                    to maintain a professional image.
-                  </p>
-                </div>
-              </div>
-
-              <div className="relative slide-in" style={{ animationDelay: '0.3s' }}>
-                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <div className="ml-16">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">Client Management</h3>
-                  <p className="mt-2 text-base text-gray-500">
-                    Keep track of your clients' preferences, history, and contact information
-                    to provide personalized service.
-                  </p>
-                </div>
-              </div>
-
-              <div className="relative slide-in" style={{ animationDelay: '0.4s' }}>
-                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
-                <div className="ml-16">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">Analytics & Reports</h3>
-                  <p className="mt-2 text-base text-gray-500">
-                    Gain insights into your business with comprehensive reports on revenue,
-                    appointments, and customer trends.
-                  </p>
-                </div>
+              <div className="mt-8">
+                <Link to="/register?role=business_owner">
+                  <Button variant="primary" size="lg">Start Your Free Trial</Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -173,27 +287,40 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-indigo-700">
+      <div className="bg-indigo-700 dark:bg-indigo-900">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
-          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl fade-in">
-            <span className="block">Ready to transform your salon?</span>
-            <span className="block text-indigo-200">Start today.</span>
+          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <span className="block">Ready to get started?</span>
+            <span className="block text-indigo-200">Join thousands of happy users today.</span>
           </h2>
-          <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+          <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0 gap-4">
             <div className="inline-flex rounded-md shadow">
               <Link to="/register" className="no-underline">
                 <Button
                   variant="secondary"
-                  size="md"
+                  size="lg"
                   className="text-indigo-600 bg-white hover:bg-indigo-50"
                 >
-                  Get started
+                  Sign Up Now
+                </Button>
+              </Link>
+            </div>
+            <div className="inline-flex rounded-md shadow">
+              <Link to="/login" className="no-underline">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="text-white border-white hover:bg-indigo-600"
+                >
+                  Log In
                 </Button>
               </Link>
             </div>
           </div>
         </div>
       </div>
+
+
     </div>
   );
 };

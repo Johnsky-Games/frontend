@@ -154,10 +154,10 @@ const BusinessOwnerServicesPage: React.FC = () => {
   if (error) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-        <div className="bg-white shadow sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Error Loading Services</h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Error Loading Services</h3>
+            <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
               <p>{error}</p>
             </div>
             <div className="mt-4">
@@ -179,8 +179,8 @@ const BusinessOwnerServicesPage: React.FC = () => {
       {/* Header */}
       <div className="mb-6 flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">Business Services</h1>
-          <p className="mt-1 text-sm text-gray-500">{pagination.total_items} total services</p>
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Business Services</h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{pagination.total_items} total services</p>
         </div>
         <button
           onClick={() => navigate('/business-owner/services/create')}
@@ -191,13 +191,13 @@ const BusinessOwnerServicesPage: React.FC = () => {
       </div>
 
       {/* Compact Filters */}
-      <div className="mb-6 bg-white p-4 rounded-lg shadow">
+      <div className="mb-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <select
             name="category"
             value={filters.category}
             onChange={handleFilterChange}
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
+            className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
           >
             <option value="">All Categories</option>
             <option value="hair">Hair Services</option>
@@ -213,7 +213,7 @@ const BusinessOwnerServicesPage: React.FC = () => {
             name="is_active"
             value={filters.is_active}
             onChange={handleFilterChange}
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
+            className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
           >
             <option value="">All Statuses</option>
             <option value="true">Active</option>
@@ -225,7 +225,7 @@ const BusinessOwnerServicesPage: React.FC = () => {
             value={filters.search}
             onChange={handleFilterChange}
             placeholder="Search services..."
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
+            className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
           />
         </div>
       </div>
@@ -234,16 +234,16 @@ const BusinessOwnerServicesPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         {services.length > 0 ? (
           services.map((service) => (
-            <div key={service.id} className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-5">
+            <div key={service.id} className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow p-5">
               {/* Header */}
               <div className="flex justify-between items-start mb-3">
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-semibold text-gray-900 truncate">{service.name}</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate">{service.name}</h3>
                   {service.category && (
-                    <p className="text-sm text-gray-500 capitalize">{service.category.replace('_', ' ')}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">{service.category.replace('_', ' ')}</p>
                   )}
                 </div>
-                <span className={`ml-2 px-2 py-1 text-xs font-semibold rounded-full flex-shrink-0 ${service.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                <span className={`ml-2 px-2 py-1 text-xs font-semibold rounded-full flex-shrink-0 ${service.is_active ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
                   }`}>
                   {service.is_active ? 'Active' : 'Inactive'}
                 </span>
@@ -251,18 +251,18 @@ const BusinessOwnerServicesPage: React.FC = () => {
 
               {/* Description */}
               {service.description && (
-                <p className="text-sm text-gray-600 mb-4 line-clamp-2">{service.description}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">{service.description}</p>
               )}
 
               {/* Info */}
               <div className="space-y-2 mb-4 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Duration:</span>
-                  <span className="font-medium text-gray-900">{service.duration} mins</span>
+                  <span className="text-gray-500 dark:text-gray-400">Duration:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{service.duration} mins</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Price:</span>
-                  <span className="font-medium text-gray-900">${Number(service.price).toFixed(2)}</span>
+                  <span className="text-gray-500 dark:text-gray-400">Price:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">${Number(service.price).toFixed(2)}</span>
                 </div>
               </div>
 
@@ -286,8 +286,8 @@ const BusinessOwnerServicesPage: React.FC = () => {
                 <button
                   onClick={() => handleToggleServiceStatus(service.id, service.is_active)}
                   className={`w-full px-3 py-2 rounded-md text-sm font-medium transition-colors ${service.is_active
-                      ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      : 'bg-green-100 text-green-700 hover:bg-green-200'
+                    ? 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    : 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-200 hover:bg-green-200 dark:hover:bg-green-900/50'
                     }`}
                 >
                   {service.is_active ? 'Deactivate' : 'Activate'}
@@ -296,11 +296,11 @@ const BusinessOwnerServicesPage: React.FC = () => {
             </div>
           ))
         ) : (
-          <div className="col-span-full text-center py-12 bg-white rounded-lg shadow">
-            <p className="text-gray-500">No services found</p>
+          <div className="col-span-full text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow">
+            <p className="text-gray-500 dark:text-gray-400">No services found</p>
             <button
               onClick={() => navigate('/business-owner/services/create')}
-              className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200"
+              className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-secondary-700 dark:text-secondary-200 bg-secondary-100 dark:bg-secondary-900/30 hover:bg-secondary-200 dark:hover:bg-secondary-900/50"
             >
               + Create your first service
             </button>
@@ -316,8 +316,8 @@ const BusinessOwnerServicesPage: React.FC = () => {
               onClick={() => setPagination(prev => ({ ...prev, current_page: Math.max(1, prev.current_page - 1) }))}
               disabled={pagination.current_page <= 1}
               className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${pagination.current_page <= 1
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-white text-gray-700 hover:bg-gray-50'
                 }`}
             >
               Previous
@@ -326,8 +326,8 @@ const BusinessOwnerServicesPage: React.FC = () => {
               onClick={() => setPagination(prev => ({ ...prev, current_page: Math.min(prev.total_pages, prev.current_page + 1) }))}
               disabled={pagination.current_page >= pagination.total_pages}
               className={`ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${pagination.current_page >= pagination.total_pages
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-white text-gray-700 hover:bg-gray-50'
                 }`}
             >
               Next
@@ -347,8 +347,8 @@ const BusinessOwnerServicesPage: React.FC = () => {
                   onClick={() => setPagination(prev => ({ ...prev, current_page: Math.max(1, prev.current_page - 1) }))}
                   disabled={pagination.current_page <= 1}
                   className={`relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 text-sm font-medium ${pagination.current_page <= 1
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-white text-gray-700 hover:bg-gray-50'
                     }`}
                 >
                   Previous
@@ -357,8 +357,8 @@ const BusinessOwnerServicesPage: React.FC = () => {
                   onClick={() => setPagination(prev => ({ ...prev, current_page: Math.min(prev.total_pages, prev.current_page + 1) }))}
                   disabled={pagination.current_page >= pagination.total_pages}
                   className={`relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 text-sm font-medium ${pagination.current_page >= pagination.total_pages
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-white text-gray-700 hover:bg-gray-50'
                     }`}
                 >
                   Next

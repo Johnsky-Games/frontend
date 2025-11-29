@@ -20,9 +20,11 @@ import ResendVerificationPage from './pages/ResendVerificationPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import VerifyEmailReminderPage from './pages/VerifyEmailReminderPage';
 import PrivateRoute from './components/PrivateRoute';
+import GuestRoute from './components/GuestRoute';
 import UserManagementPage from './pages/UserManagementPage';
 import ReportsPage from './pages/ReportsPage';
 import Header from './components/Header';
+import PublicHeader from './components/PublicHeader';
 import RoleRedirect from './components/RoleRedirect';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import AdminAppointmentsPage from './pages/AdminAppointmentsPage';
@@ -63,6 +65,8 @@ import BusinessBookingPage from './pages/BusinessBookingPage';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 
+import Footer from './components/Footer';
+
 // Layout component for authenticated users
 const AuthenticatedLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -79,7 +83,11 @@ const AuthenticatedLayout: React.FC<{ children: React.ReactNode }> = ({ children
 const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200 flex flex-col">
-      {children}
+      <PublicHeader />
+      <main className="flex-grow">
+        {children}
+      </main>
+      <Footer />
     </div>
   );
 };
@@ -98,34 +106,46 @@ const AnimatedRoutes = () => {
           </PublicLayout>
         } />
         <Route path="/login" element={
-          <PublicLayout>
-            <LoginPage />
-          </PublicLayout>
+          <GuestRoute>
+            <PublicLayout>
+              <LoginPage />
+            </PublicLayout>
+          </GuestRoute>
         } />
         <Route path="/register" element={
-          <PublicLayout>
-            <RegisterPage />
-          </PublicLayout>
+          <GuestRoute>
+            <PublicLayout>
+              <RegisterPage />
+            </PublicLayout>
+          </GuestRoute>
         } />
         <Route path="/forgot-password" element={
-          <PublicLayout>
-            <ForgotPasswordPage />
-          </PublicLayout>
+          <GuestRoute>
+            <PublicLayout>
+              <ForgotPasswordPage />
+            </PublicLayout>
+          </GuestRoute>
         } />
         <Route path="/reset-password/:token" element={
-          <PublicLayout>
-            <ResetPasswordPage />
-          </PublicLayout>
+          <GuestRoute>
+            <PublicLayout>
+              <ResetPasswordPage />
+            </PublicLayout>
+          </GuestRoute>
         } />
         <Route path="/verify-email/:token" element={
-          <PublicLayout>
-            <VerifyEmailPage />
-          </PublicLayout>
+          <GuestRoute>
+            <PublicLayout>
+              <VerifyEmailPage />
+            </PublicLayout>
+          </GuestRoute>
         } />
         <Route path="/resend-verification" element={
-          <PublicLayout>
-            <ResendVerificationPage />
-          </PublicLayout>
+          <GuestRoute>
+            <PublicLayout>
+              <ResendVerificationPage />
+            </PublicLayout>
+          </GuestRoute>
         } />
 
         {/* Onboarding Routes (must be before other private routes) */}

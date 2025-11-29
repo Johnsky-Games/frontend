@@ -56,10 +56,10 @@ const BusinessOwnerDashboardPage: React.FC = () => {
   if (error) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-        <div className="bg-white shadow sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Error Loading Dashboard</h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Error Loading Dashboard</h3>
+            <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
               <p>{error}</p>
             </div>
             <div className="mt-4">
@@ -79,8 +79,8 @@ const BusinessOwnerDashboardPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900">Business Owner Dashboard</h1>
-        <p className="mt-1 text-sm text-gray-500">Manage your business operations</p>
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Business Owner Dashboard</h1>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage your business operations</p>
       </div>
 
       {/* Insights/Alerts */}
@@ -105,7 +105,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
       {/* Main Stats Overview - 6 cards */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 mb-8">
         {/* Existing cards */}
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0 bg-primary-500 rounded-md p-3">
@@ -115,9 +115,9 @@ const BusinessOwnerDashboardPage: React.FC = () => {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Total Appointments</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Total Appointments</dt>
                   <dd className="flex items-baseline">
-                    <div className="text-2xl font-semibold text-gray-900">{dashboardData?.stats?.totalAppointments || 0}</div>
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">{dashboardData?.stats?.totalAppointments || 0}</div>
                   </dd>
                 </dl>
               </div>
@@ -125,19 +125,19 @@ const BusinessOwnerDashboardPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-yellow-500 rounded-md p-3">
+              <div className="flex-shrink-0 bg-secondary-500 rounded-md p-3">
                 <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Pending Appointments</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Pending Appointments</dt>
                   <dd className="flex items-baseline">
-                    <div className="text-2xl font-semibold text-gray-900">{dashboardData?.stats?.pendingAppointments || 0}</div>
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">{dashboardData?.stats?.pendingAppointments || 0}</div>
                   </dd>
                 </dl>
               </div>
@@ -145,19 +145,19 @@ const BusinessOwnerDashboardPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-green-500 rounded-md p-3">
+              <div className="flex-shrink-0 bg-accent-500 rounded-md p-3">
                 <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Completed Today</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Completed Today</dt>
                   <dd className="flex items-baseline">
-                    <div className="text-2xl font-semibold text-gray-900">{dashboardData?.stats?.completedToday || 0}</div>
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">{dashboardData?.stats?.completedToday || 0}</div>
                   </dd>
                 </dl>
               </div>
@@ -165,19 +165,19 @@ const BusinessOwnerDashboardPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-blue-500 rounded-md p-3">
+              <div className="flex-shrink-0 bg-secondary-500 rounded-md p-3">
                 <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Total Clients</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Total Clients</dt>
                   <dd className="flex items-baseline">
-                    <div className="text-2xl font-semibold text-gray-900">{dashboardData?.stats?.totalClients || 0}</div>
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">{dashboardData?.stats?.totalClients || 0}</div>
                   </dd>
                 </dl>
               </div>
@@ -186,7 +186,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
         </div>
 
         {/* Subscription Widget */}
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
               <div className={`flex-shrink-0 rounded-md p-3 ${dashboardData?.stats?.subscription?.status === 'active' ? 'bg-purple-500' :
@@ -198,14 +198,14 @@ const BusinessOwnerDashboardPage: React.FC = () => {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Subscription</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Subscription</dt>
                   <dd className="flex flex-col">
-                    <div className="text-lg font-semibold text-gray-900">
+                    <div className="text-lg font-semibold text-gray-900 dark:text-white">
                       {dashboardData?.stats?.subscription ? (
                         <>
                           <span className="capitalize">{dashboardData.stats.subscription.plan_type}</span>
-                          <span className={`ml-2 text-xs px-2 py-0.5 rounded-full ${dashboardData.stats.subscription.status === 'active' ? 'bg-green-100 text-green-800' :
-                            dashboardData.stats.subscription.status === 'trial' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800'
+                          <span className={`ml-2 text-xs px-2 py-0.5 rounded-full ${dashboardData.stats.subscription.status === 'active' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' :
+                            dashboardData.stats.subscription.status === 'trial' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'
                             }`}>
                             {dashboardData.stats.subscription.status}
                           </span>
@@ -213,7 +213,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
                       ) : 'No Plan'}
                     </div>
                     {dashboardData?.stats?.subscription && (
-                      <div className="text-xs text-gray-500 mt-1">
+                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                         Expires: {new Date(dashboardData.stats.subscription.end_date).toLocaleDateString()}
                       </div>
                     )}
@@ -225,7 +225,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
         </div>
 
         {/* Rating Widget */}
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0 bg-pink-500 rounded-md p-3">
@@ -235,12 +235,12 @@ const BusinessOwnerDashboardPage: React.FC = () => {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Rating</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Rating</dt>
                   <dd className="flex items-baseline">
-                    <div className="text-2xl font-semibold text-gray-900">
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">
                       {dashboardData?.stats?.rating?.average_rating ? Number(dashboardData.stats.rating.average_rating).toFixed(1) : '0.0'}
                     </div>
-                    <div className="ml-2 text-sm text-gray-500">
+                    <div className="ml-2 text-sm text-gray-500 dark:text-gray-400">
                       ({dashboardData?.stats?.rating?.total_ratings || 0} reviews)
                     </div>
                   </dd>
@@ -253,7 +253,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
 
       {/* NEW: Financial & Performance Metrics */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0 bg-green-600 rounded-md p-3">
@@ -263,8 +263,8 @@ const BusinessOwnerDashboardPage: React.FC = () => {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Monthly Revenue</dt>
-                  <dd className="text-2xl font-semibold text-gray-900">
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Monthly Revenue</dt>
+                  <dd className="text-2xl font-semibold text-gray-900 dark:text-white">
                     ${Number(dashboardData?.analytics?.monthlyRevenue || 0).toFixed(2)}
                   </dd>
                 </dl>
@@ -273,7 +273,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0 bg-emerald-500 rounded-md p-3">
@@ -283,8 +283,8 @@ const BusinessOwnerDashboardPage: React.FC = () => {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Today's Revenue</dt>
-                  <dd className="text-2xl font-semibold text-gray-900">
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Today's Revenue</dt>
+                  <dd className="text-2xl font-semibold text-gray-900 dark:text-white">
                     ${Number(dashboardData?.analytics?.todayRevenue || 0).toFixed(2)}
                   </dd>
                 </dl>
@@ -293,7 +293,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0 bg-teal-500 rounded-md p-3">
@@ -303,8 +303,8 @@ const BusinessOwnerDashboardPage: React.FC = () => {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Avg Transaction</dt>
-                  <dd className="text-2xl font-semibold text-gray-900">
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Avg Transaction</dt>
+                  <dd className="text-2xl font-semibold text-gray-900 dark:text-white">
                     ${Number(dashboardData?.analytics?.avgTransaction || 0).toFixed(2)}
                   </dd>
                 </dl>
@@ -313,7 +313,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
               <div className={`flex-shrink-0 rounded-md p-3 ${Number(dashboardData?.analytics?.cancellationRate) > 20 ? 'bg-red-500' : 'bg-gray-500'}`}>
@@ -323,8 +323,8 @@ const BusinessOwnerDashboardPage: React.FC = () => {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Cancellation Rate</dt>
-                  <dd className="text-2xl font-semibold text-gray-900">
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Cancellation Rate</dt>
+                  <dd className="text-2xl font-semibold text-gray-900 dark:text-white">
                     {dashboardData?.analytics?.cancellationRate || '0.0'}%
                   </dd>
                 </dl>
@@ -337,8 +337,8 @@ const BusinessOwnerDashboardPage: React.FC = () => {
       {/* NEW: Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Appointment Status Breakdown */}
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Appointment Status Breakdown</h3>
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Appointment Status Breakdown</h3>
           {dashboardData?.charts?.statusBreakdown?.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
@@ -360,13 +360,13 @@ const BusinessOwnerDashboardPage: React.FC = () => {
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <p className="text-center text-gray-500 py-12">No data available</p>
+            <p className="text-center text-gray-500 dark:text-gray-400 py-12">No data available</p>
           )}
         </div>
 
         {/* Top Services */}
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Top Services</h3>
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Top Services</h3>
           {dashboardData?.charts?.topServices?.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={dashboardData.charts.topServices} layout="vertical">
@@ -378,14 +378,14 @@ const BusinessOwnerDashboardPage: React.FC = () => {
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <p className="text-center text-gray-500 py-12">No data available</p>
+            <p className="text-center text-gray-500 dark:text-gray-400 py-12">No data available</p>
           )}
         </div>
       </div>
 
       {/* NEW: Peak Hours Chart */}
-      <div className="bg-white p-6 rounded-lg shadow mb-8">
-        <h3 className="text-lg font-medium text-gray-900 mb-4">Peak Hours</h3>
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Peak Hours</h3>
         {dashboardData?.charts?.peakHours?.length > 0 ? (
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={dashboardData.charts.peakHours}>
@@ -397,16 +397,16 @@ const BusinessOwnerDashboardPage: React.FC = () => {
             </BarChart>
           </ResponsiveContainer>
         ) : (
-          <p className="text-center text-gray-500 py-12">No data available</p>
+          <p className="text-center text-gray-500 dark:text-gray-400 py-12">No data available</p>
         )}
       </div>
 
       {/* Existing Recent Lists */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Recent Appointments */}
-        <div className="bg-white shadow overflow-hidden sm:rounded-md">
+        <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
           <div className="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Recent Appointments</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Recent Appointments</h3>
           </div>
           <ul className="divide-y divide-gray-200">
             {dashboardData?.recentAppointments?.length ? (
@@ -417,18 +417,18 @@ const BusinessOwnerDashboardPage: React.FC = () => {
                       <div className="text-sm font-medium text-primary-600 truncate">
                         {appointment.client_name}
                       </div>
-                      <div className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                      <div className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-100 text-secondary-800">
                         {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
                       </div>
                     </div>
                     <div className="mt-2 sm:flex sm:justify-between">
                       <div className="sm:flex">
                         <div className="mr-6">
-                          <p className="text-sm text-gray-500">{appointment.service_name}</p>
-                          <p className="text-sm text-gray-900">{new Date(appointment.date).toLocaleDateString()} at {appointment.start_time}</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">{appointment.service_name}</p>
+                          <p className="text-sm text-gray-900 dark:text-white">{new Date(appointment.date).toLocaleDateString()} at {appointment.start_time}</p>
                         </div>
                       </div>
-                      <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                      <div className="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
                         <svg className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0 1 1 0 002 0zm0 4a1 1 0 011 1v4a1 1 0 11-2 0v-4a1 1 0 011-1zm0 6a1 1 0 10-2 0 1 1 0 002 0z" clipRule="evenodd" />
                         </svg>
@@ -441,7 +441,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
             ) : (
               <li>
                 <div className="px-4 py-5 sm:p-6 text-center">
-                  <p className="text-sm text-gray-500">No recent appointments</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">No recent appointments</p>
                 </div>
               </li>
             )}
@@ -449,9 +449,9 @@ const BusinessOwnerDashboardPage: React.FC = () => {
         </div>
 
         {/* Recent Clients */}
-        <div className="bg-white shadow overflow-hidden sm:rounded-md">
+        <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
           <div className="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Recent Clients</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Recent Clients</h3>
           </div>
           <ul className="divide-y divide-gray-200">
             {dashboardData?.recentClients?.length ? (
@@ -460,16 +460,16 @@ const BusinessOwnerDashboardPage: React.FC = () => {
                   <div className="px-4 py-4 sm:px-6">
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
-                        <div className="bg-primary-100 rounded-full p-2">
+                        <div className="bg-secondary-100 rounded-full p-2">
                           <span className="text-primary-800 font-medium">
                             {client.name.charAt(0)}
                           </span>
                         </div>
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{client.name}</div>
-                        <div className="text-sm text-gray-500">{client.email}</div>
-                        <div className="text-sm text-gray-500">Since {new Date(client.created_at).toLocaleDateString()}</div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-white">{client.name}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">{client.email}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">Since {new Date(client.created_at).toLocaleDateString()}</div>
                       </div>
                     </div>
                   </div>
@@ -478,7 +478,7 @@ const BusinessOwnerDashboardPage: React.FC = () => {
             ) : (
               <li>
                 <div className="px-4 py-5 sm:p-6 text-center">
-                  <p className="text-sm text-gray-500">No recent clients</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">No recent clients</p>
                 </div>
               </li>
             )}

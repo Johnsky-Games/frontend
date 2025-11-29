@@ -339,7 +339,7 @@ const BusinessProfilePage: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
       </div>
     );
   }
@@ -347,10 +347,10 @@ const BusinessProfilePage: React.FC = () => {
   if (user && user.role !== 'business_owner') {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-        <div className="bg-white shadow sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg font-medium leading-6 text-gray-900">Access Denied</h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
+            <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">Access Denied</h3>
+            <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
               <p>Only business owners can manage business profiles.</p>
             </div>
           </div>
@@ -360,10 +360,10 @@ const BusinessProfilePage: React.FC = () => {
   } else if (!user && !loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-        <div className="bg-white shadow sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg font-medium leading-6 text-gray-900">Access Required</h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
+            <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">Access Required</h3>
+            <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
               <p>Please sign in to access this page.</p>
             </div>
           </div>
@@ -374,42 +374,42 @@ const BusinessProfilePage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-      <h1 className="text-2xl font-semibold text-gray-900 mb-6">Business Profile</h1>
+      <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Business Profile</h1>
 
       {business && (
         <div className="mb-6">
           {business.verification_status === 'approved' && business.is_verified ? (
-            <div className="bg-green-50 border border-green-200 rounded-md p-4">
+            <div className="bg-accent-50 dark:bg-purple-900/20 border border-accent-200 dark:border-purple-700 rounded-md p-4">
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-accent-400 dark:text-purple-400" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-sm font-medium text-green-800">Business Verified</h3>
-                  <div className="mt-2 text-sm text-green-700">
+                  <h3 className="text-sm font-medium text-accent-800 dark:text-purple-200">Business Verified</h3>
+                  <div className="mt-2 text-sm text-accent-700 dark:text-purple-300">
                     <p>Your business has been verified and is visible to customers.</p>
                   </div>
                 </div>
               </div>
             </div>
           ) : business.verification_status === 'rejected' ? (
-            <div className="bg-red-50 border border-red-200 rounded-md p-4">
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-md p-4">
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-red-400 dark:text-red-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                   </svg>
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-sm font-medium text-red-800">Business Verification Rejected</h3>
-                  <div className="mt-2 text-sm text-red-700">
+                  <h3 className="text-sm font-medium text-red-800 dark:text-red-200">Business Verification Rejected</h3>
+                  <div className="mt-2 text-sm text-red-700 dark:text-red-300">
                     <p>Your business verification was rejected. {business.verification_notes && `Reason: ${business.verification_notes}`}</p>
                     <button
                       type="button"
                       onClick={handleVerificationRequest}
-                      className="mt-2 font-medium text-red-700 hover:text-red-900"
+                      className="mt-2 font-medium text-red-700 dark:text-red-300 hover:text-red-900 dark:hover:text-red-100"
                     >
                       Request Verification Again
                     </button>
@@ -418,37 +418,37 @@ const BusinessProfilePage: React.FC = () => {
               </div>
             </div>
           ) : business.verification_status === 'pending' || verificationRequested ? (
-            <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4">
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-md p-4">
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-yellow-400 dark:text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-sm font-medium text-yellow-800">Verification Pending</h3>
-                  <div className="mt-2 text-sm text-yellow-700">
+                  <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-200">Verification Pending</h3>
+                  <div className="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
                     <p>Your business verification request is under review by our administrators.</p>
                   </div>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
+            <div className="bg-secondary-50 dark:bg-emerald-900/20 border border-secondary-200 dark:border-emerald-700 rounded-md p-4">
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-secondary-400 dark:text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                   </svg>
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-sm font-medium text-blue-800">Ready for Verification</h3>
-                  <div className="mt-2 text-sm text-blue-700">
+                  <h3 className="text-sm font-medium text-secondary-800 dark:text-emerald-200">Ready for Verification</h3>
+                  <div className="mt-2 text-sm text-secondary-700 dark:text-emerald-300">
                     <p>Your business profile is complete and ready for verification.</p>
                     <button
                       type="button"
                       onClick={handleVerificationRequest}
-                      className="mt-2 font-medium text-blue-700 hover:text-blue-900"
+                      className="mt-2 font-medium text-secondary-700 dark:text-emerald-300 hover:text-secondary-900 dark:hover:text-emerald-100"
                     >
                       Request Business Verification
                     </button>
@@ -462,13 +462,13 @@ const BusinessProfilePage: React.FC = () => {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
         <div className="lg:col-span-1">
-          <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+          <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
             <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Business Logo</h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">Upload your business logo</p>
+              <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Business Logo</h3>
+              <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Upload your business logo</p>
             </div>
-            <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-              <div className="flex items-center justify-center w-32 h-32 rounded-full bg-gray-200 overflow-hidden">
+            <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:px-6">
+              <div className="flex items-center justify-center w-32 h-32 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
                 {logoPreview ? (
                   <img
                     src={logoPreview}
@@ -482,19 +482,19 @@ const BusinessProfilePage: React.FC = () => {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <span className="text-gray-400">No logo</span>
+                  <span className="text-gray-400 dark:text-gray-500">No logo</span>
                 )}
               </div>
               <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700">Upload Logo</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Upload Logo</label>
                 <div className="mt-1 flex justify-center">
-                  <div className="flex items-center justify-center w-48 h-32 border-2 border-dashed border-gray-300 rounded-md">
+                  <div className="flex items-center justify-center w-48 h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-md">
                     <div className="space-y-1 text-center">
-                      <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                      <svg className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
-                      <div className="flex text-sm text-gray-600">
-                        <label htmlFor="logo-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500">
+                      <div className="flex text-sm text-gray-600 dark:text-gray-400">
+                        <label htmlFor="logo-upload" className="relative cursor-pointer bg-white dark:bg-gray-800 rounded-md font-medium text-primary-600 hover:text-primary-500">
                           <span>Upload a file</span>
                           <input
                             id="logo-upload"
@@ -507,7 +507,7 @@ const BusinessProfilePage: React.FC = () => {
                         </label>
                         <p className="pl-1">or drag and drop</p>
                       </div>
-                      <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">PNG, JPG, GIF up to 10MB</p>
                     </div>
                   </div>
                 </div>
@@ -527,13 +527,13 @@ const BusinessProfilePage: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white shadow overflow-hidden sm:rounded-lg mt-6">
+          <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg mt-6">
             <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Cover Image</h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">Upload your business cover image</p>
+              <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Cover Image</h3>
+              <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Upload your business cover image</p>
             </div>
-            <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-              <div className="w-full h-32 bg-gray-200 overflow-hidden rounded-md">
+            <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:px-6">
+              <div className="w-full h-32 bg-gray-200 dark:bg-gray-700 overflow-hidden rounded-md">
                 {coverImagePreview ? (
                   <img
                     src={coverImagePreview}
@@ -553,9 +553,9 @@ const BusinessProfilePage: React.FC = () => {
                 )}
               </div>
               <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700">Upload Cover Image</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Upload Cover Image</label>
                 <div className="mt-1 flex justify-center">
-                  <div className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-md">
+                  <div className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md">
                     <div className="space-y-1 text-center">
                       <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
@@ -596,18 +596,18 @@ const BusinessProfilePage: React.FC = () => {
         </div>
 
         <div className="lg:col-span-2">
-          <div className="bg-white shadow sm:rounded-lg">
+          <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
             <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Business Information</h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">Update your business details</p>
+              <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Business Information</h3>
+              <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Update your business details</p>
             </div>
-            <div className="border-t border-gray-200 px-4 py-5 sm:p-6">
+            <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-6">
               <form onSubmit={handleSubmit} className="space-y-8 divide-y divide-gray-200">
                 <div className="space-y-8 divide-y divide-gray-200">
                   <div>
                     <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                       <div className="sm:col-span-3">
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Business Name
                         </label>
                         <div className="mt-1">
@@ -617,13 +617,13 @@ const BusinessProfilePage: React.FC = () => {
                             id="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-6">
-                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Description
                         </label>
                         <div className="mt-1">
@@ -633,7 +633,7 @@ const BusinessProfilePage: React.FC = () => {
                             rows={3}
                             value={formData.description}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -642,14 +642,14 @@ const BusinessProfilePage: React.FC = () => {
 
                   <div className="pt-8">
                     <div>
-                      <h3 className="text-lg leading-6 font-medium text-gray-900">Contact Information</h3>
-                      <p className="mt-1 text-sm text-gray-500">
+                      <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Contact Information</h3>
+                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         How customers can reach you.
                       </p>
                     </div>
                     <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                       <div className="sm:col-span-3">
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Email address
                         </label>
                         <div className="mt-1">
@@ -659,13 +659,13 @@ const BusinessProfilePage: React.FC = () => {
                             type="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-3">
-                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Phone Number
                         </label>
                         <div className="mt-1">
@@ -675,13 +675,13 @@ const BusinessProfilePage: React.FC = () => {
                             id="phone"
                             value={formData.phone}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-3">
-                        <label htmlFor="whatsapp_number" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="whatsapp_number" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           WhatsApp Number
                         </label>
                         <div className="mt-1">
@@ -692,13 +692,13 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.whatsapp_number}
                             onChange={handleChange}
                             placeholder="+1234567890"
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-3">
-                        <label htmlFor="website_url" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="website_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Website URL
                         </label>
                         <div className="mt-1">
@@ -709,7 +709,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.website_url}
                             onChange={handleChange}
                             placeholder="https://example.com"
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -718,14 +718,14 @@ const BusinessProfilePage: React.FC = () => {
 
                   <div className="pt-8">
                     <div>
-                      <h3 className="text-lg leading-6 font-medium text-gray-900">Social Media</h3>
-                      <p className="mt-1 text-sm text-gray-500">
+                      <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Social Media</h3>
+                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         Connect your social media profiles.
                       </p>
                     </div>
                     <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                       <div className="sm:col-span-3">
-                        <label htmlFor="facebook_url" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="facebook_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Facebook URL
                         </label>
                         <div className="mt-1">
@@ -736,13 +736,13 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.facebook_url}
                             onChange={handleChange}
                             placeholder="https://facebook.com/..."
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-3">
-                        <label htmlFor="instagram_url" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="instagram_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Instagram URL
                         </label>
                         <div className="mt-1">
@@ -753,13 +753,13 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.instagram_url}
                             onChange={handleChange}
                             placeholder="https://instagram.com/..."
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-3">
-                        <label htmlFor="twitter_url" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="twitter_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           X (Twitter) URL
                         </label>
                         <div className="mt-1">
@@ -770,13 +770,13 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.twitter_url}
                             onChange={handleChange}
                             placeholder="https://x.com/..."
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-3">
-                        <label htmlFor="linkedin_url" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="linkedin_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           LinkedIn URL
                         </label>
                         <div className="mt-1">
@@ -787,13 +787,13 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.linkedin_url}
                             onChange={handleChange}
                             placeholder="https://linkedin.com/..."
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-3">
-                        <label htmlFor="tiktok_url" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="tiktok_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           TikTok URL
                         </label>
                         <div className="mt-1">
@@ -804,13 +804,13 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.tiktok_url}
                             onChange={handleChange}
                             placeholder="https://tiktok.com/@..."
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-3">
-                        <label htmlFor="youtube_url" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="youtube_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           YouTube URL
                         </label>
                         <div className="mt-1">
@@ -821,7 +821,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.youtube_url}
                             onChange={handleChange}
                             placeholder="https://youtube.com/@..."
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -830,14 +830,14 @@ const BusinessProfilePage: React.FC = () => {
 
                   <div className="pt-8">
                     <div>
-                      <h3 className="text-lg leading-6 font-medium text-gray-900">Theme Customization</h3>
-                      <p className="mt-1 text-sm text-gray-500">
+                      <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Theme Customization</h3>
+                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         Configure your business brand colors. These colors will be applied throughout your business profile.
                       </p>
                     </div>
                     <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                       <div className="sm:col-span-2">
-                        <label htmlFor="primary_color" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="primary_color" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Primary Color
                         </label>
                         <div className="mt-1 flex items-center space-x-3">
@@ -853,14 +853,14 @@ const BusinessProfilePage: React.FC = () => {
                             type="text"
                             value={formData.primary_color}
                             onChange={(e) => setFormData(prev => ({ ...prev, primary_color: e.target.value }))}
-                            className="flex-1 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="flex-1 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                         <p className="mt-1 text-xs text-gray-500">Main brand color</p>
                       </div>
 
                       <div className="sm:col-span-2">
-                        <label htmlFor="secondary_color" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="secondary_color" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Secondary Color
                         </label>
                         <div className="mt-1 flex items-center space-x-3">
@@ -876,14 +876,14 @@ const BusinessProfilePage: React.FC = () => {
                             type="text"
                             value={formData.secondary_color}
                             onChange={(e) => setFormData(prev => ({ ...prev, secondary_color: e.target.value }))}
-                            className="flex-1 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="flex-1 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                         <p className="mt-1 text-xs text-gray-500">Complementary color</p>
                       </div>
 
                       <div className="sm:col-span-2">
-                        <label htmlFor="accent_color" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="accent_color" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Accent Color
                         </label>
                         <div className="mt-1 flex items-center space-x-3">
@@ -899,7 +899,7 @@ const BusinessProfilePage: React.FC = () => {
                             type="text"
                             value={formData.accent_color}
                             onChange={(e) => setFormData(prev => ({ ...prev, accent_color: e.target.value }))}
-                            className="flex-1 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="flex-1 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                         <p className="mt-1 text-xs text-gray-500">Highlight color</p>
@@ -919,14 +919,14 @@ const BusinessProfilePage: React.FC = () => {
 
                   <div className="pt-8">
                     <div>
-                      <h3 className="text-lg leading-6 font-medium text-gray-900">Location</h3>
-                      <p className="mt-1 text-sm text-gray-500">
+                      <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Location</h3>
+                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         Where your business is located.
                       </p>
                     </div>
                     <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                       <div className="sm:col-span-6">
-                        <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="address" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Street Address
                         </label>
                         <div className="mt-1">
@@ -936,13 +936,13 @@ const BusinessProfilePage: React.FC = () => {
                             id="address"
                             value={formData.address}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-2">
-                        <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="city" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           City
                         </label>
                         <div className="mt-1">
@@ -952,13 +952,13 @@ const BusinessProfilePage: React.FC = () => {
                             id="city"
                             value={formData.city}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-2">
-                        <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="state" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           State / Province
                         </label>
                         <div className="mt-1">
@@ -968,13 +968,13 @@ const BusinessProfilePage: React.FC = () => {
                             id="state"
                             value={formData.state}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-2">
-                        <label htmlFor="zip_code" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="zip_code" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           ZIP / Postal Code
                         </label>
                         <div className="mt-1">
@@ -984,13 +984,13 @@ const BusinessProfilePage: React.FC = () => {
                             id="zip_code"
                             value={formData.zip_code}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-3">
-                        <label htmlFor="latitude" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Latitude
                         </label>
                         <div className="mt-1">
@@ -1001,13 +1001,13 @@ const BusinessProfilePage: React.FC = () => {
                             id="latitude"
                             value={formData.latitude}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-3">
-                        <label htmlFor="longitude" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="longitude" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Longitude
                         </label>
                         <div className="mt-1">
@@ -1018,13 +1018,13 @@ const BusinessProfilePage: React.FC = () => {
                             id="longitude"
                             value={formData.longitude}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-6">
-                        <label htmlFor="map_url" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="map_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Google Maps URL
                         </label>
                         <div className="mt-1 flex rounded-md shadow-sm">
@@ -1046,7 +1046,7 @@ const BusinessProfilePage: React.FC = () => {
                             Test Link
                           </a>
                         </div>
-                        <p className="mt-2 text-sm text-gray-500">
+                        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                           You can paste the "Share" link from Google Maps here.
                         </p>
                       </div>
@@ -1082,12 +1082,12 @@ const BusinessProfilePage: React.FC = () => {
 
       {/* Special Hours Section */}
       <div className="mt-6">
-        <div className="bg-white shadow sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Special Hours (Holidays & Exceptions)</h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">Configure specific dates when your business is closed or has different hours.</p>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Special Hours (Holidays & Exceptions)</h3>
+            <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Configure specific dates when your business is closed or has different hours.</p>
           </div>
-          <div className="border-t border-gray-200 px-4 py-5 sm:p-6">
+          <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-6">
             <SpecialHoursEditor />
           </div>
         </div>

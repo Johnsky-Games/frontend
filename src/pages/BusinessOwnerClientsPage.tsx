@@ -123,10 +123,10 @@ const BusinessOwnerClientsPage: React.FC = () => {
   if (error) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-        <div className="bg-white shadow sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Error Loading Clients</h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Error Loading Clients</h3>
+            <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
               <p>{error}</p>
             </div>
             <div className="mt-4">
@@ -146,15 +146,15 @@ const BusinessOwnerClientsPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900">Business Clients</h1>
-        <p className="mt-1 text-sm text-gray-500">Manage clients of your business</p>
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Business Clients</h1>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage clients of your business</p>
       </div>
 
       {/* Filters */}
-      <div className="mb-6 bg-white p-4 rounded-lg shadow">
+      <div className="mb-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
         <form onSubmit={handleFilterSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Status
             </label>
             <select
@@ -162,7 +162,7 @@ const BusinessOwnerClientsPage: React.FC = () => {
               name="status"
               value={filters.status}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             >
               <option value="">All Statuses</option>
               <option value="active">Active</option>
@@ -170,7 +170,7 @@ const BusinessOwnerClientsPage: React.FC = () => {
             </select>
           </div>
           <div>
-            <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="search" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Search
             </label>
             <input
@@ -180,11 +180,11 @@ const BusinessOwnerClientsPage: React.FC = () => {
               value={filters.search}
               onChange={handleFilterChange}
               placeholder="Search by name or email"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             />
           </div>
           <div>
-            <label htmlFor="sort" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="sort" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Sort By
             </label>
             <select
@@ -192,7 +192,7 @@ const BusinessOwnerClientsPage: React.FC = () => {
               name="sort"
               value={filters.sort}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             >
               <option value="created_at_desc">Newest First</option>
               <option value="created_at_asc">Oldest First</option>
@@ -205,7 +205,7 @@ const BusinessOwnerClientsPage: React.FC = () => {
       </div>
 
       {/* Clients Table */}
-      <div className="bg-white shadow overflow-hidden sm:rounded-md">
+      <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
         <ul className="divide-y divide-gray-200">
           {clients.length > 0 ? (
             clients.map((client) => (
@@ -217,32 +217,32 @@ const BusinessOwnerClientsPage: React.FC = () => {
                         {client.avatar ? (
                           <img className="h-12 w-12 rounded-full" src={client.avatar} alt={client.name || 'Client'} />
                         ) : (
-                          <div className="bg-primary-100 rounded-full h-12 w-12 flex items-center justify-center">
-                            <span className="text-primary-800 font-medium">
+                          <div className="bg-secondary-100 dark:bg-secondary-900/30 rounded-full h-12 w-12 flex items-center justify-center">
+                            <span className="text-primary-800 dark:text-primary-200 font-medium">
                               {client.name ? client.name.charAt(0).toUpperCase() : '?'}
                             </span>
                           </div>
                         )}
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{client.name}</div>
-                        <div className="text-sm text-gray-500">{client.email}</div>
-                        <div className="text-sm text-gray-500">{client.phone || 'No phone'}</div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-white">{client.name}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">{client.email}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">{client.phone || 'No phone'}</div>
                       </div>
                     </div>
                     <div className="flex items-center">
-                      <div className="text-sm text-gray-900">
+                      <div className="text-sm text-gray-900 dark:text-white">
                         Appointments: {client.total_appointments}
                       </div>
                       {client.last_appointment_date && (
-                        <div className="ml-4 text-sm text-gray-500">
+                        <div className="ml-4 text-sm text-gray-500 dark:text-gray-400">
                           Last: {new Date(client.last_appointment_date).toLocaleDateString()}
                         </div>
                       )}
                       <div className="ml-4">
                         <span className={`px-2 inline-flex text-xs leading-5 font-medium rounded-full ${client.email_verified
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-yellow-100 text-yellow-800'
+                          ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200'
+                          : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200'
                           }`}>
                           {client.email_verified ? 'Verified' : 'Not Verified'}
                         </span>
@@ -252,7 +252,7 @@ const BusinessOwnerClientsPage: React.FC = () => {
                   <div className="mt-4 flex justify-end space-x-3">
                     <button
                       onClick={() => handleViewClientDetails(client.id)}
-                      className="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                      className="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                     >
                       View Profile
                     </button>
@@ -273,8 +273,8 @@ const BusinessOwnerClientsPage: React.FC = () => {
                 <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                <h3 className="mt-2 text-sm font-medium text-gray-900">No clients</h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">No clients</h3>
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                   Get started by scheduling your first appointment.
                 </p>
               </div>
@@ -284,9 +284,9 @@ const BusinessOwnerClientsPage: React.FC = () => {
 
         {/* Pagination */}
         {pagination.total_pages > 1 && (
-          <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+          <div className="bg-white dark:bg-gray-800 px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 sm:px-6">
             <div className="flex-1 flex">
-              <div className="text-sm text-gray-700">
+              <div className="text-sm text-gray-700 dark:text-gray-300">
                 Showing <span className="font-medium">{(pagination.current_page - 1) * pagination.items_per_page + 1}</span> to{' '}
                 <span className="font-medium">
                   {Math.min(pagination.current_page * pagination.items_per_page, pagination.total_items)}

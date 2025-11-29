@@ -113,62 +113,62 @@ const SubscriptionPage: React.FC = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="text-center">
-                <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
                     Simple, transparent pricing
                 </h2>
-                <p className="mt-4 text-xl text-gray-500">
+                <p className="mt-4 text-xl text-gray-500 dark:text-gray-400">
                     Choose the plan that best fits your business needs.
                 </p>
             </div>
 
             {/* Current Subscription Status */}
             {currentSubscription && (
-                <div className="mt-8 bg-white shadow overflow-hidden sm:rounded-lg max-w-3xl mx-auto">
+                <div className="mt-8 bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg max-w-3xl mx-auto">
                     <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
                         <div>
-                            <h3 className="text-lg leading-6 font-medium text-gray-900">
+                            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                                 Current Subscription
                             </h3>
-                            <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                            <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
                                 Your plan details and status.
                             </p>
                         </div>
-                        <span className={`px-3 py-1 rounded-full text-sm font-semibold ${currentSubscription.status === 'active' ? 'bg-green-100 text-green-800' :
-                            currentSubscription.status === 'trial' ? 'bg-blue-100 text-blue-800' :
-                                currentSubscription.status === 'expired' ? 'bg-red-100 text-red-800' :
-                                    'bg-gray-100 text-gray-800'
+                        <span className={`px-3 py-1 rounded-full text-sm font-semibold ${currentSubscription.status === 'active' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' :
+                            currentSubscription.status === 'trial' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200' :
+                                currentSubscription.status === 'expired' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200' :
+                                    'bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-200'
                             }`}>
                             {currentSubscription.status.toUpperCase()}
                         </span>
                     </div>
-                    <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-                        <dl className="sm:divide-y sm:divide-gray-200">
+                    <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-0">
+                        <dl className="sm:divide-y sm:divide-gray-200 dark:divide-gray-700">
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500">Plan</dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Plan</dt>
+                                <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
                                     {currentSubscription.plan_name}
                                 </dd>
                             </div>
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500">Valid Until</dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Valid Until</dt>
+                                <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
                                     {new Date(currentSubscription.end_date).toLocaleDateString()}
                                 </dd>
                             </div>
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500">Auto Renewal</dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Auto Renewal</dt>
+                                <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
                                     {currentSubscription.auto_renew ? 'On' : 'Off'}
                                 </dd>
                             </div>
                         </dl>
                     </div>
-                    <div className="bg-gray-50 px-4 py-4 sm:px-6 flex justify-end">
+                    <div className="bg-gray-50 dark:bg-gray-700 px-4 py-4 sm:px-6 flex justify-end">
                         {currentSubscription.status !== 'cancelled' && currentSubscription.status !== 'expired' && (
                             <button
                                 onClick={handleCancel}
                                 disabled={processing}
-                                className="text-red-600 hover:text-red-800 font-medium text-sm"
+                                className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 font-medium text-sm"
                             >
                                 Cancel Subscription
                             </button>
@@ -178,15 +178,15 @@ const SubscriptionPage: React.FC = () => {
             )}
 
             {/* Plans Grid */}
-            <div className="mt-12 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-3">
+            <div className="mt-12 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:grid-cols-3">
                 {plans.map((plan) => (
-                    <div key={plan.id} className={`border rounded-lg shadow-sm divide-y divide-gray-200 bg-white flex flex-col ${currentSubscription?.plan_id === plan.id ? 'ring-2 ring-primary-500' : ''
+                    <div key={plan.id} className={`border rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800 flex flex-col ${currentSubscription?.plan_id === plan.id ? 'ring-2 ring-primary-500' : ''
                         }`}>
                         <div className="p-6">
-                            <h2 className="text-lg leading-6 font-medium text-gray-900">{plan.name}</h2>
+                            <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">{plan.name}</h2>
                             <p className="mt-4">
-                                <span className="text-4xl font-extrabold text-gray-900">${plan.price}</span>
-                                <span className="text-base font-medium text-gray-500">/{plan.duration_months === 1 ? 'mo' : 'yr'}</span>
+                                <span className="text-4xl font-extrabold text-gray-900 dark:text-white">${plan.price}</span>
+                                <span className="text-base font-medium text-gray-500 dark:text-gray-400">/{plan.duration_months === 1 ? 'mo' : 'yr'}</span>
                             </p>
                             {plan.trial_days > 0 && (
                                 <p className="mt-1 text-sm text-primary-600 font-semibold">
@@ -205,12 +205,12 @@ const SubscriptionPage: React.FC = () => {
                             </button>
                         </div>
                         <div className="pt-6 pb-8 px-6 flex-grow">
-                            <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">What's included</h3>
+                            <h3 className="text-xs font-medium text-gray-900 dark:text-white tracking-wide uppercase">What's included</h3>
                             <ul className="mt-6 space-y-4">
                                 {Array.isArray(plan.features) && plan.features.map((feature, index) => (
                                     <li key={index} className="flex space-x-3">
                                         <Check className="flex-shrink-0 h-5 w-5 text-green-500" aria-hidden="true" />
-                                        <span className="text-sm text-gray-500">{feature}</span>
+                                        <span className="text-sm text-gray-500 dark:text-gray-400">{feature}</span>
                                     </li>
                                 ))}
                             </ul>

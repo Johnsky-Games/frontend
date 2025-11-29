@@ -191,7 +191,7 @@ const AppointmentsPage: React.FC = () => {
   };
 
   const handleCancelAppointment = (id: number) => {
-    setAppointments(appointments.map(apt => 
+    setAppointments(appointments.map(apt =>
       apt.id === id ? { ...apt, status: 'cancelled' } : apt
     ));
     toast.success('Appointment cancelled successfully!');
@@ -199,12 +199,12 @@ const AppointmentsPage: React.FC = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'scheduled': return 'bg-yellow-100 text-yellow-800';
-      case 'confirmed': return 'bg-blue-100 text-blue-800';
-      case 'completed': return 'bg-green-100 text-green-800';
-      case 'cancelled': return 'bg-red-100 text-red-800';
-      case 'no_show': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'scheduled': return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200';
+      case 'confirmed': return 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200';
+      case 'completed': return 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200';
+      case 'cancelled': return 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200';
+      case 'no_show': return 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200';
+      default: return 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200';
     }
   };
 
@@ -219,10 +219,10 @@ const AppointmentsPage: React.FC = () => {
   if (!user) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-        <div className="bg-white shadow sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg font-medium leading-6 text-gray-900">Access Denied</h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
+            <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">Access Denied</h3>
+            <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
               <p>Please sign in to view appointments.</p>
             </div>
           </div>
@@ -234,13 +234,13 @@ const AppointmentsPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-4 sm:mb-0">Appointments</h1>
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4 sm:mb-0">Appointments</h1>
         <div className="flex space-x-2">
           <input
             type="date"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="block w-full min-w-0 flex-1 rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
           <button
             onClick={() => setShowAddForm(true)}
@@ -252,15 +252,15 @@ const AppointmentsPage: React.FC = () => {
       </div>
 
       {showAddForm && (
-        <div className="mb-8 bg-white shadow overflow-hidden sm:rounded-lg">
+        <div className="mb-8 bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
           <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Book New Appointment</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Book New Appointment</h3>
           </div>
-          <div className="border-t border-gray-200 px-4 py-5 sm:p-6">
+          <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-6">
             <form onSubmit={handleAddAppointment}>
               <div className="grid grid-cols-6 gap-6">
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="service" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="service" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Select Service
                   </label>
                   <select
@@ -268,7 +268,7 @@ const AppointmentsPage: React.FC = () => {
                     name="service_id"
                     value={values.service_id}
                     onChange={(e) => handleChange('service_id', parseInt(e.target.value))}
-                    className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:text-white"
                   >
                     <option value="1">Haircut & Style - $45.00</option>
                     <option value="2">Beard Trim - $25.00</option>
@@ -307,8 +307,8 @@ const AppointmentsPage: React.FC = () => {
                     error={errors.start_time || (isFieldFilled('start_time') && isFieldFilled('end_time') ? timeError : '')}
                     isValid={isFieldValid('start_time') && (!timeError || !isFieldFilled('end_time'))}
                     helperText={errors.start_time ? errors.start_time :
-                               timeError && isFieldFilled('start_time') && isFieldFilled('end_time') ? timeError :
-                               'Select start time'}
+                      timeError && isFieldFilled('start_time') && isFieldFilled('end_time') ? timeError :
+                        'Select start time'}
                   />
                 </div>
 
@@ -324,13 +324,13 @@ const AppointmentsPage: React.FC = () => {
                     error={errors.end_time || (isFieldFilled('start_time') && isFieldFilled('end_time') ? timeError : '')}
                     isValid={isFieldValid('end_time') && (!timeError || !isFieldFilled('start_time'))}
                     helperText={errors.end_time ? errors.end_time :
-                               timeError && isFieldFilled('start_time') && isFieldFilled('end_time') ? timeError :
-                               'Select end time after start time'}
+                      timeError && isFieldFilled('start_time') && isFieldFilled('end_time') ? timeError :
+                        'Select end time after start time'}
                   />
                 </div>
 
                 <div className="col-span-6">
-                  <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="notes" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Notes
                   </label>
                   <textarea
@@ -339,7 +339,7 @@ const AppointmentsPage: React.FC = () => {
                     rows={3}
                     value={values.notes}
                     onChange={(e) => handleChange('notes', e.target.value)}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -354,7 +354,7 @@ const AppointmentsPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowAddForm(false)}
-                  className="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Cancel
                 </button>
@@ -365,10 +365,10 @@ const AppointmentsPage: React.FC = () => {
       )}
 
       {appointments.filter(apt => apt.date === selectedDate).length === 0 ? (
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg font-medium leading-6 text-gray-900">No appointments for this date</h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
+            <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">No appointments for this date</h3>
+            <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
               <p>There are no appointments scheduled for {selectedDate}.</p>
             </div>
             <div className="mt-4">
@@ -382,8 +382,8 @@ const AppointmentsPage: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-          <ul className="divide-y divide-gray-200">
+        <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+          <ul className="divide-y divide-gray-200 dark:divide-gray-700">
             {appointments
               .filter(apt => apt.date === selectedDate)
               .sort((a, b) => a.start_time.localeCompare(b.start_time))
@@ -392,7 +392,7 @@ const AppointmentsPage: React.FC = () => {
                   <div className="px-4 py-4 sm:px-6">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <div className="text-sm font-medium text-indigo-600 truncate">
+                        <div className="text-sm font-medium text-indigo-600 dark:text-indigo-400 truncate">
                           Client #{appointment.client_id}
                         </div>
                         <div className="ml-2 flex-shrink-0 flex">
@@ -401,26 +401,26 @@ const AppointmentsPage: React.FC = () => {
                           </span>
                         </div>
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
                         ${appointment.total_amount.toFixed(2)}
                       </div>
                     </div>
                     <div className="mt-2 sm:flex sm:justify-between">
                       <div className="sm:flex">
                         <div className="mr-4">
-                          <p className="flex items-center text-sm text-gray-500">
+                          <p className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                             <svg className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
-                            {new Date(`${appointment.date}T${appointment.start_time}`).toLocaleDateString()} 
+                            {new Date(`${appointment.date}T${appointment.start_time}`).toLocaleDateString()}
                             <span className="ml-4">
-                              {new Date(`${appointment.date}T${appointment.start_time}`).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - 
-                              {new Date(`${appointment.date}T${appointment.end_time}`).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                              {new Date(`${appointment.date}T${appointment.start_time}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} -
+                              {new Date(`${appointment.date}T${appointment.end_time}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
                           </p>
                         </div>
                         <div>
-                          <p className="flex items-center text-sm text-gray-500">
+                          <p className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                             <svg className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                             </svg>
@@ -428,12 +428,12 @@ const AppointmentsPage: React.FC = () => {
                           </p>
                         </div>
                       </div>
-                      <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                      <div className="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
                         <span className="capitalize">{appointment.payment_status.replace('_', ' ')}</span>
                       </div>
                     </div>
                     {appointment.notes && (
-                      <div className="mt-2 text-sm text-gray-500">
+                      <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                         <p>Notes: {appointment.notes}</p>
                       </div>
                     )}
@@ -447,7 +447,7 @@ const AppointmentsPage: React.FC = () => {
                         </button>
                       )}
                       {appointment.status === 'scheduled' && (
-                        <button className="ml-2 inline-flex items-center px-3 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button className="ml-2 inline-flex items-center px-3 py-1 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                           Confirm
                         </button>
                       )}

@@ -66,13 +66,13 @@ const StaffAppointmentsPage: React.FC = () => {
     const getStatusColor = (status: string) => {
         switch (status) {
             case 'completed':
-                return 'bg-green-100 text-green-800';
+                return 'bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-200';
             case 'cancelled':
-                return 'bg-red-100 text-red-800';
+                return 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200';
             case 'scheduled':
-                return 'bg-blue-100 text-blue-800';
+                return 'bg-secondary-100 dark:bg-secondary-900/30 text-secondary-800 dark:text-secondary-200';
             default:
-                return 'bg-gray-100 text-gray-800';
+                return 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200';
         }
     };
 
@@ -107,14 +107,14 @@ const StaffAppointmentsPage: React.FC = () => {
             {/* Header */}
             <div className="mb-6 flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Mis Citas</h1>
-                    <p className="mt-1 text-sm text-gray-500">
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Mis Citas</h1>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         Gestiona tu calendario de citas
                     </p>
                 </div>
                 <Link
                     to="/staff/dashboard"
-                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                    className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                     ← Volver al Dashboard
                 </Link>
@@ -125,8 +125,8 @@ const StaffAppointmentsPage: React.FC = () => {
                 <button
                     onClick={() => setFilter('all')}
                     className={`px-4 py-2 text-sm font-medium rounded-md ${filter === 'all'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                        ? 'bg-secondary-600 text-white'
+                        : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600'
                         }`}
                 >
                     Todas ({appointments.length})
@@ -135,7 +135,7 @@ const StaffAppointmentsPage: React.FC = () => {
                     onClick={() => setFilter('scheduled')}
                     className={`px-4 py-2 text-sm font-medium rounded-md ${filter === 'scheduled'
                         ? 'bg-blue-600 text-white'
-                        : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                        : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600'
                         }`}
                 >
                     Programadas ({appointments.filter(a => a.status === 'scheduled').length})
@@ -144,7 +144,7 @@ const StaffAppointmentsPage: React.FC = () => {
                     onClick={() => setFilter('completed')}
                     className={`px-4 py-2 text-sm font-medium rounded-md ${filter === 'completed'
                         ? 'bg-blue-600 text-white'
-                        : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                        : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600'
                         }`}
                 >
                     Completadas ({appointments.filter(a => a.status === 'completed').length})
@@ -153,7 +153,7 @@ const StaffAppointmentsPage: React.FC = () => {
                     onClick={() => setFilter('cancelled')}
                     className={`px-4 py-2 text-sm font-medium rounded-md ${filter === 'cancelled'
                         ? 'bg-blue-600 text-white'
-                        : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                        : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600'
                         }`}
                 >
                     Canceladas ({appointments.filter(a => a.status === 'cancelled').length})
@@ -161,17 +161,17 @@ const StaffAppointmentsPage: React.FC = () => {
             </div>
 
             {/* Appointments List */}
-            <div className="bg-white shadow overflow-hidden sm:rounded-md">
+            <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
                 {filteredAppointments.length > 0 ? (
                     <ul className="divide-y divide-gray-200">
                         {filteredAppointments.map((appointment) => (
-                            <li key={appointment.id} className="hover:bg-gray-50 transition">
+                            <li key={appointment.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                                 <div className="px-4 py-4 sm:px-6">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center space-x-4 flex-1">
                                             {/* Avatar */}
                                             <div className="flex-shrink-0">
-                                                <div className="h-12 w-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-lg">
+                                                <div className="h-12 w-12 rounded-full bg-secondary-500 flex items-center justify-center text-white font-semibold text-lg">
                                                     {appointment.client_name?.charAt(0) || 'C'}
                                                 </div>
                                             </div>
@@ -179,17 +179,17 @@ const StaffAppointmentsPage: React.FC = () => {
                                             {/* Info */}
                                             <div className="flex-1 min-w-0">
                                                 <div className="flex items-center space-x-2">
-                                                    <p className="text-sm font-medium text-gray-900 truncate">
+                                                    <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                                                         {appointment.client_name || `Cliente #${appointment.client_id}`}
                                                     </p>
                                                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(appointment.status)}`}>
                                                         {getStatusLabel(appointment.status)}
                                                     </span>
                                                 </div>
-                                                <p className="mt-1 text-sm text-gray-600">
+                                                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                                                     {appointment.service_name || `Servicio #${appointment.service_id}`}
                                                 </p>
-                                                <div className="mt-2 flex items-center space-x-4 text-sm text-gray-500">
+                                                <div className="mt-2 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
                                                     <div className="flex items-center">
                                                         <svg className="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -212,7 +212,7 @@ const StaffAppointmentsPage: React.FC = () => {
                                                     )}
                                                 </div>
                                                 {appointment.notes && (
-                                                    <p className="mt-2 text-sm text-gray-500 italic">
+                                                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 italic">
                                                         Notas: {appointment.notes}
                                                     </p>
                                                 )}
@@ -222,13 +222,13 @@ const StaffAppointmentsPage: React.FC = () => {
                                         {/* Price */}
                                         {appointment.total_price && (
                                             <div className="ml-4 flex-shrink-0 text-right">
-                                                <p className="text-sm font-semibold text-gray-900">
+                                                <p className="text-sm font-semibold text-gray-900 dark:text-white">
                                                     ${appointment.total_price}
                                                 </p>
                                                 {appointment.status === 'scheduled' && (
                                                     <button
                                                         onClick={() => handleStatusUpdate(appointment.id, 'completed')}
-                                                        className="mt-2 inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 shadow-sm"
+                                                        className="mt-2 inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-accent-600 hover:bg-accent-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500 shadow-sm"
                                                     >
                                                         <CheckCircle className="mr-1 h-3 w-3" />
                                                         Completar
@@ -246,8 +246,8 @@ const StaffAppointmentsPage: React.FC = () => {
                         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <h3 className="mt-2 text-sm font-medium text-gray-900">No hay citas</h3>
-                        <p className="mt-1 text-sm text-gray-500">
+                        <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">No hay citas</h3>
+                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                             No se encontraron citas con los filtros seleccionados.
                         </p>
                     </div>

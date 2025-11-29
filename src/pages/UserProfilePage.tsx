@@ -224,10 +224,10 @@ const UserProfilePage: React.FC = () => {
   if (!user) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-        <div className="bg-white shadow sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <h3 className="text-lg font-medium leading-6 text-gray-900">Access Denied</h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
+            <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
               <p>Please sign in to view your profile.</p>
             </div>
           </div>
@@ -245,8 +245,8 @@ const UserProfilePage: React.FC = () => {
         <div className="lg:col-span-1">
           <div className="bg-white shadow overflow-hidden sm:rounded-lg">
             <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Profile Picture</h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">Update your profile photo</p>
+              <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Profile Picture</h3>
+              <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Update your profile photo</p>
             </div>
             <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
               <div className="flex items-center justify-center w-32 h-32 rounded-full bg-gray-200 overflow-hidden">
@@ -271,9 +271,9 @@ const UserProfilePage: React.FC = () => {
                 )}
               </div>
               <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700">Upload Photo</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Upload Photo</label>
                 <div className="mt-1 flex justify-center">
-                  <div className="flex items-center justify-center w-48 h-32 border-2 border-dashed border-gray-300 rounded-md">
+                  <div className="flex items-center justify-center w-48 h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md">
                     <div className="space-y-1 text-center">
                       <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
@@ -303,16 +303,16 @@ const UserProfilePage: React.FC = () => {
 
         {/* Profile Information Form */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white shadow sm:rounded-lg">
+          <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
             <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Personal Information</h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">Update your personal details</p>
+              <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Personal Information</h3>
+              <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Update your personal details</p>
             </div>
             <div className="border-t border-gray-200 px-4 py-5 sm:p-6">
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Full Name
                     </label>
                     <input
@@ -326,7 +326,7 @@ const UserProfilePage: React.FC = () => {
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Email Address
                     </label>
                     <input
@@ -341,7 +341,7 @@ const UserProfilePage: React.FC = () => {
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Phone Number
                     </label>
                     <input
@@ -355,7 +355,7 @@ const UserProfilePage: React.FC = () => {
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
-                    <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="role" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Role
                     </label>
                     <input
@@ -370,7 +370,7 @@ const UserProfilePage: React.FC = () => {
 
                   {user.role === 'business_owner' && business && (
                     <div className="col-span-6">
-                      <label htmlFor="business" className="block text-sm font-medium text-gray-700">
+                      <label htmlFor="business" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Business
                       </label>
                       <input
@@ -398,16 +398,16 @@ const UserProfilePage: React.FC = () => {
           </div>
 
           {/* Change Password Section */}
-          <div className="bg-white shadow sm:rounded-lg">
+          <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
             <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Change Password</h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">Update your password</p>
+              <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Change Password</h3>
+              <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Update your password</p>
             </div>
             <div className="border-t border-gray-200 px-4 py-5 sm:p-6">
               <form onSubmit={handlePasswordSubmit}>
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6">
-                    <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Current Password
                     </label>
                     <input
@@ -422,7 +422,7 @@ const UserProfilePage: React.FC = () => {
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
-                    <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       New Password
                     </label>
                     <input
@@ -437,7 +437,7 @@ const UserProfilePage: React.FC = () => {
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
-                    <label htmlFor="confirmNewPassword" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="confirmNewPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Confirm New Password
                     </label>
                     <input

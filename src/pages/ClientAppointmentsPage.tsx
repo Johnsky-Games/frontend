@@ -142,10 +142,10 @@ const ClientAppointmentsPage: React.FC = () => {
   if (error) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-        <div className="bg-white shadow sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Error Loading Appointments</h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Error Loading Appointments</h3>
+            <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
               <p>{error}</p>
             </div>
             <div className="mt-4">
@@ -165,8 +165,8 @@ const ClientAppointmentsPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8">
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900">My Appointments</h1>
-        <p className="mt-1 text-sm text-gray-500">Manage your scheduled appointments</p>
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">My Appointments</h1>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage your scheduled appointments</p>
       </div>
 
       {/* Filters */}
@@ -254,11 +254,11 @@ const ClientAppointmentsPage: React.FC = () => {
                     <div className="text-sm font-medium text-primary-600 truncate">
                       {appointment.service_name}
                     </div>
-                    <div className={`ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${appointment.status === 'scheduled' ? 'bg-blue-100 text-blue-800' :
-                      appointment.status === 'confirmed' ? 'bg-green-100 text-green-800' :
-                        appointment.status === 'completed' ? 'bg-primary-100 text-primary-800' :
-                          appointment.status === 'cancelled' ? 'bg-red-100 text-red-800' :
-                            'bg-yellow-100 text-yellow-800'
+                    <div className={`ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${appointment.status === 'scheduled' ? 'bg-secondary-100 dark:bg-secondary-900/30 text-secondary-800 dark:text-secondary-200' :
+                      appointment.status === 'confirmed' ? 'bg-secondary-100 dark:bg-secondary-900/30 text-secondary-800 dark:text-secondary-200' :
+                        appointment.status === 'completed' ? 'bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-200' :
+                          appointment.status === 'cancelled' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200' :
+                            'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200'
                       }`}>
                       {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
                     </div>
@@ -266,7 +266,7 @@ const ClientAppointmentsPage: React.FC = () => {
                   <div className="mt-2 sm:flex sm:justify-between">
                     <div className="sm:flex">
                       <div className="mr-6">
-                        <p className="text-sm text-gray-500">{appointment.business_name}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{appointment.business_name}</p>
                         {appointment.staff_member_name && (
                           <p className="text-xs text-gray-500 flex items-center mt-1">
                             <svg className="flex-shrink-0 mr-1 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -317,8 +317,8 @@ const ClientAppointmentsPage: React.FC = () => {
             <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No appointments</h3>
-            <p className="mt-1 text-sm text-gray-500">You don't have any scheduled appointments.</p>
+            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">No appointments</h3>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">You don't have any scheduled appointments.</p>
             <div className="mt-6">
               <button
                 onClick={() => navigate('/businesses')}
@@ -332,9 +332,9 @@ const ClientAppointmentsPage: React.FC = () => {
 
         {/* Pagination */}
         {pagination.total_pages > 1 && (
-          <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+          <div className="bg-white dark:bg-gray-800 px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 sm:px-6">
             <div className="flex-1 flex">
-              <div className="text-sm text-gray-700">
+              <div className="text-sm text-gray-700 dark:text-gray-300">
                 Showing <span className="font-medium">{(pagination.current_page - 1) * pagination.items_per_page + 1}</span> to{' '}
                 <span className="font-medium">
                   {Math.min(pagination.current_page * pagination.items_per_page, pagination.total_items)}
@@ -347,8 +347,8 @@ const ClientAppointmentsPage: React.FC = () => {
                 onClick={() => setPagination(prev => ({ ...prev, current_page: Math.max(1, prev.current_page - 1) }))}
                 disabled={pagination.current_page <= 1}
                 className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${pagination.current_page <= 1
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
+                  ? 'bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
+                  : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
                   }`}
               >
                 Previous
@@ -357,8 +357,8 @@ const ClientAppointmentsPage: React.FC = () => {
                 onClick={() => setPagination(prev => ({ ...prev, current_page: Math.min(prev.total_pages, prev.current_page + 1) }))}
                 disabled={pagination.current_page >= pagination.total_pages}
                 className={`ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${pagination.current_page >= pagination.total_pages
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
+                  ? 'bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
+                  : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
                   }`}
               >
                 Next

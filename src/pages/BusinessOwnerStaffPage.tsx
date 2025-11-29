@@ -221,8 +221,8 @@ const BusinessOwnerStaffPage: React.FC = () => {
             {/* Header */}
             <div className="mb-6 flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-semibold text-gray-900">Staff Management</h1>
-                    <p className="mt-1 text-sm text-gray-500">Manage your team members and their services</p>
+                    <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Staff Management</h1>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage your team members and their services</p>
                 </div>
                 <button
                     onClick={() => handleOpenModal()}
@@ -235,10 +235,10 @@ const BusinessOwnerStaffPage: React.FC = () => {
 
             {/* Staff Grid */}
             {staff.length === 0 ? (
-                <div className="text-center py-12 bg-white rounded-lg shadow">
+                <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow">
                     <User className="mx-auto h-12 w-12 text-gray-400" />
-                    <h3 className="mt-2 text-sm font-medium text-gray-900">No staff members</h3>
-                    <p className="mt-1 text-sm text-gray-500">Get started by adding your first team member.</p>
+                    <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">No staff members</h3>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Get started by adding your first team member.</p>
                     <div className="mt-6">
                         <button
                             onClick={() => handleOpenModal()}
@@ -252,7 +252,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
             ) : (
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {staff.map((member) => (
-                        <div key={member.id} className="bg-white overflow-hidden shadow rounded-lg">
+                        <div key={member.id} className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
                             <div className="p-6">
                                 <div className="flex items-center">
                                     <div className="flex-shrink-0">
@@ -263,17 +263,17 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                                 alt={member.user_name}
                                             />
                                         ) : (
-                                            <div className="h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center">
-                                                <User className="h-6 w-6 text-primary-600" />
+                                            <div className="h-12 w-12 rounded-full bg-secondary-100 dark:bg-secondary-900/30 flex items-center justify-center">
+                                                <User className="h-6 w-6 text-primary-600 dark:text-primary-400" />
                                             </div>
                                         )}
                                     </div>
                                     <div className="ml-4 flex-1">
-                                        <h3 className="text-lg font-medium text-gray-900">{member.user_name}</h3>
-                                        <p className="text-sm text-gray-500">{member.job_title}</p>
+                                        <h3 className="text-lg font-medium text-gray-900 dark:text-white">{member.user_name}</h3>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">{member.job_title}</p>
                                     </div>
                                     <div className="ml-2">
-                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${member.is_available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${member.is_available ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'
                                             }`}>
                                             {member.is_available ? 'Available' : 'Unavailable'}
                                         </span>
@@ -281,18 +281,18 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                 </div>
 
                                 {member.bio && (
-                                    <p className="mt-4 text-sm text-gray-600 line-clamp-2">{member.bio}</p>
+                                    <p className="mt-4 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">{member.bio}</p>
                                 )}
 
                                 {/* Services */}
                                 <div className="mt-4">
-                                    <p className="text-xs font-medium text-gray-500 mb-2">Services:</p>
+                                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Services:</p>
                                     <div className="flex flex-wrap gap-1">
                                         {member.services && member.services.length > 0 ? (
                                             member.services.map(serviceId => {
                                                 const service = services.find(s => s.id === serviceId);
                                                 return service ? (
-                                                    <span key={serviceId} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-primary-100 text-primary-700">
+                                                    <span key={serviceId} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-secondary-100 dark:bg-secondary-900/30 text-secondary-700 dark:text-secondary-200">
                                                         {service.name}
                                                     </span>
                                                 ) : null;
@@ -315,8 +315,8 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                     <button
                                         onClick={() => handleToggleAvailability(member.id)}
                                         className={`flex-1 inline-flex justify-center items-center px-3 py-2 border shadow-sm text-sm font-medium rounded-md ${member.is_available
-                                            ? 'border-yellow-300 text-yellow-700 bg-yellow-50 hover:bg-yellow-100'
-                                            : 'border-green-300 text-green-700 bg-green-50 hover:bg-green-100'
+                                            ? 'border-yellow-300 text-yellow-700 dark:text-yellow-200 bg-yellow-50 dark:bg-yellow-900/20 hover:bg-yellow-100 dark:hover:bg-yellow-900/40'
+                                            : 'border-green-300 text-green-700 dark:text-green-200 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/40'
                                             }`}
                                     >
                                         <Power className="h-4 w-4 mr-1" />
@@ -324,7 +324,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                     </button>
                                     <button
                                         onClick={() => handleDelete(member.id)}
-                                        className="inline-flex justify-center items-center px-3 py-2 border border-red-300 shadow-sm text-sm font-medium rounded-md text-red-700 bg-red-50 hover:bg-red-100"
+                                        className="inline-flex justify-center items-center px-3 py-2 border border-red-300 shadow-sm text-sm font-medium rounded-md text-red-700 dark:text-red-200 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40"
                                     >
                                         <Trash2 className="h-4 w-4" />
                                     </button>
@@ -356,7 +356,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                     <div className="space-y-4">
                                         {/* Email (always shown) */}
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700">
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                                 Email *
                                             </label>
                                             <input
@@ -377,7 +377,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                         {/* Name (only for new staff) */}
                                         {!editingStaff && (
                                             <div>
-                                                <label className="block text-sm font-medium text-gray-700">
+                                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                                     Full Name *
                                                 </label>
                                                 <input
@@ -397,7 +397,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                         {/* Phone (optional, only for new staff) */}
                                         {!editingStaff && (
                                             <div>
-                                                <label className="block text-sm font-medium text-gray-700">
+                                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                                     Phone (Optional)
                                                 </label>
                                                 <input
@@ -412,7 +412,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
 
                                         {/* Job Title */}
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700">Job Title *</label>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Job Title *</label>
                                             <input
                                                 type="text"
                                                 value={formData.job_title}
@@ -425,7 +425,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
 
                                         {/* Bio */}
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700">Bio</label>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Bio</label>
                                             <textarea
                                                 value={formData.bio}
                                                 onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
@@ -440,7 +440,7 @@ const BusinessOwnerStaffPage: React.FC = () => {
                                             <label className="block text-sm font-medium text-gray-700 mb-2">Services</label>
                                             <div className="border border-gray-300 rounded-md p-3 max-h-48 overflow-y-auto">
                                                 {services.length === 0 ? (
-                                                    <p className="text-sm text-gray-500">No services available</p>
+                                                    <p className="text-sm text-gray-500 dark:text-gray-400">No services available</p>
                                                 ) : (
                                                     <div className="space-y-2">
                                                         {services.map(service => (

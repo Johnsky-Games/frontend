@@ -172,18 +172,18 @@ const BusinessHoursEditor: React.FC<BusinessHoursEditorProps> = ({
     };
 
     return (
-        <div className="bg-white shadow sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
             <div className="px-4 py-5 sm:p-6">
-                <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
+                <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white mb-4">
                     Business Hours
                 </h3>
-                <p className="text-sm text-gray-500 mb-6">
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
                     Set your operating hours for each day of the week. Clients can only book appointments during these hours.
                 </p>
 
                 <div className="space-y-3">
                     {dayNames.map(day => (
-                        <div key={day} className="flex items-center gap-4 p-3 border border-gray-200 rounded-md hover:bg-gray-50">
+                        <div key={day} className="flex items-center gap-4 p-3 border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700">
                             {/* Enable/Disable Toggle */}
                             <div className="flex items-center w-32">
                                 <input
@@ -191,9 +191,9 @@ const BusinessHoursEditor: React.FC<BusinessHoursEditorProps> = ({
                                     id={`${day}-enabled`}
                                     checked={hours[day].enabled}
                                     onChange={() => handleToggleDay(day)}
-                                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                    className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 dark:border-gray-600 rounded"
                                 />
-                                <label htmlFor={`${day}-enabled`} className="ml-2 text-sm font-medium text-gray-700">
+                                <label htmlFor={`${day}-enabled`} className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {dayLabels[day]}
                                 </label>
                             </div>
@@ -206,22 +206,22 @@ const BusinessHoursEditor: React.FC<BusinessHoursEditorProps> = ({
                                         value={hours[day].open || ''}
                                         onChange={(e) => handleTimeChange(day, 'open', e.target.value)}
                                         onBlur={() => validateTimeRange(day)}
-                                        className="block w-32 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-32 px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                                     />
-                                    <span className="text-gray-500">to</span>
+                                    <span className="text-gray-500 dark:text-gray-400">to</span>
                                     <input
                                         type="time"
                                         value={hours[day].close || ''}
                                         onChange={(e) => handleTimeChange(day, 'close', e.target.value)}
                                         onBlur={() => validateTimeRange(day)}
-                                        className="block w-32 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-32 px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                                     />
                                     {errors[day] && (
-                                        <span className="text-sm text-red-600">{errors[day]}</span>
+                                        <span className="text-sm text-red-600 dark:text-red-400">{errors[day]}</span>
                                     )}
                                 </div>
                             ) : (
-                                <div className="flex-1 text-sm text-gray-500 italic">
+                                <div className="flex-1 text-sm text-gray-500 dark:text-gray-400 italic">
                                     Closed
                                 </div>
                             )}
@@ -234,14 +234,14 @@ const BusinessHoursEditor: React.FC<BusinessHoursEditorProps> = ({
                     <button
                         type="button"
                         onClick={handleCopyToAll}
-                        className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                     >
                         Copy Monday to All Days
                     </button>
                     <button
                         type="button"
                         onClick={handleReset}
-                        className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                     >
                         Reset to Default
                     </button>
@@ -249,7 +249,7 @@ const BusinessHoursEditor: React.FC<BusinessHoursEditorProps> = ({
                         type="button"
                         onClick={handleSave}
                         disabled={saving || loading}
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {saving ? 'Saving...' : 'Save Business Hours'}
                     </button>

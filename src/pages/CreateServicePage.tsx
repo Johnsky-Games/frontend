@@ -111,16 +111,16 @@ const CreateServicePage: React.FC = () => {
     return (
         <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-8 py-8">
             <div className="mb-6">
-                <h1 className="text-2xl font-semibold text-gray-900">Create New Service</h1>
-                <p className="mt-1 text-sm text-gray-500">Add a new service to your business</p>
+                <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Create New Service</h1>
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Add a new service to your business</p>
             </div>
 
-            <div className="bg-white shadow sm:rounded-lg">
+            <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <form onSubmit={handleSubmit} className="px-4 py-5 sm:p-6">
                     <div className="space-y-6">
                         {/* Service Name */}
                         <div>
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Service Name <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -137,7 +137,7 @@ const CreateServicePage: React.FC = () => {
 
                         {/* Description */}
                         <div>
-                            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Description
                             </label>
                             <textarea
@@ -154,7 +154,7 @@ const CreateServicePage: React.FC = () => {
                         {/* Duration and Price */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label htmlFor="duration" className="block text-sm font-medium text-gray-700">
+                                <label htmlFor="duration" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     Duration (minutes) <span className="text-red-500">*</span>
                                 </label>
                                 <input
@@ -171,7 +171,7 @@ const CreateServicePage: React.FC = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                                <label htmlFor="price" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     Price ($) <span className="text-red-500">*</span>
                                 </label>
                                 <input
@@ -191,7 +191,7 @@ const CreateServicePage: React.FC = () => {
 
                         {/* Category */}
                         <div>
-                            <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Category
                             </label>
                             <select
@@ -215,7 +215,7 @@ const CreateServicePage: React.FC = () => {
 
                         {/* Service Image */}
                         <div>
-                            <label htmlFor="service_image" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="service_image" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Service Image
                             </label>
                             <div className="mt-1 flex items-center space-x-4">

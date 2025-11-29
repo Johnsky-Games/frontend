@@ -162,15 +162,15 @@ const BusinessDetailsPage: React.FC = () => {
     }
 
     return (
-        <div className="bg-gray-50 min-h-screen pb-12">
+        <div className="bg-gray-50 dark:bg-gray-900 min-h-screen pb-12">
             <Header />
             {/* Header / Banner */}
-            <div className="bg-white shadow-sm">
+            <div className="bg-white dark:bg-gray-800 shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div>
-                            <h1 className="text-3xl font-bold text-gray-900">{business.name}</h1>
-                            <div className="flex items-center gap-2 mt-2 text-gray-500">
+                            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{business.name}</h1>
+                            <div className="flex items-center gap-2 mt-2 text-gray-500 dark:text-gray-400">
                                 <MapPin size={18} />
                                 <span>{business.city}, {business.state}</span>
                                 <span className="mx-2">•</span>
@@ -178,11 +178,11 @@ const BusinessDetailsPage: React.FC = () => {
                             </div>
                             <div className="flex items-center gap-4 mt-4">
                                 <div className="flex items-center gap-1">
-                                    <span className="text-2xl font-bold text-gray-900">
+                                    <span className="text-2xl font-bold text-gray-900 dark:text-white">
                                         {business.average_rating ? Number(business.average_rating).toFixed(1) : 'New'}
                                     </span>
                                     <StarRating rating={Number(business.average_rating) || 0} readonly size="md" />
-                                    <span className="text-gray-500 text-sm">
+                                    <span className="text-gray-500 dark:text-gray-400 text-sm">
                                         ({business.total_ratings || 0} reviews)
                                     </span>
                                 </div>
@@ -207,35 +207,35 @@ const BusinessDetailsPage: React.FC = () => {
                     {/* Main Content */}
                     <div className="lg:col-span-2 space-y-8">
                         {/* About */}
-                        <div className="bg-white rounded-xl shadow-sm p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">About</h2>
-                            <p className="text-gray-600 whitespace-pre-line">
+                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">About</h2>
+                            <p className="text-gray-600 dark:text-gray-300 whitespace-pre-line">
                                 {business.description || 'No description provided.'}
                             </p>
                         </div>
 
                         {/* Services */}
-                        <div className="bg-white rounded-xl shadow-sm p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Services</h2>
+                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Services</h2>
                             {loading ? (
                                 <div className="animate-pulse space-y-4">
                                     {[1, 2, 3].map(i => (
-                                        <div key={i} className="h-20 bg-gray-100 rounded-lg"></div>
+                                        <div key={i} className="h-20 bg-gray-100 dark:bg-gray-700 rounded-lg"></div>
                                     ))}
                                 </div>
                             ) : services.length > 0 ? (
                                 <div className="space-y-4">
                                     {services.map((service: any) => (
-                                        <div key={service.id} className="flex justify-between items-center p-4 border border-gray-100 rounded-lg hover:border-purple-100 transition-colors">
+                                        <div key={service.id} className="flex justify-between items-center p-4 border border-gray-100 dark:border-gray-700 rounded-lg hover:border-purple-100 dark:hover:border-purple-900 transition-colors">
                                             <div>
-                                                <h3 className="font-semibold text-gray-900">{service.name}</h3>
-                                                <p className="text-sm text-gray-500 mt-1">{service.description}</p>
-                                                <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+                                                <h3 className="font-semibold text-gray-900 dark:text-white">{service.name}</h3>
+                                                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{service.description}</p>
+                                                <div className="flex items-center gap-4 mt-2 text-sm text-gray-500 dark:text-gray-400">
                                                     <span className="flex items-center gap-1">
                                                         <Clock size={14} />
                                                         {service.duration} min
                                                     </span>
-                                                    <span className="font-semibold text-purple-600">
+                                                    <span className="font-semibold text-purple-600 dark:text-purple-400">
                                                         ${Number(service.price).toFixed(2)}
                                                     </span>
                                                 </div>
@@ -250,14 +250,14 @@ const BusinessDetailsPage: React.FC = () => {
                                     ))}
                                 </div>
                             ) : (
-                                <p className="text-gray-500 text-center py-4">No services available yet.</p>
+                                <p className="text-gray-500 dark:text-gray-400 text-center py-4">No services available yet.</p>
                             )}
                         </div>
 
                         {/* Reviews */}
-                        <div className="bg-white rounded-xl shadow-sm p-6">
+                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
                             <div className="flex justify-between items-center mb-6">
-                                <h2 className="text-xl font-bold text-gray-900">Reviews</h2>
+                                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Reviews</h2>
                                 {user && (
                                     <button
                                         onClick={() => setShowRatingForm(true)}
@@ -274,11 +274,11 @@ const BusinessDetailsPage: React.FC = () => {
                     {/* Sidebar */}
                     <div className="space-y-6">
                         {/* Contact & Location */}
-                        <div className="bg-white rounded-xl shadow-sm p-6">
-                            <h3 className="text-lg font-bold text-gray-900 mb-4">Contact & Location</h3>
+                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Contact & Location</h3>
                             <div className="space-y-4">
                                 {business.address && (
-                                    <div className="flex items-start gap-3 text-gray-600">
+                                    <div className="flex items-start gap-3 text-gray-600 dark:text-gray-300">
                                         <MapPin className="shrink-0 mt-1" size={20} />
                                         <div>
                                             <p>{business.address}</p>
@@ -288,7 +288,7 @@ const BusinessDetailsPage: React.FC = () => {
                                                     href={business.map_url}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="text-purple-600 text-sm hover:underline mt-1 inline-block"
+                                                    className="text-purple-600 dark:text-purple-400 text-sm hover:underline mt-1 inline-block"
                                                 >
                                                     View on Map
                                                 </a>

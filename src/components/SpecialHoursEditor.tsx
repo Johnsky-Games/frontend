@@ -106,16 +106,16 @@ const SpecialHoursEditor: React.FC = () => {
 
     return (
         <div className="space-y-6">
-            <div className="bg-gray-50 p-4 rounded-md border border-gray-200">
-                <h4 className="text-sm font-medium text-gray-900 mb-4">Add New Special Hour (Holiday/Exception)</h4>
+            <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-md border border-gray-200 dark:border-gray-700">
+                <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-4">Add New Special Hour (Holiday/Exception)</h4>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6 items-end">
                     <div className="lg:col-span-1">
-                        <label className="block text-xs font-medium text-gray-700 mb-1">Date</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Date</label>
                         <input
                             type="date"
                             value={newSpecialHour.date}
                             onChange={(e) => setNewSpecialHour({ ...newSpecialHour, date: e.target.value })}
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                         />
                     </div>
 
@@ -126,9 +126,9 @@ const SpecialHoursEditor: React.FC = () => {
                                 type="checkbox"
                                 checked={newSpecialHour.is_closed}
                                 onChange={(e) => setNewSpecialHour({ ...newSpecialHour, is_closed: e.target.checked })}
-                                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 dark:border-gray-600 rounded"
                             />
-                            <label htmlFor="is_closed" className="ml-2 block text-sm text-gray-900">
+                            <label htmlFor="is_closed" className="ml-2 block text-sm text-gray-900 dark:text-white">
                                 Closed?
                             </label>
                         </div>
@@ -142,7 +142,7 @@ const SpecialHoursEditor: React.FC = () => {
                                     type="time"
                                     value={newSpecialHour.open_time}
                                     onChange={(e) => setNewSpecialHour({ ...newSpecialHour, open_time: e.target.value })}
-                                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                                 />
                             </div>
                             <div className="lg:col-span-1">
@@ -151,7 +151,7 @@ const SpecialHoursEditor: React.FC = () => {
                                     type="time"
                                     value={newSpecialHour.close_time}
                                     onChange={(e) => setNewSpecialHour({ ...newSpecialHour, close_time: e.target.value })}
-                                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                                 />
                             </div>
                         </>
@@ -164,7 +164,7 @@ const SpecialHoursEditor: React.FC = () => {
                             value={newSpecialHour.reason}
                             onChange={(e) => setNewSpecialHour({ ...newSpecialHour, reason: e.target.value })}
                             placeholder="e.g. Public Holiday"
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                         />
                     </div>
 
@@ -173,7 +173,7 @@ const SpecialHoursEditor: React.FC = () => {
                             type="button"
                             onClick={handleAdd}
                             disabled={adding}
-                            className="w-full inline-flex justify-center items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                            className="w-full inline-flex justify-center items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
                         >
                             {adding ? 'Adding...' : 'Add'}
                         </button>
@@ -181,27 +181,27 @@ const SpecialHoursEditor: React.FC = () => {
                 </div>
             </div>
 
-            <div className="bg-white shadow overflow-hidden sm:rounded-md">
-                <ul className="divide-y divide-gray-200">
+            <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
+                <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                     {specialHours.length === 0 ? (
-                        <li className="px-4 py-4 sm:px-6 text-center text-gray-500 text-sm">
+                        <li className="px-4 py-4 sm:px-6 text-center text-gray-500 dark:text-gray-400 text-sm">
                             No special hours configured.
                         </li>
                     ) : (
                         specialHours.map((hour) => (
-                            <li key={hour.id} className="px-4 py-4 sm:px-6 hover:bg-gray-50">
+                            <li key={hour.id} className="px-4 py-4 sm:px-6 hover:bg-gray-50 dark:hover:bg-gray-700">
                                 <div className="flex items-center justify-between">
                                     <div className="flex flex-col sm:flex-row sm:items-center">
-                                        <p className="text-sm font-medium text-indigo-600 truncate w-32">
+                                        <p className="text-sm font-medium text-primary-600 dark:text-primary-400 truncate w-32">
                                             {new Date(hour.date).toLocaleDateString()}
                                         </p>
                                         <div className="ml-0 sm:ml-4 flex-shrink-0 flex flex-col sm:flex-row">
-                                            <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${hour.is_closed ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                                            <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${hour.is_closed ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200' : 'bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-200'
                                                 }`}>
                                                 {hour.is_closed ? 'Closed' : `${hour.open_time} - ${hour.close_time}`}
                                             </p>
                                             {hour.reason && (
-                                                <p className="mt-1 sm:mt-0 sm:ml-4 text-sm text-gray-500">
+                                                <p className="mt-1 sm:mt-0 sm:ml-4 text-sm text-gray-500 dark:text-gray-400">
                                                     {hour.reason}
                                                 </p>
                                             )}

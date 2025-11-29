@@ -100,10 +100,10 @@ const ClientAppointmentDetailsPage: React.FC = () => {
     if (error) {
         return (
             <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-                <div className="bg-white shadow sm:rounded-lg">
+                <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                     <div className="px-4 py-5 sm:p-6">
-                        <h3 className="text-lg leading-6 font-medium text-gray-900">Error</h3>
-                        <div className="mt-2 max-w-xl text-sm text-gray-500">
+                        <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Error</h3>
+                        <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
                             <p>{error}</p>
                         </div>
                         <div className="mt-4">
@@ -124,7 +124,7 @@ const ClientAppointmentDetailsPage: React.FC = () => {
         return (
             <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-8 py-8">
                 <div className="text-center">
-                    <h2 className="text-xl font-medium text-gray-900">Appointment not found</h2>
+                    <h2 className="text-xl font-medium text-gray-900 dark:text-white">Appointment not found</h2>
                     <button
                         onClick={() => navigate('/client/appointments')}
                         className="mt-4 text-primary-600 hover:text-primary-500"
@@ -138,12 +138,12 @@ const ClientAppointmentDetailsPage: React.FC = () => {
 
     const getStatusColor = (status: string) => {
         switch (status) {
-            case 'scheduled': return 'bg-blue-100 text-blue-800';
-            case 'confirmed': return 'bg-green-100 text-green-800';
-            case 'completed': return 'bg-primary-100 text-primary-800';
-            case 'cancelled': return 'bg-red-100 text-red-800';
-            case 'no_show': return 'bg-yellow-100 text-yellow-800';
-            default: return 'bg-gray-100 text-gray-800';
+            case 'scheduled': return 'bg-secondary-100 dark:bg-secondary-900/30 text-secondary-800 dark:text-secondary-200';
+            case 'confirmed': return 'bg-secondary-100 dark:bg-secondary-900/30 text-secondary-800 dark:text-secondary-200';
+            case 'completed': return 'bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-200';
+            case 'cancelled': return 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200';
+            case 'no_show': return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200';
+            default: return 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200';
         }
     };
 
@@ -152,20 +152,20 @@ const ClientAppointmentDetailsPage: React.FC = () => {
             <div className="mb-6 flex items-center">
                 <button
                     onClick={() => navigate('/client/appointments')}
-                    className="mr-4 p-2 rounded-full hover:bg-gray-100 text-gray-500"
+                    className="mr-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
                 >
                     <ArrowLeft size={20} />
                 </button>
-                <h1 className="text-2xl font-semibold text-gray-900">Appointment Details</h1>
+                <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Appointment Details</h1>
             </div>
 
-            <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
                 <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
                     <div>
-                        <h3 className="text-lg leading-6 font-medium text-gray-900">
+                        <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                             {appointment.service_name}
                         </h3>
-                        <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                        <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
                             Reference ID: #{appointment.id}
                         </p>
                     </div>
@@ -173,14 +173,14 @@ const ClientAppointmentDetailsPage: React.FC = () => {
                         {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
                     </span>
                 </div>
-                <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+                <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-0">
                     <dl className="sm:divide-y sm:divide-gray-200">
                         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500 flex items-center">
+                            <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center">
                                 <Calendar className="mr-2 h-5 w-5 text-gray-400" />
                                 Date & Time
                             </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
                                 {new Date(appointment.date).toLocaleDateString('en-US', {
                                     weekday: 'long',
                                     year: 'numeric',
@@ -193,14 +193,14 @@ const ClientAppointmentDetailsPage: React.FC = () => {
                         </div>
 
                         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500 flex items-center">
+                            <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center">
                                 <MapPin className="mr-2 h-5 w-5 text-gray-400" />
                                 Business
                             </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
                                 <div className="font-medium">{appointment.business_name}</div>
                                 {appointment.business_address && (
-                                    <div className="text-gray-500">{appointment.business_address}</div>
+                                    <div className="text-gray-500 dark:text-gray-400">{appointment.business_address}</div>
                                 )}
                                 <div className="mt-1 flex gap-4">
                                     {appointment.business_phone && (
@@ -220,18 +220,18 @@ const ClientAppointmentDetailsPage: React.FC = () => {
 
                         {appointment.staff_member_name && (
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500 flex items-center">
+                                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center">
                                     <User className="mr-2 h-5 w-5 text-gray-400" />
                                     Staff Member
                                 </dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
                                     <div className="flex items-center">
                                         <div className="flex-shrink-0 h-10 w-10 rounded-full bg-primary-500 flex items-center justify-center text-white font-semibold">
                                             {appointment.staff_member_name.charAt(0).toUpperCase()}
                                         </div>
                                         <div className="ml-3">
                                             <div className="font-medium">{appointment.staff_member_name}</div>
-                                            <div className="text-xs text-gray-500">Your service provider</div>
+                                            <div className="text-xs text-gray-500 dark:text-gray-400">Your service provider</div>
                                         </div>
                                     </div>
                                 </dd>
@@ -239,22 +239,22 @@ const ClientAppointmentDetailsPage: React.FC = () => {
                         )}
 
                         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500 flex items-center">
+                            <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center">
                                 <DollarSign className="mr-2 h-5 w-5 text-gray-400" />
                                 Price
                             </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
                                 ${Number(appointment.total_price).toFixed(2)}
                             </dd>
                         </div>
 
                         {appointment.staff_member_name && (
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500 flex items-center">
+                                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center">
                                     <User className="mr-2 h-5 w-5 text-gray-400" />
                                     Staff Member
                                 </dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
                                     {appointment.staff_member_name}
                                 </dd>
                             </div>
@@ -262,11 +262,11 @@ const ClientAppointmentDetailsPage: React.FC = () => {
 
                         {appointment.notes && (
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500 flex items-center">
+                                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center">
                                     <FileText className="mr-2 h-5 w-5 text-gray-400" />
                                     Notes
                                 </dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
                                     {appointment.notes}
                                 </dd>
                             </div>
@@ -275,7 +275,7 @@ const ClientAppointmentDetailsPage: React.FC = () => {
                 </div>
 
                 {appointment.status === 'scheduled' && (
-                    <div className="bg-gray-50 px-4 py-4 sm:px-6 flex justify-end">
+                    <div className="bg-gray-50 dark:bg-gray-700 px-4 py-4 sm:px-6 flex justify-end">
                         <button
                             onClick={handleCancelAppointment}
                             className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"

@@ -138,7 +138,7 @@ const BusinessOwnerClientProfilePage: React.FC = () => {
               {client.avatar ? (
                 <img className="h-20 w-20 rounded-full" src={client.avatar} alt={client.name} />
               ) : (
-                <div className="bg-primary-100 rounded-full h-20 w-20 flex items-center justify-center">
+                <div className="bg-secondary-100 rounded-full h-20 w-20 flex items-center justify-center">
                   <span className="text-primary-800 font-medium text-2xl">
                     {client.name ? client.name.charAt(0).toUpperCase() : '?'}
                   </span>

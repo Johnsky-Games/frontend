@@ -127,10 +127,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (error) {
       console.error('Failed to fetch user data:', error);
-      // Clear invalid token
+      // Clear invalid token and business theme
       localStorage.removeItem('token');
       localStorage.removeItem('userData');
       localStorage.removeItem('businessData');
+      localStorage.removeItem('businessTheme');
+      window.dispatchEvent(new Event('business-theme-updated'));
     } finally {
       setLoading(false);
     }
@@ -263,6 +265,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem('token');
     localStorage.removeItem('userData');
     localStorage.removeItem('businessData');
+
+    // Clear business theme and reset to default
+    localStorage.removeItem('businessTheme');
+    window.dispatchEvent(new Event('business-theme-updated'));
+
     navigate('/login');
   };
 
