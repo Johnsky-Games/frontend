@@ -433,9 +433,7 @@ const AnimatedRoutes = () => {
 
         {/* Public/Shared Business Details */}
         <Route path="/businesses/:businessId" element={
-          <PublicLayout>
-            <BusinessDetailsPage />
-          </PublicLayout>
+          <BusinessDetailsPage />
         } />
         <Route path="/businesses/:businessId/book" element={
           <PrivateRoute>

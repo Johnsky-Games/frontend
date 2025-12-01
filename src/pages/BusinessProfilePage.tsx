@@ -6,6 +6,11 @@ import { useTheme } from '../context/ThemeContext';
 import api from '../services/ApiService';
 import BusinessHoursEditor from '../components/BusinessHoursEditor';
 import SpecialHoursEditor from '../components/SpecialHoursEditor';
+import {
+  Building, FileText, MapPin, Phone, Mail, Globe,
+  Facebook, Instagram, Twitter, Linkedin, Youtube,
+  Palette, Upload, Image as ImageIcon, Link as LinkIcon
+} from 'lucide-react';
 
 const BusinessProfilePage: React.FC = () => {
   const { business, user, refreshBusiness } = useAuth();
@@ -610,14 +615,18 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Business Name
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Building className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                          </div>
                           <input
                             type="text"
                             name="name"
                             id="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            placeholder="My Awesome Salon"
                           />
                         </div>
                       </div>
@@ -626,16 +635,23 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Description
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute top-3 left-3 pointer-events-none">
+                            <FileText className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                          </div>
                           <textarea
                             id="description"
                             name="description"
-                            rows={3}
+                            rows={4}
                             value={formData.description}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            placeholder="Tell your customers about your business..."
                           />
                         </div>
+                        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                          Brief description of your services and what makes your business unique.
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -652,14 +668,18 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Email address
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Mail className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                          </div>
                           <input
                             id="email"
                             name="email"
                             type="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            placeholder="contact@example.com"
                           />
                         </div>
                       </div>
@@ -668,14 +688,18 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Phone Number
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Phone className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                          </div>
                           <input
                             type="text"
                             name="phone"
                             id="phone"
                             value={formData.phone}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            placeholder="+1 (555) 000-0000"
                           />
                         </div>
                       </div>
@@ -684,7 +708,10 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="whatsapp_number" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           WhatsApp Number
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Phone className="h-5 w-5 text-green-500" aria-hidden="true" />
+                          </div>
                           <input
                             type="text"
                             name="whatsapp_number"
@@ -692,7 +719,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.whatsapp_number}
                             onChange={handleChange}
                             placeholder="+1234567890"
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -701,7 +728,10 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="website_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Website URL
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Globe className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                          </div>
                           <input
                             type="url"
                             name="website_url"
@@ -709,7 +739,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.website_url}
                             onChange={handleChange}
                             placeholder="https://example.com"
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -728,7 +758,10 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="facebook_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Facebook URL
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Facebook className="h-5 w-5 text-blue-600" aria-hidden="true" />
+                          </div>
                           <input
                             type="url"
                             name="facebook_url"
@@ -736,7 +769,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.facebook_url}
                             onChange={handleChange}
                             placeholder="https://facebook.com/..."
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -745,7 +778,10 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="instagram_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Instagram URL
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Instagram className="h-5 w-5 text-pink-600" aria-hidden="true" />
+                          </div>
                           <input
                             type="url"
                             name="instagram_url"
@@ -753,7 +789,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.instagram_url}
                             onChange={handleChange}
                             placeholder="https://instagram.com/..."
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -762,7 +798,10 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="twitter_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           X (Twitter) URL
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Twitter className="h-5 w-5 text-gray-800 dark:text-gray-200" aria-hidden="true" />
+                          </div>
                           <input
                             type="url"
                             name="twitter_url"
@@ -770,7 +809,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.twitter_url}
                             onChange={handleChange}
                             placeholder="https://x.com/..."
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -779,7 +818,10 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="linkedin_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           LinkedIn URL
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Linkedin className="h-5 w-5 text-blue-700" aria-hidden="true" />
+                          </div>
                           <input
                             type="url"
                             name="linkedin_url"
@@ -787,7 +829,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.linkedin_url}
                             onChange={handleChange}
                             placeholder="https://linkedin.com/..."
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -796,7 +838,10 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="tiktok_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           TikTok URL
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <LinkIcon className="h-5 w-5 text-gray-900 dark:text-white" aria-hidden="true" />
+                          </div>
                           <input
                             type="url"
                             name="tiktok_url"
@@ -804,7 +849,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.tiktok_url}
                             onChange={handleChange}
                             placeholder="https://tiktok.com/@..."
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -813,7 +858,10 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="youtube_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           YouTube URL
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Youtube className="h-5 w-5 text-red-600" aria-hidden="true" />
+                          </div>
                           <input
                             type="url"
                             name="youtube_url"
@@ -821,7 +869,7 @@ const BusinessProfilePage: React.FC = () => {
                             value={formData.youtube_url}
                             onChange={handleChange}
                             placeholder="https://youtube.com/@..."
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -841,22 +889,29 @@ const BusinessProfilePage: React.FC = () => {
                           Primary Color
                         </label>
                         <div className="mt-1 flex items-center space-x-3">
-                          <input
-                            type="color"
-                            name="primary_color"
-                            id="primary_color"
-                            value={formData.primary_color}
-                            onChange={handleChange}
-                            className="h-10 w-20 rounded border border-gray-300 cursor-pointer"
-                          />
-                          <input
-                            type="text"
-                            value={formData.primary_color}
-                            onChange={(e) => setFormData(prev => ({ ...prev, primary_color: e.target.value }))}
-                            className="flex-1 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
-                          />
+                          <div className="relative">
+                            <input
+                              type="color"
+                              name="primary_color"
+                              id="primary_color"
+                              value={formData.primary_color}
+                              onChange={handleChange}
+                              className="h-10 w-12 rounded border border-gray-300 cursor-pointer p-0 overflow-hidden"
+                            />
+                          </div>
+                          <div className="relative flex-1 rounded-md shadow-sm">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                              <Palette className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                            </div>
+                            <input
+                              type="text"
+                              value={formData.primary_color}
+                              onChange={(e) => setFormData(prev => ({ ...prev, primary_color: e.target.value }))}
+                              className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md uppercase"
+                            />
+                          </div>
                         </div>
-                        <p className="mt-1 text-xs text-gray-500">Main brand color</p>
+                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Main brand color</p>
                       </div>
 
                       <div className="sm:col-span-2">
@@ -864,22 +919,29 @@ const BusinessProfilePage: React.FC = () => {
                           Secondary Color
                         </label>
                         <div className="mt-1 flex items-center space-x-3">
-                          <input
-                            type="color"
-                            name="secondary_color"
-                            id="secondary_color"
-                            value={formData.secondary_color}
-                            onChange={handleChange}
-                            className="h-10 w-20 rounded border border-gray-300 cursor-pointer"
-                          />
-                          <input
-                            type="text"
-                            value={formData.secondary_color}
-                            onChange={(e) => setFormData(prev => ({ ...prev, secondary_color: e.target.value }))}
-                            className="flex-1 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
-                          />
+                          <div className="relative">
+                            <input
+                              type="color"
+                              name="secondary_color"
+                              id="secondary_color"
+                              value={formData.secondary_color}
+                              onChange={handleChange}
+                              className="h-10 w-12 rounded border border-gray-300 cursor-pointer p-0 overflow-hidden"
+                            />
+                          </div>
+                          <div className="relative flex-1 rounded-md shadow-sm">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                              <Palette className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                            </div>
+                            <input
+                              type="text"
+                              value={formData.secondary_color}
+                              onChange={(e) => setFormData(prev => ({ ...prev, secondary_color: e.target.value }))}
+                              className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md uppercase"
+                            />
+                          </div>
                         </div>
-                        <p className="mt-1 text-xs text-gray-500">Complementary color</p>
+                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Complementary color</p>
                       </div>
 
                       <div className="sm:col-span-2">
@@ -887,22 +949,29 @@ const BusinessProfilePage: React.FC = () => {
                           Accent Color
                         </label>
                         <div className="mt-1 flex items-center space-x-3">
-                          <input
-                            type="color"
-                            name="accent_color"
-                            id="accent_color"
-                            value={formData.accent_color}
-                            onChange={handleChange}
-                            className="h-10 w-20 rounded border border-gray-300 cursor-pointer"
-                          />
-                          <input
-                            type="text"
-                            value={formData.accent_color}
-                            onChange={(e) => setFormData(prev => ({ ...prev, accent_color: e.target.value }))}
-                            className="flex-1 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
-                          />
+                          <div className="relative">
+                            <input
+                              type="color"
+                              name="accent_color"
+                              id="accent_color"
+                              value={formData.accent_color}
+                              onChange={handleChange}
+                              className="h-10 w-12 rounded border border-gray-300 cursor-pointer p-0 overflow-hidden"
+                            />
+                          </div>
+                          <div className="relative flex-1 rounded-md shadow-sm">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                              <Palette className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                            </div>
+                            <input
+                              type="text"
+                              value={formData.accent_color}
+                              onChange={(e) => setFormData(prev => ({ ...prev, accent_color: e.target.value }))}
+                              className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md uppercase"
+                            />
+                          </div>
                         </div>
-                        <p className="mt-1 text-xs text-gray-500">Highlight color</p>
+                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Highlight color</p>
                       </div>
 
                       <div className="sm:col-span-6">
@@ -929,14 +998,17 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="address" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Street Address
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <MapPin className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                          </div>
                           <input
                             type="text"
                             name="address"
                             id="address"
                             value={formData.address}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -952,7 +1024,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="city"
                             value={formData.city}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -968,7 +1040,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="state"
                             value={formData.state}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -984,7 +1056,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="zip_code"
                             value={formData.zip_code}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -993,7 +1065,10 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Latitude
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <MapPin className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                          </div>
                           <input
                             type="number"
                             step="any"
@@ -1001,7 +1076,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="latitude"
                             value={formData.latitude}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -1010,7 +1085,10 @@ const BusinessProfilePage: React.FC = () => {
                         <label htmlFor="longitude" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Longitude
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <MapPin className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                          </div>
                           <input
                             type="number"
                             step="any"
@@ -1018,7 +1096,7 @@ const BusinessProfilePage: React.FC = () => {
                             id="longitude"
                             value={formData.longitude}
                             onChange={handleChange}
-                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
+                            className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                           />
                         </div>
                       </div>
@@ -1028,22 +1106,27 @@ const BusinessProfilePage: React.FC = () => {
                           Google Maps URL
                         </label>
                         <div className="mt-1 flex rounded-md shadow-sm">
-                          <input
-                            type="url"
-                            name="map_url"
-                            id="map_url"
-                            value={formData.map_url}
-                            onChange={handleChange}
-                            placeholder="https://goo.gl/maps/..."
-                            className="flex-1 focus:ring-primary-500 focus:border-primary-500 block w-full min-w-0 rounded-none rounded-l-md sm:text-sm border-gray-300"
-                          />
+                          <div className="relative flex-grow focus-within:z-10">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                              <Globe className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                            </div>
+                            <input
+                              type="url"
+                              name="map_url"
+                              id="map_url"
+                              value={formData.map_url}
+                              onChange={handleChange}
+                              placeholder="https://goo.gl/maps/..."
+                              className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-none rounded-l-md pl-10 py-3 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                            />
+                          </div>
                           <a
                             href={formData.map_url || '#'}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm ${!formData.map_url ? 'pointer-events-none opacity-50' : 'hover:bg-gray-100'}`}
+                            className={`-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-r-md text-gray-700 dark:text-gray-200 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 ${!formData.map_url ? 'pointer-events-none opacity-50' : ''}`}
                           >
-                            Test Link
+                            <span>Test Link</span>
                           </a>
                         </div>
                         <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
